@@ -1,4 +1,4 @@
-package com.sim.chongwukongjing;
+package com.sim.chongwukongjing.ui.Main;
 
 import me.goldze.mvvmhabit.base.BaseApplication;
 

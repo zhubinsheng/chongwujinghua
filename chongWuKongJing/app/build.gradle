@@ -8,7 +8,7 @@ android {
     buildToolsVersion "29.0.0"
     defaultConfig {
         applicationId "com.sim.chongwukongjing"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -37,5 +37,11 @@ dependencies {
     implementation 'me.jessyan:autosize:1.1.2'
     implementation 'com.qmuiteam:qmui:1.4.0'
     implementation 'com.jakewharton:butterknife:10.1.0'
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.3"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.0"
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation group: 'io.fogcloud.sdk', name: 'easylinkv3', version: '0.2.7'
+    implementation 'com.xwray:passwordview:1.0'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 }

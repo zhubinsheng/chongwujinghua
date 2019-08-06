@@ -1,9 +1,11 @@
-package com.sim.chongwukongjing;
+package com.sim.chongwukongjing.ui.Base;
 
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.sim.chongwukongjing.R;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -26,6 +28,16 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 初始化控件
      */
     protected abstract void initView();
+
+    /**
+     * 初始化设置
+     */
+    protected abstract void initSet();
+
+    /**
+     * 初始化数据
+     */
+    protected abstract void initData();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +66,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         //initBar();
         initView();//实例化控件
-        //initData();//初始化数据
-        //initSet();//设置控件属性
+        initData();//初始化数据
+        initSet();//设置控件属性
         //registerObserver();//注册登录观察者
         //isOnLine();//注册在线状态观察者
     }

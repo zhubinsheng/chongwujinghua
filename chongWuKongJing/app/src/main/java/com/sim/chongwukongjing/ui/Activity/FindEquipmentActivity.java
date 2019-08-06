@@ -1,13 +1,10 @@
-package com.sim.chongwukongjing;
+package com.sim.chongwukongjing.ui.Activity;
 
-import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
+import com.sim.chongwukongjing.R;
+import com.sim.chongwukongjing.ui.Base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.Unbinder;
@@ -48,7 +45,15 @@ public class FindEquipmentActivity extends BaseActivity {
         itemWithChevron.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);//默认文字在左边   右侧更多按钮
     }
 
+    @Override
+    protected void initSet() {
 
+    }
+
+    @Override
+    protected void initData() {
+
+    }
 
 
 }

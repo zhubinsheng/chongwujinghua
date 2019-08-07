@@ -1,8 +1,32 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
+
+MobSDK {
+    appKey "2bf824fa8dac4"
+    appSecret "7ab4ef652c6cefb619c0a857897635c6"
+
+    ShareSDK {
+        QQ {
+            appId "100371282"
+            appKey "aed9b0303e3ed1e27bae87c33761161d"
+            shareByAppClient true
+        }
+        Wechat {
+            appId "wx4868b35061f87885"
+            appSecret "64020361b8ec4c99936c0e3999a9f249"
+        }
+    }
+
+}
+
 
 android {
     dataBinding {
         enabled true
+    }
+    defaultConfig {
+        // 这里添加
+        multiDexEnabled true
     }
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
@@ -27,7 +51,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.12'
@@ -44,4 +67,6 @@ dependencies {
     implementation group: 'io.fogcloud.sdk', name: 'easylinkv3', version: '0.2.7'
     implementation 'com.xwray:passwordview:1.0'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47'
+    implementation 'com.android.support:multidex:1.0.3'
 }

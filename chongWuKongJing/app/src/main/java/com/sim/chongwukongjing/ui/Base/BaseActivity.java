@@ -5,6 +5,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.sim.chongwukongjing.R;
 
 import butterknife.ButterKnife;
@@ -16,7 +17,7 @@ import butterknife.Unbinder;
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected Unbinder unbinder;
-
+    protected QMUITipDialog tipD;//声明一个QMUITipDialog对象
     /**
      * 获取当前布局文件资源id
      *
@@ -70,5 +71,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         initSet();//设置控件属性
         //registerObserver();//注册登录观察者
         //isOnLine();//注册在线状态观察者
+    }
+
+    protected void showLoadingDialog(String msg) {
+
+        if (tipD != null) {
+            tipD.dismiss();
+        }
+        if (isFinishing()) {
+            return;
+        }
+        tipD = new QMUITipDialog.Builder(this)
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord(msg)
+                .create();
+        tipD.show();
     }
 }

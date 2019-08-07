@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/QMUITheme"
-        tools:replace="android:allowBackup"
+        android:name = ".ui.Main.MyApplication"
+        tools:replace="android:name"
         tools:ignore="GoogleAppIndexingWarning"
         >
         <meta-data
@@ -28,7 +29,7 @@
         <meta-data
             android:name="design_height_in_dp"
             android:value="1080"/>
-        <activity android:name=".ui.Main.MainActivity">
+        <activity android:name=".ui.fragment.AftersaleMaintenanceActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

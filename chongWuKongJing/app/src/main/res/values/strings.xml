@@ -5,5 +5,6 @@ ABCDEFGHIJKLMNOPQRSTUVWXYZ`¬!"£$%^*()~=#{}[];':,./?/*-_+&#060;&#062;&#064;&#03
     <string name="connection_code">密码</string>
     <string name="me">我的资料</string>
     <string name="index">首页</string>
+    <string name="loading_login">正在登录</string>
 
 </resources>

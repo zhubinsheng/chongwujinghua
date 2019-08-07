@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import com.sim.chongwukongjing.ui.Base.BaseFragment;
 import com.sim.chongwukongjing.R;
 
+/**
+ * @author Administrator
+ */
 public class MachineStateSwitchFragment extends BaseFragment {
     @Override
     protected View getBaseView(LayoutInflater inflater, ViewGroup container) {

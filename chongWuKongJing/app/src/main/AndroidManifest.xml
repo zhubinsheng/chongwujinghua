@@ -29,7 +29,7 @@
         <meta-data
             android:name="design_height_in_dp"
             android:value="1080"/>
-        <activity android:name=".ui.Activity.AftersaleMaintenanceActivity">
+        <activity android:name=".ui.fragment.machune.MachineSetActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -7,10 +7,13 @@ import android.view.ViewGroup;
 import com.sim.chongwukongjing.ui.Base.BaseFragment;
 import com.sim.chongwukongjing.R;
 
+/**
+ * @author Administrator
+ */
 public class MachineStateTimingFragment extends BaseFragment {
     @Override
     protected View getBaseView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.machine_state, container, false);
+        return inflater.inflate(R.layout.machine_timing, container, false);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.sim.chongwukongjing.ui.fragment;
+package com.sim.chongwukongjing.ui.Activity;
 
 import android.content.Context;
 import android.content.Intent;

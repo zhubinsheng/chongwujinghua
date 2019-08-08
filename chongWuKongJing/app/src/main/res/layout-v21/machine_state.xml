@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="707dp"
+        android:layout_height="130dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
@@ -27,8 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
-                app:srcCompat="@drawable/main_screen_drawable_mine_selected"
-                tools:targetApi="lollipop" />
+                app:srcCompat="@drawable/main_screen_drawable_mine_selected" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -36,7 +34,6 @@
                 android:layout_height="wrap_content"
                 android:text="上海   徐汇区" />
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -44,18 +41,16 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/wendu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="31"
-                android:textSize="30dp" />
+                android:textSize="30dp"
+                android:text="31" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="多云转晴 " />
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -18,7 +18,6 @@ import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
 import com.sim.chongwukongjing.ui.Base.wigdet.FragAdapter;
 import com.sim.chongwukongjing.ui.Base.wigdet.NoScrollViewPager;
-import com.sim.chongwukongjing.ui.fragment.home.UserPageFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +64,14 @@ public class MachineSetActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+
+        /*Map<String,String> param =new HashMap<String,String>();
+        param.put("mac", "123456");
+        param.put("phone", "123");
+        param.put("passwd","123124");
+        String  sign =
+        Md5.signMD5(API.appkey,param);
+        System.out.println(sign);*/
     }
 
 

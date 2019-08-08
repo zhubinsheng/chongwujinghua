@@ -14,19 +14,12 @@ import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.net.Uri;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -213,6 +206,5 @@ public class AndroidUtils {
         }
         return null;
     }
-
 
 }

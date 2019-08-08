@@ -1,7 +1,6 @@
 package com.sim.chongwukongjing.ui.Main;
 
 import com.mob.MobSDK;
-import com.sim.chongwukongjing.ui.Utils;
 
 import me.goldze.mvvmhabit.base.BaseApplication;
 

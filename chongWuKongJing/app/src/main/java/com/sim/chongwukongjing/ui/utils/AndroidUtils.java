@@ -1,4 +1,4 @@
-package com.sim.chongwukongjing.ui;
+package com.sim.chongwukongjing.ui.utils;
 
 /**
  * Created by Administrator on 2017/12/23 0023.
@@ -37,7 +37,7 @@ import java.util.UUID;
 /**
  * 项目工具类
  */
-public class Utils {
+public class AndroidUtils {
 
     public static boolean isMainProcess(Context context) {
         int pid = android.os.Process.myPid();

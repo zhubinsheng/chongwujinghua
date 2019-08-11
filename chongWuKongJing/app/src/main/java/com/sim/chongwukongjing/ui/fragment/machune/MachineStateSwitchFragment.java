@@ -44,7 +44,7 @@ public class MachineStateSwitchFragment extends BaseFragment {
         path.moveTo(200, 200);
         path.quadTo(800, 200, 800, 800);
 
-        PathInterpolator pathInterpolator = new PathInterpolator(0.33f,0f,0.12f,1f);
+        /*PathInterpolator pathInterpolator = new PathInterpolator(0.33f,0f,0.12f,1f);
         AnimatorSet animSet = new AnimatorSet();
         animSet.addListener(new Animator.AnimatorListener() {
             @Override
@@ -73,7 +73,7 @@ public class MachineStateSwitchFragment extends BaseFragment {
 
         animSet.setInterpolator(pathInterpolator);
         animSet.setDuration(1500);
-        animSet.start();
+        animSet.start();*/
 
 
 

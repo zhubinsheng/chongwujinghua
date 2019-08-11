@@ -1,5 +1,7 @@
 package com.sim.chongwukongjing.ui.Base;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -49,14 +51,17 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         //初始化方法
         init();
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
     }
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbinder.unbind();
+        if (unbinder!=null){
+            unbinder.unbind();
+        }
+
 
     }
 
@@ -86,5 +91,14 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .setTipWord(msg)
                 .create();
         tipD.show();
+    }
+
+
+    /**
+     * startActivity 方法优化
+     */
+
+    public void startActivity(Class<? extends Activity> cls) {
+        startActivity(new Intent(this, cls));
     }
 }

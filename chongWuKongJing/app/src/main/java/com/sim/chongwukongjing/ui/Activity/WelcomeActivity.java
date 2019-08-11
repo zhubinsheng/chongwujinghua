@@ -49,7 +49,7 @@ public class WelcomeActivity extends BaseActivity {
                 startActivity(RegisterActivity.class);
                 break;
             case R.id.textView4:
-                startActivity(RegisterActivity.class);
+                startActivity(LoginActivity.class);
                 break;
             default:
                 break;

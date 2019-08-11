@@ -38,16 +38,45 @@
         android:inputType="number"
         android:maxLines="1" />
 
-    <EditText
-        android:id="@+id/et_register_password4"
-        style="@style/EditTextStyle"
+    <com.xwray.passwordview.PasswordView
+        android:id="@+id/editText3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:hint="请输入密码"
-        android:maxLength="20"
+        style="@style/EditTextStyle"
+        android:digits="@string/rule_text"
         android:inputType="textPassword"
-        android:maxLines="1" />
+        android:hint="@string/connection_code"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:orientation="horizontal">
+
+
+        <CheckBox
+            android:id="@+id/checkBox2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="20dp"
+            android:textColor="@color/btn_filled_blue_bg_disabled"
+            android:text="记住密码" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textSize="20dp"
+            android:textColor="@color/btn_filled_blue_bg_disabled"
+            android:text="忘记密码" />
+
+
+    </LinearLayout>
 
     <View
         android:id="@+id/view"

@@ -147,12 +147,14 @@ public class RegisterActivity extends BaseActivity {
                     public void accept(SendcodeResult baseInfo) throws Exception {
                         if ("10000".equals(baseInfo.getCode())){
                             ToastUtils.showShort(baseInfo.getMsg());
+                            startActivity(LoginActivity.class);
+                            finish();
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        ToastUtils.showShort("验证码发送失败，请稍后重试");
+                        ToastUtils.showShort("注册失败，请稍后重试");
                     }
                 });
 

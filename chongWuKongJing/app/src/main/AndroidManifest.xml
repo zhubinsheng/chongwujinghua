@@ -43,6 +43,8 @@
             android:name=".ui.Activity.WelcomeActivity"
             android:theme="@style/AnimActivity" />
         <activity android:name=".ui.Activity.RegisterActivity" />
+        <activity android:name=".ui.Activity.LoginActivity"></activity>
+        <activity android:name=".ui.Activity.AddMachineActivity"></activity>
     </application>
 
 </manifest>

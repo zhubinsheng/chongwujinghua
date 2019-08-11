@@ -31,4 +31,7 @@ public interface HttpApi {
     @POST("api/sso/reg")
     Observable<SendcodeResult> reg(@Body RequestBody body);
 
+    @POST("api/sso/login")
+    Observable<SendcodeResult> login(@Body RequestBody body);
+
 }

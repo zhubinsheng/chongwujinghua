@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/QMUITheme"
         android:name = ".ui.Main.MyApplication"
-        tools:replace="android:name"
+        tools:replace="android:allowBackup"
         tools:ignore="GoogleAppIndexingWarning"
         android:networkSecurityConfig="@xml/network_security_config"
         >
@@ -33,11 +33,7 @@
             android:value="1080"/>
 
         <activity android:name=".ui.Activity.InterfaceActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.Activity.WelcomeActivity"
@@ -48,7 +44,14 @@
         <activity android:name=".ui.Activity.FindEquipmentActivity"></activity>
         <activity android:name=".ui.Activity.InputPasswordActivity"></activity>
         <activity android:name=".ui.Activity.MyEquipmentAcitivity"></activity>
-        <activity android:name=".ui.fragment.machune.MachineSetActivity"></activity>
+        <activity android:name=".ui.fragment.machune.MachineSetActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

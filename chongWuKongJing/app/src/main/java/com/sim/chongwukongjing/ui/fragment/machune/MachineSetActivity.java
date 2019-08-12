@@ -1,6 +1,7 @@
 package com.sim.chongwukongjing.ui.fragment.machune;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -9,8 +10,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.baoyachi.stepview.HorizontalStepView;
+import com.baoyachi.stepview.bean.StepBean;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
@@ -41,6 +45,7 @@ public class MachineSetActivity extends BaseActivity {
     @BindView(R.id.main_tab_segment)
     QMUITabSegment mainTabSegment;
 
+
     //数据
     private List<Fragment> fragmentList;
 
@@ -49,7 +54,7 @@ public class MachineSetActivity extends BaseActivity {
     private TextView unReadMsg;
     private String pushData;
 
-
+    private Context mcontext;
 
     @Override
     protected int getLayoutRes() {
@@ -80,7 +85,7 @@ public class MachineSetActivity extends BaseActivity {
     protected void initSet() {
         addTabAndViewPage();
         //设置viewPage的缓存页数
-        mainViewPage.setOffscreenPageLimit(3);
+        mainViewPage.setOffscreenPageLimit(5);
         //设置adapter
         mainViewPage.setAdapter(new FragAdapter(getSupportFragmentManager(), fragmentList));
         //设置字体大小

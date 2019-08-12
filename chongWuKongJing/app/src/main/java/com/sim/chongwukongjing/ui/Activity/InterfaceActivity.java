@@ -33,7 +33,7 @@ public class InterfaceActivity extends BaseActivity {
 
     private String username;
     private String password;
-    private boolean aBoolean;
+    private boolean aBoolean = false;
 
     @Override
     protected int getLayoutRes() {
@@ -49,10 +49,16 @@ public class InterfaceActivity extends BaseActivity {
     protected void initSet() {
         SharedPreferences sharedPreferences= this.getSharedPreferences("config", Context.MODE_PRIVATE);
         if (sharedPreferences != null){
-             aBoolean = true;
+
              username =sharedPreferences.getString("username", "");
              password =sharedPreferences.getString("password", "");
-             login();
+             if (
+                     !username.equals("")||!password.equals("")
+             ){
+                 aBoolean = true;
+                 login();
+             }
+
         }
     }
 
@@ -112,6 +118,8 @@ public class InterfaceActivity extends BaseActivity {
                             MyApplication.getInstance().setLoginResult(baseInfo);
                             startActivity(AddMachineActivity.class);
                             finish();
+                        }else {
+                            ToastUtils.showShort(baseInfo.getMsg());
                         }
                     }
                 }, new Consumer<Throwable>() {

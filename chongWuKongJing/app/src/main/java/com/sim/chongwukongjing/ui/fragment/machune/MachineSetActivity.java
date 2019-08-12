@@ -146,6 +146,8 @@ public class MachineSetActivity extends BaseActivity {
         fragmentList.add(new MachineStateSwitchFragment());
         fragmentList.add(new MachineInfoFragment());
         fragmentList.add(new MachineStateTimingFragment());
+        fragmentList.add(new MachineInfoFragment());
+        fragmentList.add(new MachineStateTimingFragment());
         //添加tab
         mainTabSegment.addTab(
                 new QMUITabSegment.Tab(
@@ -166,6 +168,22 @@ public class MachineSetActivity extends BaseActivity {
         }*/
 
 
+
+        mainTabSegment.addTab(
+                new QMUITabSegment.Tab(
+                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
+                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
+                        getString(R.string.kaiguan),
+                        false,
+                        false));
+
+        mainTabSegment.addTab(
+                new QMUITabSegment.Tab(
+                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
+                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
+                        getString(R.string.dingshi),
+                        false,
+                        false));
 
         mainTabSegment.addTab(
                 new QMUITabSegment.Tab(

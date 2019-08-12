@@ -1,25 +1,30 @@
 package com.sim.chongwukongjing.ui.Activity;
 
 import android.annotation.SuppressLint;
+import android.graphics.Canvas;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
 import com.sim.chongwukongjing.ui.Main.MyApplication;
-import com.sim.chongwukongjing.ui.bean.ProductlistResult;
+import com.sim.chongwukongjing.ui.bean.MyList;
+import com.sim.chongwukongjing.ui.fragment.machune.MachineSetActivity;
 import com.sim.chongwukongjing.ui.http.HttpApi;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
-import com.sim.chongwukongjing.ui.wigdet.FindProductlistAdapter;
+import com.sim.chongwukongjing.ui.wigdet.MyProductlistAdapter;
 
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -32,10 +37,11 @@ import static com.sim.chongwukongjing.ui.utils.Md5.signMD5;
 /**
  * @author binshengzhu
  */
-public class FindEquipmentActivity extends BaseActivity {
+public class MyEquipmentAcitivity extends BaseActivity {
 
-    private FindProductlistAdapter productlistAdapter;
-    private List<ProductlistResult.DataBean> data;
+
+    private MyProductlistAdapter productlistAdapter;
+    private List<MyList.DataBean> data;
 
     @BindView(R.id.ProductRecy)
     RecyclerView ProductRecy;
@@ -43,10 +49,16 @@ public class FindEquipmentActivity extends BaseActivity {
     @BindView(R.id.topbar)
     QMUITopBar qmuiTopBar;
 
+    @BindView(R.id.textView3)
+    TextView textView3;
+
+    @BindView(R.id.textView4)
+    TextView textView4;
+
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.activity_finding_equipment;
+        return R.layout.activity_my_equipment;
     }
 
     @Override
@@ -71,8 +83,40 @@ public class FindEquipmentActivity extends BaseActivity {
         }
 
 
+        OnItemSwipeListener onItemSwipeListener = new OnItemSwipeListener() {
+            @Override
+            public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {}
+            @Override
+            public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {}
+            @Override
+            public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {}
+
+            @Override
+            public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float v, float v1, boolean b) {
+
+            }
+        };
+
+
 
     }
+
+    @OnClick({R.id.textView3,R.id.textView4})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.textView3:
+                startActivity(MachineSetActivity.class);
+                break;
+            case R.id.textView4:
+                startActivity(AddMachineActivity.class);
+                break;
+            default:
+                break;
+        }
+    }
+
+
+
 
     @Override
     protected void initData() {
@@ -99,22 +143,22 @@ public class FindEquipmentActivity extends BaseActivity {
 
                 .build();
 
-        Observable<ProductlistResult> observable = mloginApi.productlist(body);
+        Observable<MyList> observable = mloginApi.mylist(body);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ProductlistResult>() {
+                .subscribe(new Consumer<MyList>() {
                     @Override
-                    public void accept(ProductlistResult baseInfo) throws Exception {
+                    public void accept(MyList baseInfo) throws Exception {
                         if ("10000".equals(baseInfo.getCode())){
                             ToastUtils.showShort(baseInfo.getMsg());
                             //创建适配器
                             data = baseInfo.getData();
-                            productlistAdapter = new FindProductlistAdapter(R.layout.productlist_itemview, data,FindEquipmentActivity.this);
+                            productlistAdapter = new MyProductlistAdapter(R.layout.ny_productlist_itemview, data,MyEquipmentAcitivity.this);
                             //条目点击事件
                             productlistAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                    ProductlistResult.DataBean dataBean = data.get(position);
+                                    MyList.DataBean dataBean = data.get(position);
                                     startActivity(InputPasswordActivity.class);
                                     finish();
                                 }

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -40,6 +41,8 @@ public class InputPasswordActivity extends BaseActivity {
     @BindView(R.id.editText3)
     TextView editText3;
 
+    @BindView(R.id.topbar)
+    QMUITopBar qmuiTopBar;
 
     private String ssid;
     private EasylinkP2P elp2p;
@@ -62,20 +65,27 @@ public class InputPasswordActivity extends BaseActivity {
 
     @Override
     protected void initSet() {
-
+        qmuiTopBar.setTitle("添加设备");
     }
 
     @Override
     protected void initData() {
         requestPermissions();
         ssid = getWIFISSID(this);
-        ssidName.setText(ssid);
+        if ("unknown id".equals(ssid)){
+            ToastUtils.showLong("请先打开无线网");
+        }else {
+            ssidName.setText(ssid);
+        }
+
     }
 
     @OnClick({R.id.textView8})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.textView8:
+                startActivity(MyEquipmentAcitivity.class);
+                finish();
                 //发送数据包(包含ssid和password)给设备，连续发10s，再停止3s，再继续发，如此反复
                 EasyLinkParams easylinkPara = new EasyLinkParams();
                 easylinkPara.ssid = ssid;
@@ -87,7 +97,7 @@ public class InputPasswordActivity extends BaseActivity {
                     @Override
                     public void onSuccess(int code, String message) {
                         ToastUtils.showShort("配网成功");
-                        startActivity(LoginActivity.class);
+                        startActivity(MyEquipmentAcitivity.class);
                         finish();
                     }
                     @Override

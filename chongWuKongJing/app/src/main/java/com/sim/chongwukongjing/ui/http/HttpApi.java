@@ -2,6 +2,7 @@ package com.sim.chongwukongjing.ui.http;
 
 
 import com.sim.chongwukongjing.ui.bean.LoginResult;
+import com.sim.chongwukongjing.ui.bean.MyList;
 import com.sim.chongwukongjing.ui.bean.ProductlistResult;
 import com.sim.chongwukongjing.ui.bean.RegResult;
 import com.sim.chongwukongjing.ui.bean.SendcodeResult;
@@ -37,5 +38,8 @@ public interface HttpApi {
 
     @POST("api/dvc/productlist")
     Observable<ProductlistResult> productlist(@Body RequestBody body);
+
+    @POST("api/dvc/mylist")
+    Observable<MyList> mylist(@Body RequestBody body);
 
 }

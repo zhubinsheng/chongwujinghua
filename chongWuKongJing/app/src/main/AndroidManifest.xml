@@ -47,6 +47,8 @@
         <activity android:name=".ui.Activity.AddMachineActivity"></activity>
         <activity android:name=".ui.Activity.FindEquipmentActivity"></activity>
         <activity android:name=".ui.Activity.InputPasswordActivity"></activity>
+        <activity android:name=".ui.Activity.MyEquipmentAcitivity"></activity>
+        <activity android:name=".ui.fragment.machune.MachineSetActivity"></activity>
     </application>
 
 </manifest>

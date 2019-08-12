@@ -22,13 +22,13 @@
     <RelativeLayout
         android:id="@+id/rl_bottom"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true">
 
         <com.qmuiteam.qmui.widget.QMUITabSegment
             android:id="@+id/main_tab_segment"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="80dp"
             android:background="@color/white"
             android:isScrollContainer="true"
             app:qmui_tab_icon_position="top">

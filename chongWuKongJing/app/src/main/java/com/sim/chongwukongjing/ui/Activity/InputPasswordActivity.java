@@ -10,6 +10,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.sim.chongwukongjing.R;
@@ -17,7 +18,11 @@ import com.sim.chongwukongjing.ui.Base.BaseActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.fogcloud.sdk.easylink.api.EasylinkP2P;
+import io.fogcloud.sdk.easylink.helper.EasyLinkCallBack;
+import io.fogcloud.sdk.easylink.helper.EasyLinkParams;
+import me.goldze.mvvmhabit.utils.ToastUtils;
 
 /**
  * @author binshengzhu
@@ -25,10 +30,19 @@ import io.fogcloud.sdk.easylink.api.EasylinkP2P;
 public class InputPasswordActivity extends BaseActivity {
 
     private static final String TAG = "InputPasswordActivity";
+
     @BindView(R.id.ssid_name)
     TextView ssidName;
 
-    EasylinkP2P elp2p;
+    @BindView(R.id.textView8)
+    TextView textView8;
+
+    @BindView(R.id.editText3)
+    TextView editText3;
+
+
+    private String ssid;
+    private EasylinkP2P elp2p;
 
     @Override
     protected int getLayoutRes() {
@@ -38,7 +52,6 @@ public class InputPasswordActivity extends BaseActivity {
     @Override
     protected void initView() {
         elp2p = new EasylinkP2P(this);
-        elp2p.getSSID();
 
 /*
         ConnectivityManager ctm = (ConnectivityManager) this.
@@ -55,10 +68,39 @@ public class InputPasswordActivity extends BaseActivity {
     @Override
     protected void initData() {
         requestPermissions();
-        String ssid = getWIFISSID(this);
+        ssid = getWIFISSID(this);
         ssidName.setText(ssid);
     }
 
+    @OnClick({R.id.textView8})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.textView8:
+                //发送数据包(包含ssid和password)给设备，连续发10s，再停止3s，再继续发，如此反复
+                EasyLinkParams easylinkPara = new EasyLinkParams();
+                easylinkPara.ssid = ssid;
+                easylinkPara.password = editText3.getText().toString();
+                easylinkPara.runSecond = 60000;
+                easylinkPara.sleeptime = 20;
+
+                elp2p.startEasyLink(easylinkPara, new EasyLinkCallBack() {
+                    @Override
+                    public void onSuccess(int code, String message) {
+                        ToastUtils.showShort("配网成功");
+                        startActivity(LoginActivity.class);
+                        finish();
+                    }
+                    @Override
+                    public void onFailure(int code, String message) {
+                        Log.d(TAG, code + message);
+                    }
+                });
+                break;
+
+            default:
+                break;
+        }
+    }
 
 
     /**

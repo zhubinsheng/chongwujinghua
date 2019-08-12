@@ -1,4 +1,4 @@
-package com.sim.chongwukongjing.ui.Base.wigdet;
+package com.sim.chongwukongjing.ui.wigdet;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -1,7 +1,6 @@
 package com.sim.chongwukongjing.ui.Activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.EditText;
@@ -11,14 +10,12 @@ import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
-import com.sim.chongwukongjing.ui.bean.LoginResult;
+import com.sim.chongwukongjing.ui.bean.RegResult;
 import com.sim.chongwukongjing.ui.bean.SendcodeResult;
 import com.sim.chongwukongjing.ui.http.HttpApi;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
 
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -139,12 +136,12 @@ public class RegisterActivity extends BaseActivity {
 
 
 
-        Observable<SendcodeResult> observable = mloginApi.reg(body);
+        Observable<RegResult> observable = mloginApi.reg(body);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<SendcodeResult>() {
+                .subscribe(new Consumer<RegResult>() {
                     @Override
-                    public void accept(SendcodeResult baseInfo) throws Exception {
+                    public void accept(RegResult baseInfo) throws Exception {
                         if ("10000".equals(baseInfo.getCode())){
                             ToastUtils.showShort(baseInfo.getMsg());
                             startActivity(LoginActivity.class);

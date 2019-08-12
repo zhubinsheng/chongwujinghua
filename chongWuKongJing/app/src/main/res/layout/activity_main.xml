@@ -5,13 +5,13 @@
     android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
-    <com.sim.chongwukongjing.ui.Base.wigdet.NoScrollViewPager
+    <com.sim.chongwukongjing.ui.wigdet.NoScrollViewPager
         android:id="@+id/main_view_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/main_view">
 
-    </com.sim.chongwukongjing.ui.Base.wigdet.NoScrollViewPager>
+    </com.sim.chongwukongjing.ui.wigdet.NoScrollViewPager>
 
     <View
         android:id="@+id/main_view"

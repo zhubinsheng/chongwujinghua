@@ -1,6 +1,7 @@
 package com.sim.chongwukongjing.ui.Main;
 
 import com.mob.MobSDK;
+import com.sim.chongwukongjing.ui.bean.LoginResult;
 
 import me.goldze.mvvmhabit.base.BaseApplication;
 
@@ -9,10 +10,30 @@ import me.goldze.mvvmhabit.base.BaseApplication;
  */
 public class MyApplication extends BaseApplication {
 
+    private LoginResult loginResult;
+    private static MyApplication instance;
+
+    public static MyApplication getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(MyApplication instance) {
+        MyApplication.instance = instance;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         //initOpenInstall();
         MobSDK.init(this);
+        instance = this;
+    }
+
+    public LoginResult getLoginResult() {
+        return loginResult;
+    }
+
+    public void setLoginResult(LoginResult loginResult) {
+        this.loginResult = loginResult;
     }
 }

@@ -16,8 +16,8 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
-import com.sim.chongwukongjing.ui.Base.wigdet.FragAdapter;
-import com.sim.chongwukongjing.ui.Base.wigdet.NoScrollViewPager;
+import com.sim.chongwukongjing.ui.wigdet.FragAdapter;
+import com.sim.chongwukongjing.ui.wigdet.NoScrollViewPager;
 
 import java.util.ArrayList;
 import java.util.List;

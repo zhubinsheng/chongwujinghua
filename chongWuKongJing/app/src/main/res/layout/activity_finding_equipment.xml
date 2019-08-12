@@ -19,16 +19,10 @@
         android:textSize="30dp"
         android:text="选择您的   AIR  MEDIC" />
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ProductRecy"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/qmui_config_color_background">
+        android:layout_height="match_parent" />
 
-        <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
-            android:id="@+id/groupListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </ScrollView>
 
 </LinearLayout>

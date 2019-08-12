@@ -1,8 +1,9 @@
 package com.sim.chongwukongjing.ui.http;
 
 
-import com.sim.chongwukongjing.ui.bean.LoginParam;
 import com.sim.chongwukongjing.ui.bean.LoginResult;
+import com.sim.chongwukongjing.ui.bean.ProductlistResult;
+import com.sim.chongwukongjing.ui.bean.RegResult;
 import com.sim.chongwukongjing.ui.bean.SendcodeResult;
 
 import io.reactivex.Observable;
@@ -29,9 +30,12 @@ public interface HttpApi {
     Observable<SendcodeResult> sendcode(@Body RequestBody body);
 
     @POST("api/sso/reg")
-    Observable<SendcodeResult> reg(@Body RequestBody body);
+    Observable<RegResult> reg(@Body RequestBody body);
 
     @POST("api/sso/login")
-    Observable<SendcodeResult> login(@Body RequestBody body);
+    Observable<LoginResult> login(@Body RequestBody body);
+
+    @POST("api/dvc/productlist")
+    Observable<ProductlistResult> productlist(@Body RequestBody body);
 
 }

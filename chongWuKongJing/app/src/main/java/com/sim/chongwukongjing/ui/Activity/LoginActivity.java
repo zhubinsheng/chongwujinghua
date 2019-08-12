@@ -9,7 +9,8 @@ import android.widget.TextView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
-import com.sim.chongwukongjing.ui.bean.SendcodeResult;
+import com.sim.chongwukongjing.ui.Main.MyApplication;
+import com.sim.chongwukongjing.ui.bean.LoginResult;
 import com.sim.chongwukongjing.ui.http.HttpApi;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
 import com.sim.chongwukongjing.ui.utils.SharedPreferencesUtil;
@@ -107,12 +108,12 @@ public class LoginActivity extends BaseActivity {
                     .add("passwd",editText3.getText().toString())
                     .build();
 
-        Observable<SendcodeResult> observable = mloginApi.login(body);
+        Observable<LoginResult> observable = mloginApi.login(body);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<SendcodeResult>() {
+                .subscribe(new Consumer<LoginResult>() {
                     @Override
-                    public void accept(SendcodeResult baseInfo) throws Exception {
+                    public void accept(LoginResult baseInfo) throws Exception {
                         if ("10000".equals(baseInfo.getCode())){
                             ToastUtils.showShort(baseInfo.getMsg());
                             if (checkBox2.isChecked()){
@@ -120,6 +121,7 @@ public class LoginActivity extends BaseActivity {
                             }else {
                                 SharedPreferencesUtil.deleteUser(getApplicationContext());
                             }
+                            MyApplication.getInstance().setLoginResult(baseInfo);
                             startActivity(AddMachineActivity.class);
                             finish();
                         }

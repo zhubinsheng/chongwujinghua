@@ -2,7 +2,6 @@ package com.sim.chongwukongjing.ui.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 /**
  * @author Administrator
@@ -35,6 +34,15 @@ public class SharedPreferencesUtil {
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.apply();
+    }
+
+    public static void getUser(Context context) {
+        SharedPreferences sharedPreferences= context.getSharedPreferences("config", Context.MODE_PRIVATE);
+        // 使用getString方法获得value，注意第2个参数是value的默认值
+        if (sharedPreferences != null){
+            String username =sharedPreferences.getString("username", "");
+            String password =sharedPreferences.getString("password", "");
+        }
     }
 
 

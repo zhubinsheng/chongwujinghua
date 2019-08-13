@@ -32,7 +32,7 @@ import io.reactivex.schedulers.Schedulers;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import okhttp3.FormBody;
 
-import static com.sim.chongwukongjing.ui.utils.Md5.signMD5;
+import static com.sim.chongwukongjing.ui.utils.Md5Util.signMD5;
 
 /**
  * @author binshengzhu

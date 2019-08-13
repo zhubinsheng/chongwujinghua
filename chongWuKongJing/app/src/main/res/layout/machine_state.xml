@@ -76,33 +76,13 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!--<com.baoyachi.stepview.HorizontalStepView
-        android:id="@+id/step_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />-->
-    <com.xw.repo.BubbleSeekBar
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:bsb_bubble_color="@color/qmui_config_color_red"
-    app:bsb_bubble_text_color="@color/colorPrimaryDark"
-    app:bsb_max="低风"
-    app:bsb_min="高风"
-    app:bsb_progress="0"
-    app:bsb_second_track_color="@color/qmui_config_color_red"
-    app:bsb_section_count="5"
-    app:bsb_section_text_position="bottom_sides"
-    app:bsb_show_progress_in_float="true"
-    app:bsb_show_section_mark="true"
-    app:bsb_show_section_text="true"
-    app:bsb_show_thumb_text="true"
-    app:bsb_track_color="@color/qmui_config_color_red"/>
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/GifImageView"
-        android:layout_width="match_parent"
-        android:layout_height="332dp"
-        android:layout_marginTop="@dimen/dp_40"
+        android:layout_width="wrap_content"
+        android:layout_height="248dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/dp_10"
         android:src="@drawable/kuaisu_x_b" />
 
     <ImageView
@@ -112,6 +92,16 @@
         android:layout_gravity="center"
         app:srcCompat="@drawable/machine_main_picture" />
 
-
+    <SeekBar
+        android:id="@+id/seekBar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:progressDrawable="@drawable/progress_style"
+        android:thumb="@null"
+        android:max="3"
+        android:progress="1"
+        android:maxHeight="30dp"
+        android:minHeight="30dp"/>
 
 </LinearLayout>

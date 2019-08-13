@@ -1,21 +1,21 @@
 package com.sim.chongwukongjing.ui.fragment.machune;
 
+import android.annotation.SuppressLint;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 
-import androidx.core.content.ContextCompat;
-
-import com.baoyachi.stepview.HorizontalStepView;
-import com.baoyachi.stepview.bean.StepBean;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseFragment;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.sim.chongwukongjing.ui.MqttService;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import me.goldze.mvvmhabit.utils.ToastUtils;
 import pl.droidsonroids.gif.GifImageView;
 
 /**
@@ -23,14 +23,44 @@ import pl.droidsonroids.gif.GifImageView;
  */
 public class MachineStateSwitchFragment extends BaseFragment {
 
+    private static int MANSU = 1;
+    private static int ZHONGSU = 2;
+    private static int KUAISU = 3;
+
+
     @BindView(R.id.imageView2)
     ImageView imageView2;
 
     @BindView(R.id.GifImageView)
     GifImageView gifImageView;
 
-    /*@BindView(R.id.step_view)
-    HorizontalStepView horizontalStepView;*/
+    @BindView(R.id.seekBar2)
+    SeekBar seekBar2;
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch(msg.what){
+                case 1:gifImageView.setImageResource(R.drawable.mansu_machene_x_b); break;
+                case 2:gifImageView.setImageResource(R.drawable.zhongsu_x_b);  break;
+                case 3:gifImageView.setImageResource(R.drawable.kuaisu_x_b);  break;
+                default:break;
+            }
+        }
+    };
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+    }
 
     @Override
     protected View getBaseView(LayoutInflater inflater, ViewGroup container) {
@@ -39,7 +69,7 @@ public class MachineStateSwitchFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-
+        MqttService.makePassword(getActivity());
     }
 
     @Override
@@ -49,32 +79,81 @@ public class MachineStateSwitchFragment extends BaseFragment {
 
     @Override
     protected void initSet(View view) {
-        List<StepBean> stepsBeanList = new ArrayList<>();
-        StepBean stepBean0 = new StepBean("接单",1);
-        StepBean stepBean1 = new StepBean("打包",1);
-        StepBean stepBean2 = new StepBean("出发",1);
-        StepBean stepBean3 = new StepBean("送单",0);
-        StepBean stepBean4 = new StepBean("完成",-1);
-        stepsBeanList.add(stepBean0);
-        stepsBeanList.add(stepBean1);
-        stepsBeanList.add(stepBean2);
-        stepsBeanList.add(stepBean3);
-        stepsBeanList.add(stepBean4);
 
-        /*horizontalStepView
-                .setStepViewTexts(stepsBeanList)//总步骤
-                .setTextSize(12)//set textSize
-                .setStepsViewIndicatorCompletedLineColor(ContextCompat.getColor(getActivity(), android.R.color.white))//设置StepsViewIndicator完成线的颜色
-                .setStepsViewIndicatorUnCompletedLineColor(ContextCompat.getColor(getActivity(), R.color.uncompleted_text_color))//设置StepsViewIndicator未完成线的颜色
-                .setStepViewComplectedTextColor(ContextCompat.getColor(getActivity(), android.R.color.white))//设置StepsView text完成线的颜色
-                .setStepViewUnComplectedTextColor(ContextCompat.getColor(getActivity(), R.color.uncompleted_text_color))//设置StepsView text未完成线的颜色
-                .setStepsViewIndicatorCompleteIcon(ContextCompat.getDrawable(getActivity(), R.drawable.complted))//设置StepsViewIndicator CompleteIcon
-                .setStepsViewIndicatorDefaultIcon(ContextCompat.getDrawable(getActivity(), R.drawable.default_icon))//设置StepsViewIndicator DefaultIcon
-                .setStepsViewIndicatorAttentionIcon(ContextCompat.getDrawable(getActivity(), R.drawable.attention));//设置StepsViewIndicator AttentionIcon*/
+        seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                switch (seekBar.getProgress()) {
+                    case 0:
+                        //gifImageView.setVisibility(View.GONE);
+                        ToastUtils.showLong("已关闭机器,停止风扇");
+                        break;
+                    case 1:
+                        gifImageView.setImageResource(R.drawable.mansu_machine_x_a);
+                        handler.sendEmptyMessageDelayed(MANSU,3000);
+
+                        ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
+                        break;
+                    case 2:
+                        gifImageView.setImageResource(R.drawable.zhongsu_x_a);
+                        handler.sendEmptyMessageDelayed(ZHONGSU,1500);
+
+                        ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
+                        break;
+                    case 3:
+                        gifImageView.setImageResource(R.drawable.kuaisu_x_a);
+                        handler.sendEmptyMessageDelayed(KUAISU,1000);
+
+                        ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
+                        break;
+
+
+                    default:
+
+                        break;
+                }
+
+            }
+        });
     }
 
     @Override
     protected void initDisplayData(View view) {
 
     }
+
+    /**
+     * 设置当前进度
+     *
+     * @param progress
+     */
+    public void setProgress(int progress) {
+        progress = progress >= 0 ? progress : 0;
+        progress = progress <= 3 ? progress : 3;
+        seekBar2.setProgress(progress);
+    }
+
+
+    @OnClick({R.id.seekBar2})
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.seekBar2:
+
+                break;
+
+            default:
+                break;
+        }
+    }
+
 }

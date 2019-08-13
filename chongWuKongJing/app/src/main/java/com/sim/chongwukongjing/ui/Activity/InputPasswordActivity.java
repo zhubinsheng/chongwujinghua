@@ -9,6 +9,9 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -16,14 +19,28 @@ import android.widget.TextView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
+import com.sim.chongwukongjing.ui.bean.FindDeviceResult;
+import com.sim.chongwukongjing.ui.http.HttpApi;
+import com.sim.chongwukongjing.ui.http.RetrofitClient;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.fogcloud.sdk.easylink.api.EasylinkP2P;
 import io.fogcloud.sdk.easylink.helper.EasyLinkCallBack;
 import io.fogcloud.sdk.easylink.helper.EasyLinkParams;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import me.goldze.mvvmhabit.utils.ToastUtils;
+import okhttp3.FormBody;
+
+import static com.sim.chongwukongjing.ui.utils.Md5Util.signMD5;
 
 /**
  * @author binshengzhu
@@ -46,6 +63,20 @@ public class InputPasswordActivity extends BaseActivity {
 
     private String ssid;
     private EasylinkP2P elp2p;
+
+    @SuppressLint("HandlerLeak")
+    private Handler myHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what == 0x123)
+            {
+                //你要做的事
+
+            }
+
+        }
+    };
 
     @Override
     protected int getLayoutRes() {
@@ -73,7 +104,7 @@ public class InputPasswordActivity extends BaseActivity {
         requestPermissions();
         ssid = getWIFISSID(this);
         if ("unknown id".equals(ssid)){
-            ToastUtils.showLong("请先打开无线网");
+            ToastUtils.showLong("请先连接无线网");
         }else {
             ssidName.setText(ssid);
         }
@@ -84,8 +115,8 @@ public class InputPasswordActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.textView8:
-                startActivity(MyEquipmentAcitivity.class);
-                finish();
+                //startActivity(MyEquipmentAcitivity.class);
+                //finish();
                 //发送数据包(包含ssid和password)给设备，连续发10s，再停止3s，再继续发，如此反复
                 EasyLinkParams easylinkPara = new EasyLinkParams();
                 easylinkPara.ssid = ssid;
@@ -93,10 +124,19 @@ public class InputPasswordActivity extends BaseActivity {
                 easylinkPara.runSecond = 60000;
                 easylinkPara.sleeptime = 20;
 
+                //使用定时器,每隔200毫秒让handler发送一个空信息
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        myHandler.sendEmptyMessage(0x123);
+                    }
+                }, 0,800);
+
+
                 elp2p.startEasyLink(easylinkPara, new EasyLinkCallBack() {
                     @Override
                     public void onSuccess(int code, String message) {
-                        ToastUtils.showShort("配网成功");
+                        ToastUtils.showShort("机器配网成功!");
                         startActivity(MyEquipmentAcitivity.class);
                         finish();
                     }
@@ -177,4 +217,44 @@ public class InputPasswordActivity extends BaseActivity {
 
     }
 
+    @SuppressLint("CheckResult")
+    private void findDevice() {
+        HttpApi mloginApi;
+        mloginApi = RetrofitClient.create(HttpApi.class);
+        String motime = String.valueOf(System.currentTimeMillis());
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("motime",motime);
+
+
+        String androidID = Settings.System.getString(this.getContentResolver(), Settings.System.ANDROID_ID);
+        String sign = signMD5("interlnx&aY4N!bAAds",hashMap);
+
+        FormBody body = new FormBody.Builder()
+                .add("appid", "1288")
+                .add("motime",  motime)
+                .add("sign", "1234567890")
+                .add("type", String.valueOf(5678))
+                .build();
+
+        Observable<FindDeviceResult> observable = mloginApi.findDevice(body);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<FindDeviceResult>() {
+                    @Override
+                    public void accept(FindDeviceResult baseInfo) throws Exception {
+                        if ("10000".equals(baseInfo.getCode())){
+                            ToastUtils.showShort(baseInfo.getMsg());
+
+                            startActivity(MyEquipmentAcitivity.class);
+                            finish();
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        ToastUtils.showShort("登录失败，请稍后重试");
+                    }
+                });
+    }
 }

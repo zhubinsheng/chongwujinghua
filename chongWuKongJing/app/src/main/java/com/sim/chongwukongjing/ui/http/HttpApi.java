@@ -1,18 +1,23 @@
 package com.sim.chongwukongjing.ui.http;
 
 
+import com.sim.chongwukongjing.ui.bean.FindDeviceResult;
 import com.sim.chongwukongjing.ui.bean.LoginResult;
 import com.sim.chongwukongjing.ui.bean.MyList;
 import com.sim.chongwukongjing.ui.bean.ProductlistResult;
 import com.sim.chongwukongjing.ui.bean.RegResult;
 import com.sim.chongwukongjing.ui.bean.SendcodeResult;
+import com.sim.chongwukongjing.ui.bean.location;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * @author Administrator
@@ -42,4 +47,12 @@ public interface HttpApi {
     @POST("api/dvc/mylist")
     Observable<MyList> mylist(@Body RequestBody body);
 
+    @POST("api/dvc/findDevice")
+    Observable<FindDeviceResult> findDevice(@Body RequestBody body);
+
+    @POST("api/dvc/weather")
+    Observable<FindDeviceResult> weather(@Body RequestBody body);
+
+    @GET("/reverse_geocoding/v3")
+    Call<location> findLocation(@Query("location") float location, @Query("ak") String ak);
 }

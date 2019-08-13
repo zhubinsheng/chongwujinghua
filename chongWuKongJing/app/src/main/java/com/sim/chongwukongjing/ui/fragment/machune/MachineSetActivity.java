@@ -10,16 +10,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.baoyachi.stepview.HorizontalStepView;
-import com.baoyachi.stepview.bean.StepBean;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
+import com.sim.chongwukongjing.ui.bean.location;
+import com.sim.chongwukongjing.ui.http.HttpApi;
 import com.sim.chongwukongjing.ui.wigdet.FragAdapter;
 import com.sim.chongwukongjing.ui.wigdet.NoScrollViewPager;
 
@@ -27,6 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 /**
@@ -64,12 +68,13 @@ public class MachineSetActivity extends BaseActivity {
     @Override
     protected void initView() {
         //QMUIStatusBarHelper.translucent(this,getResources().getColor(R.color.transparent));
+        ActivityUtils.finishAllActivitiesExceptNewest();
     }
 
 
     @Override
     protected void initData() {
-
+        //findLocation();
         /*Map<String,String> param =new HashMap<String,String>();
         param.put("mac", "123456");
         param.put("phone", "123");
@@ -230,5 +235,31 @@ public class MachineSetActivity extends BaseActivity {
         super.onDestroy();
     }
 
+
+    public void findLocation() {
+        String baseUrl = "http://api.map.baidu.com";
+        String ak = "2RWAxllFj7sSXPGXt6xoy0PBwfcMqZdY";
+        float loc = (float) 118.29357;
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .build();
+        HttpApi apiService = retrofit.create(HttpApi.class);
+
+
+        Call<location> call = apiService.findLocation(loc,ak);
+
+        call.enqueue(new Callback<com.sim.chongwukongjing.ui.bean.location>() {
+            @Override
+            public void onResponse(Call<location> call, Response<location> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<location> call, Throwable t) {
+
+            }
+
+        });
+    }
 
 }

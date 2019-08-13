@@ -12,7 +12,7 @@ import me.goldze.mvvmhabit.utils.StringUtils;
 /**
  * @author binshengzhu
  */
-public class Md5 {
+public class Md5Util {
     public static String signMD5(String appKey, Map<String, String> map) {
         List<String> keys = new ArrayList<String>(map.keySet());
         Collections.sort(keys, String.CASE_INSENSITIVE_ORDER);

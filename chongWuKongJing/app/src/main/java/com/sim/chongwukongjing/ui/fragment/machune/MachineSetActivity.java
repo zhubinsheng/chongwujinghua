@@ -1,10 +1,13 @@
 package com.sim.chongwukongjing.ui.fragment.machune;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,8 +23,10 @@ import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
 import com.sim.chongwukongjing.ui.bean.location;
 import com.sim.chongwukongjing.ui.http.HttpApi;
+import com.sim.chongwukongjing.ui.utils.LocationUtils;
 import com.sim.chongwukongjing.ui.wigdet.FragAdapter;
 import com.sim.chongwukongjing.ui.wigdet.NoScrollViewPager;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +72,7 @@ public class MachineSetActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        requestPermissions();
         //QMUIStatusBarHelper.translucent(this,getResources().getColor(R.color.transparent));
         ActivityUtils.finishAllActivitiesExceptNewest();
     }
@@ -75,6 +81,12 @@ public class MachineSetActivity extends BaseActivity {
     @Override
     protected void initData() {
         //findLocation();
+        Location location = LocationUtils.getInstance( this ).showLocation();
+
+        if (location != null) {
+            String address = "纬度：" + location.getLatitude() + "经度：" + location.getLongitude();
+            Log.d("zbs",address);
+        }
         /*Map<String,String> param =new HashMap<String,String>();
         param.put("mac", "123456");
         param.put("phone", "123");
@@ -84,7 +96,35 @@ public class MachineSetActivity extends BaseActivity {
         System.out.println(sign);*/
     }
 
+    @SuppressLint("CheckResult")
+    private void requestPermissions() {
+        RxPermissions rxPermission = new RxPermissions(this);
+        rxPermission
+                .requestEach(Manifest.permission.INTERNET,
+                        Manifest.permission.ACCESS_WIFI_STATE,
+                        //Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.ACCESS_NETWORK_STATE,
+                        //Manifest.permission.READ_EXTERNAL_STORAGE,
+                        //Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.CHANGE_WIFI_MULTICAST_STATE,
+                        Manifest.permission.CHANGE_WIFI_STATE,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION)
+                .subscribe(permission -> {
+                    if (permission.granted) {
+                        // 用户已经同意该权限
+                        //Log.d(TAG, permission.name + " is granted.");
+                    } else if (permission.shouldShowRequestPermissionRationale) {
+                        // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时。还会提示请求权限的对话框
+                        //Log.d(TAG, permission.name + " is denied. More info should be provided.");
+                    } else {
+                        // 用户拒绝了该权限，而且选中『不再询问』
+                        //Log.d(TAG, permission.name + " is denied.");
+                    }
+                });
 
+
+    }
 
     @Override
     protected void initSet() {

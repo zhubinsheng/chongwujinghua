@@ -41,7 +41,11 @@
             android:value="1080"/>
 
         <activity android:name=".ui.Activity.InterfaceActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.Activity.WelcomeActivity"
@@ -53,11 +57,7 @@
         <activity android:name=".ui.Activity.InputPasswordActivity"></activity>
         <activity android:name=".ui.Activity.MyEquipmentAcitivity"></activity>
         <activity android:name=".ui.fragment.machune.MachineSetActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <service android:name="org.eclipse.paho.android.service.MqttService" />

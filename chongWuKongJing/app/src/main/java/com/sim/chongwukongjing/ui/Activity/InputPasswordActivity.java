@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
+import com.sim.chongwukongjing.ui.Main.MyApplication;
 import com.sim.chongwukongjing.ui.bean.FindDeviceResult;
 import com.sim.chongwukongjing.ui.http.HttpApi;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
@@ -49,6 +50,7 @@ public class InputPasswordActivity extends BaseActivity {
 
     private static final String TAG = "InputPasswordActivity";
 
+    private boolean succuse = false;
     @BindView(R.id.ssid_name)
     TextView ssidName;
 
@@ -71,8 +73,9 @@ public class InputPasswordActivity extends BaseActivity {
             super.handleMessage(msg);
             if(msg.what == 0x123)
             {
-                //你要做的事
-
+                if (!succuse){
+                    findDevice();
+                }
             }
 
         }
@@ -111,9 +114,11 @@ public class InputPasswordActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.textView8})
+    @OnClick({R.id.textView8,R.id.ssid_name})
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ssid_name:
+                startActivity(MyEquipmentAcitivity.class);
             case R.id.textView8:
                 //startActivity(MyEquipmentAcitivity.class);
                 //finish();
@@ -136,9 +141,11 @@ public class InputPasswordActivity extends BaseActivity {
                 elp2p.startEasyLink(easylinkPara, new EasyLinkCallBack() {
                     @Override
                     public void onSuccess(int code, String message) {
-                        ToastUtils.showShort("机器配网成功!");
-                        startActivity(MyEquipmentAcitivity.class);
-                        finish();
+                        //ToastUtils.showShort("机器配网成功!");
+                        Log.d("zbs","机器配网成功!");
+                        findDevice();
+                        //startActivity(MyEquipmentAcitivity.class);
+                        //finish();
                     }
                     @Override
                     public void onFailure(int code, String message) {
@@ -234,7 +241,8 @@ public class InputPasswordActivity extends BaseActivity {
                 .add("appid", "1288")
                 .add("motime",  motime)
                 .add("sign", "1234567890")
-                .add("type", String.valueOf(5678))
+                .add("type", "5678")
+                .add("token", MyApplication.getInstance().getLoginResult().getData().getToken())
                 .build();
 
         Observable<FindDeviceResult> observable = mloginApi.findDevice(body);
@@ -245,7 +253,14 @@ public class InputPasswordActivity extends BaseActivity {
                     public void accept(FindDeviceResult baseInfo) throws Exception {
                         if ("10000".equals(baseInfo.getCode())){
                             ToastUtils.showShort(baseInfo.getMsg());
-
+                            if (baseInfo.getMsg().equals("配网成功！")){
+                                Log.d("zbs","成功!");
+                                succuse = true;
+                            }
+                            if (baseInfo.getCode().equals("10000")){
+                                Log.d("zbs","成功2!");
+                                succuse = true;
+                            }
                             startActivity(MyEquipmentAcitivity.class);
                             finish();
                         }

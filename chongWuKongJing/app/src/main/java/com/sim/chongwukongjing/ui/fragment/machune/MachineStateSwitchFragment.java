@@ -19,7 +19,7 @@ import me.goldze.mvvmhabit.utils.ToastUtils;
 import pl.droidsonroids.gif.GifImageView;
 
 /**
- * @author Administrator
+ * @author Administrator  风力调整
  */
 public class MachineStateSwitchFragment extends BaseFragment {
 

@@ -9,5 +9,8 @@ ABCDEFGHIJKLMNOPQRSTUVWXYZ`¬!"£$%^*()~=#{}[];':,./?/*-_+&#060;&#062;&#064;&#03
     <string name="fengli">风力</string>
     <string name="kaiguan">开/关</string>
     <string name="dingshi">定时</string>
+    <string name="yeliang">液量</string>
+    <string name="fengweidneg">氛围灯</string>
+    <string name="_10">添加 设定</string>
 
 </resources>

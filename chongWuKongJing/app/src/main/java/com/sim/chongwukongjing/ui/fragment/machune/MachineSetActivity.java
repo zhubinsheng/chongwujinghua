@@ -193,46 +193,26 @@ public class MachineSetActivity extends BaseActivity {
         fragmentList.add(new DynamicFragment());
         fragmentList.add(new MsgFragment());
         */
+        fragmentList.add(new MachineYeLiangFragment());
         fragmentList.add(new MachineStateSwitchFragment());
         fragmentList.add(new MachineInfoFragment());
         fragmentList.add(new MachineStateTimingFragment());
-        fragmentList.add(new MachineInfoFragment());
-        fragmentList.add(new MachineStateTimingFragment());
+        fragmentList.add(new MachineStateWindPowerFragment());
         //添加tab
+        mainTabSegment.addTab(
+                new QMUITabSegment.Tab(
+                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
+                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
+                        getString(R.string.yeliang),
+                        false,
+                        true));
+
         mainTabSegment.addTab(
                 new QMUITabSegment.Tab(
                         getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
                         getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
                         getString(R.string.fengli),
                         false,
-                        true));
-
-        /*if (StringUtils.toInt(ConfigModel.getInitData().getOpen_video_chat()) == 1) {
-            mainTabSegment.addTab(
-                    new QMUITabSegment.Tab(
-                            getResources().getDrawable(R.drawable.main_screen_drawable_ranking_unselected),
-                            getResources().getDrawable(R.drawable.main_screen_drawable_ranking_selected),
-                            null,
-                            false,
-                            true));
-        }*/
-
-
-
-        mainTabSegment.addTab(
-                new QMUITabSegment.Tab(
-                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
-                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
-                        getString(R.string.kaiguan),
-                        false,
-                        false));
-
-        mainTabSegment.addTab(
-                new QMUITabSegment.Tab(
-                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
-                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
-                        getString(R.string.dingshi),
-                        false,
                         false));
 
         mainTabSegment.addTab(
@@ -248,6 +228,14 @@ public class MachineSetActivity extends BaseActivity {
                         getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
                         getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
                         getString(R.string.dingshi),
+                        false,
+                        false));
+
+        mainTabSegment.addTab(
+                new QMUITabSegment.Tab(
+                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
+                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
+                        getString(R.string.fengweidneg),
                         false,
                         false));
     }

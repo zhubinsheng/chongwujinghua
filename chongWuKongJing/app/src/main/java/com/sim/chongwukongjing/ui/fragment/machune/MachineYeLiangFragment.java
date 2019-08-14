@@ -4,16 +4,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sim.chongwukongjing.ui.Base.BaseFragment;
 import com.sim.chongwukongjing.R;
+import com.sim.chongwukongjing.ui.Base.BaseFragment;
 
 /**
  * @author binshengzhu
  */
-public class MachineStateWindPowerFragment extends BaseFragment {
+public class MachineYeLiangFragment extends BaseFragment {
+
     @Override
     protected View getBaseView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.machine_state, container, false);
+        return inflater.inflate(R.layout.yeti_fragment, container, false);
     }
 
     @Override

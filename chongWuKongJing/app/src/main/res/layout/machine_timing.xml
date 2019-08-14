@@ -11,6 +11,6 @@
 
     <com.sim.chongwukongjing.ui.wigdet.DynamicWave
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="729dp" />
 
 </LinearLayout>

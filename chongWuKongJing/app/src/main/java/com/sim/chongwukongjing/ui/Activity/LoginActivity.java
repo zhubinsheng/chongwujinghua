@@ -122,8 +122,10 @@ public class LoginActivity extends BaseActivity {
                                 SharedPreferencesUtil.deleteUser(getApplicationContext());
                             }
                             MyApplication.getInstance().setLoginResult(baseInfo);
-                            startActivity(AddMachineActivity.class);
+                            startActivity(MyEquipmentAcitivity.class);
                             finish();
+                        }else {
+                            ToastUtils.showShort(baseInfo.getMsg());
                         }
                     }
                 }, new Consumer<Throwable>() {

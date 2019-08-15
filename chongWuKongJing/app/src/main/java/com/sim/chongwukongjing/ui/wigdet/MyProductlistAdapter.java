@@ -8,7 +8,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
-import com.chad.library.adapter.base.BaseItemDraggableAdapter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.bean.MyList;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author binshengzhu
  */
-public class MyProductlistAdapter extends BaseItemDraggableAdapter<MyList.DataBean, BaseViewHolder> {
+public class MyProductlistAdapter extends BaseQuickAdapter<MyList.DataBean, BaseViewHolder> {
 
     private Activity mcontext;
 
@@ -33,6 +33,13 @@ public class MyProductlistAdapter extends BaseItemDraggableAdapter<MyList.DataBe
         //可链式调用赋值
         helper.setText(R.id.textView12, item.getDvcnm())
                 .setText(R.id.textView13 ,item.getIsnative())
+                .addOnClickListener(R.id.shanchu)    //给添加点击事件
+                .addOnClickListener(R.id.content)
+
+
+
+
+
                 .setText(R.id.textView13 ,String.valueOf(item.getTid())+"%");
 
         if (!TextUtils.isEmpty(item.getPic())) {

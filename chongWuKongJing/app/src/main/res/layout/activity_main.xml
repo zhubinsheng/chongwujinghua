@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     android:layout_height="match_parent">
+
+
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/qmui_topbar_height" />
 
     <com.sim.chongwukongjing.ui.wigdet.NoScrollViewPager
         android:id="@+id/main_view_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/main_view">
+        android:layout_weight="1">
+
 
     </com.sim.chongwukongjing.ui.wigdet.NoScrollViewPager>
 
@@ -36,4 +44,4 @@
         </com.qmuiteam.qmui.widget.QMUITabSegment>
     </RelativeLayout>
 
-</RelativeLayout>
+</LinearLayout>

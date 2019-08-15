@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -15,27 +16,41 @@ import android.widget.TextView;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
+import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
-import com.sim.chongwukongjing.ui.bean.location;
+import com.sim.chongwukongjing.ui.Main.MyApplication;
+import com.sim.chongwukongjing.ui.bean.DvcInfoResult;
+import com.sim.chongwukongjing.ui.bean.WeatherResult;
+import com.sim.chongwukongjing.ui.bean.tianqiResult;
 import com.sim.chongwukongjing.ui.http.HttpApi;
+import com.sim.chongwukongjing.ui.http.RetrofitClient;
 import com.sim.chongwukongjing.ui.utils.LocationUtils;
 import com.sim.chongwukongjing.ui.wigdet.FragAdapter;
 import com.sim.chongwukongjing.ui.wigdet.NoScrollViewPager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import me.goldze.mvvmhabit.utils.StringUtils;
+import me.goldze.mvvmhabit.utils.ToastUtils;
+import okhttp3.FormBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
+import static com.sim.chongwukongjing.ui.utils.Md5Util.signMD5;
 
 
 /**
@@ -54,7 +69,8 @@ public class MachineSetActivity extends BaseActivity {
     @BindView(R.id.main_tab_segment)
     QMUITabSegment mainTabSegment;
 
-
+    @BindView(R.id.topbar)
+    QMUITopBar topbar;
     //数据
     private List<Fragment> fragmentList;
 
@@ -65,6 +81,8 @@ public class MachineSetActivity extends BaseActivity {
 
     private Context mcontext;
 
+    private String address;
+
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_main;
@@ -74,19 +92,23 @@ public class MachineSetActivity extends BaseActivity {
     protected void initView() {
         requestPermissions();
         //QMUIStatusBarHelper.translucent(this,getResources().getColor(R.color.transparent));
-        ActivityUtils.finishAllActivitiesExceptNewest();
+        //关闭其他所有ａｃｔｉｖｉｔｙ
+        //ActivityUtils.finishAllActivitiesExceptNewest();
+        topbar.setTitle("My Air Machiene");
     }
 
 
     @Override
     protected void initData() {
-        //findLocation();
+
         Location location = LocationUtils.getInstance( this ).showLocation();
 
         if (location != null) {
-            String address = "纬度：" + location.getLatitude() + "经度：" + location.getLongitude();
+            address = "纬度：" + location.getLatitude() + "经度：" + location.getLongitude();
             Log.d("zbs",address);
         }
+        //getWeather();
+        //findLocation(address);
         /*Map<String,String> param =new HashMap<String,String>();
         param.put("mac", "123456");
         param.put("phone", "123");
@@ -94,6 +116,14 @@ public class MachineSetActivity extends BaseActivity {
         String  sign =
         Md5.signMD5(API.appkey,param);
         System.out.println(sign);*/
+
+
+        String infoString = getIntent().getStringExtra("did");
+
+        if (!StringUtils.isEmpty(infoString)){
+            dvcinfo(infoString);
+        }
+
     }
 
     @SuppressLint("CheckResult")
@@ -205,7 +235,7 @@ public class MachineSetActivity extends BaseActivity {
                         getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
                         getString(R.string.yeliang),
                         false,
-                        true));
+                        false));
 
         mainTabSegment.addTab(
                 new QMUITabSegment.Tab(
@@ -264,7 +294,7 @@ public class MachineSetActivity extends BaseActivity {
     }
 
 
-    public void findLocation() {
+    public void findLocation(String address) {
         String baseUrl = "http://api.map.baidu.com";
         String ak = "2RWAxllFj7sSXPGXt6xoy0PBwfcMqZdY";
         float loc = (float) 118.29357;
@@ -274,20 +304,102 @@ public class MachineSetActivity extends BaseActivity {
         HttpApi apiService = retrofit.create(HttpApi.class);
 
 
-        Call<location> call = apiService.findLocation(loc,ak);
+        Call<tianqiResult> call = apiService.findLocation(address,ak);
 
-        call.enqueue(new Callback<com.sim.chongwukongjing.ui.bean.location>() {
+        call.enqueue(new Callback<com.sim.chongwukongjing.ui.bean.tianqiResult>() {
             @Override
-            public void onResponse(Call<location> call, Response<location> response) {
+            public void onResponse(Call<tianqiResult> call, Response<tianqiResult> response) {
 
             }
 
             @Override
-            public void onFailure(Call<location> call, Throwable t) {
+            public void onFailure(Call<tianqiResult> call, Throwable t) {
 
             }
 
         });
+    }
+
+    @SuppressLint("CheckResult")
+    private void getWeather() {
+        HttpApi mloginApi;
+        mloginApi = RetrofitClient.create(HttpApi.class);
+        String motime = String.valueOf(System.currentTimeMillis());
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("motime",motime);
+        hashMap.put("smstype","REG");
+
+        String sign = signMD5("interlnx&aY4N!bAAds",hashMap);
+
+        FormBody body ;
+        body = new FormBody.Builder()
+                    .add("appid", "1288")
+                    .add("motime",  motime)
+                    .add("sign", "1234567890")
+                    .add("city","南京市建邺区")
+                    .add("token", MyApplication.getInstance().getLoginResult().getData().getToken())
+                    .build();
+
+
+        Observable<WeatherResult> observable = mloginApi.getWeather(body);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<WeatherResult>() {
+                    @Override
+                    public void accept(WeatherResult baseInfo) throws Exception {
+                        if ("10000".equals(baseInfo.getCode())){
+                            ToastUtils.showShort(baseInfo.getMsg());
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        ToastUtils.showShort("网络延迟过高，请稍后重试");
+                    }
+                });
+
+    }
+
+
+    @SuppressLint("CheckResult")
+    private void dvcinfo(String did) {
+        HttpApi mloginApi;
+        mloginApi = RetrofitClient.create(HttpApi.class);
+        String motime = String.valueOf(System.currentTimeMillis());
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("motime",motime);
+
+
+        String androidID = Settings.System.getString(this.getContentResolver(), Settings.System.ANDROID_ID);
+        String sign = signMD5("interlnx&aY4N!bAAds",hashMap);
+
+        FormBody body = new FormBody.Builder()
+                .add("appid", "1288")
+                .add("motime",  motime)
+                .add("sign", "1234567890")
+                .add("did", did)
+                .add("token", MyApplication.getInstance().getLoginResult().getData().getToken())
+                .build();
+
+        Observable<DvcInfoResult> observable = mloginApi.dvcinfo(body);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<DvcInfoResult>() {
+                    @Override
+                    public void accept(DvcInfoResult baseInfo) throws Exception {
+                        if ("10000".equals(baseInfo.getCode())){
+                            ToastUtils.showShort(baseInfo.getMsg());
+
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        ToastUtils.showShort("获取机器信息失败，请稍后重试");
+                    }
+                });
     }
 
 }

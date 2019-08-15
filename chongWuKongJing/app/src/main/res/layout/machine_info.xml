@@ -4,10 +4,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.qmuiteam.qmui.widget.QMUITopBar
-        android:id="@+id/topbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/qmui_topbar_height" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,14 +22,24 @@
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 app:srcCompat="@drawable/main_screen_drawable_mine_selected" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/diqu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="上海   徐汇区" />
         </LinearLayout>
+
+        <View
+            android:layout_width="3px"
+            android:background="@color/black"
+            android:layout_height="wrap_content" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -40,16 +47,37 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/wendu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:textSize="30dp"
+
                 android:text="31" />
 
             <TextView
+                android:id="@+id/tianqi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="多云转晴 " />
+
+            <TextView
+                android:id="@+id/zuidigao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="20 / 35" />
         </LinearLayout>
+
+        <View
+            android:layout_width="3px"
+            android:background="@color/black"
+            android:layout_height="wrap_content" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -57,18 +85,24 @@
             android:orientation="vertical">
 
             <TextView
-
+                android:id="@+id/shidu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="温度   66%" />
 
             <TextView
-
+                android:id="@+id/fengdu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="东风   二级" />
         </LinearLayout>
     </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -81,13 +115,18 @@
         android:layout_width="match_parent"
         android:layout_height="65dp" />-->
 
-        <com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
+        <!--<com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
             android:id="@+id/groupListView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qmui_list_item_height"
             app:qmui_accessory_type="chevron"
             app:qmui_orientation="vertical"
             app:qmui_commonList_titleColor="@color/qmui_s_link_color"
-            app:qmui_commonList_detailColor="@color/qmui_config_color_red"/>
+            app:qmui_commonList_detailColor="@color/qmui_config_color_red"/>-->
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/machine_main_picture" />
     </LinearLayout>
 </LinearLayout>

@@ -116,7 +116,7 @@ public class InterfaceActivity extends BaseActivity {
                         if ("10000".equals(baseInfo.getCode())){
                             ToastUtils.showShort(baseInfo.getMsg());
                             MyApplication.getInstance().setLoginResult(baseInfo);
-                            startActivity(AddMachineActivity.class);
+                            startActivity(MyEquipmentAcitivity.class);
                             finish();
                         }else {
                             ToastUtils.showShort(baseInfo.getMsg());

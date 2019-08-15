@@ -1,7 +1,7 @@
 package com.sim.chongwukongjing.ui.Activity;
 
 import android.annotation.SuppressLint;
-import android.graphics.Canvas;
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,16 +9,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
 import com.sim.chongwukongjing.ui.Main.MyApplication;
 import com.sim.chongwukongjing.ui.bean.MyList;
+import com.sim.chongwukongjing.ui.bean.UnbindResult;
 import com.sim.chongwukongjing.ui.fragment.machune.MachineSetActivity;
 import com.sim.chongwukongjing.ui.http.HttpApi;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
 import com.sim.chongwukongjing.ui.wigdet.MyProductlistAdapter;
+import com.sim.chongwukongjing.ui.wigdet.SpacesItemDecoration;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +47,7 @@ public class MyEquipmentAcitivity extends BaseActivity {
     private List<MyList.DataBean> data;
 
     @BindView(R.id.ProductRecy)
-    RecyclerView ProductRecy;
+    RecyclerView productRecy;
 
     @BindView(R.id.topbar)
     QMUITopBar qmuiTopBar;
@@ -63,7 +66,7 @@ public class MyEquipmentAcitivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        qmuiTopBar.setTitle("添加设备");
+        qmuiTopBar.setTitle("设备列表");
 
 
     }
@@ -74,7 +77,9 @@ public class MyEquipmentAcitivity extends BaseActivity {
         //创建布局管理
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        ProductRecy.setLayoutManager(layoutManager);
+        int space = 8;
+        productRecy.addItemDecoration(new SpacesItemDecoration(space));
+        productRecy.setLayoutManager(layoutManager);
 
         if (MyApplication.getInstance().getLoginResult() == null){
             ToastUtils.showShort("请先登录");
@@ -83,19 +88,8 @@ public class MyEquipmentAcitivity extends BaseActivity {
         }
 
 
-        OnItemSwipeListener onItemSwipeListener = new OnItemSwipeListener() {
-            @Override
-            public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {}
-            @Override
-            public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {}
-            @Override
-            public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {}
 
-            @Override
-            public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float v, float v1, boolean b) {
 
-            }
-        };
 
 
 
@@ -153,24 +147,110 @@ public class MyEquipmentAcitivity extends BaseActivity {
                             ToastUtils.showShort(baseInfo.getMsg());
                             //创建适配器
                             data = baseInfo.getData();
-                            productlistAdapter = new MyProductlistAdapter(R.layout.ny_productlist_itemview, data,MyEquipmentAcitivity.this);
-                            //条目点击事件
-                            productlistAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                            productlistAdapter = new MyProductlistAdapter(R.layout.drag_item_shanchu, data,MyEquipmentAcitivity.this);
+
+                            /*ItemDragAndSwipeCallback itemDragAndSwipeCallback = new ItemDragAndSwipeCallback(productlistAdapter);
+                            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
+                            itemTouchHelper.attachToRecyclerView(productRecy);
+
+                            // 开启滑动删除功能
+                            productlistAdapter.enableSwipeItem();
+                            //若不做特殊处理,可以不设置滑动或拖拽监听,其自动能实现拖拽或删除功能了
+                            productlistAdapter.setOnItemSwipeListener(onItemSwipeListener);*/
+
+
+                            //条目点击事件 开启侧滑以后被屏蔽了　草
+                           /* productlistAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                                     MyList.DataBean dataBean = data.get(position);
-                                    startActivity(InputPasswordActivity.class);
-                                    finish();
+                                    startActivity(MachineSetActivity.class);
+
+                                }
+                            });*/
+
+
+                            productlistAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+                                @Override
+                                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+                                    switch (view.getId()) {
+                                        case R.id.content:
+                                            MyList.DataBean dataBean = data.get(position);
+
+                                            Intent startIntent = new Intent(getApplicationContext(),
+                                                    MachineSetActivity.class);
+                                            startIntent.putExtra("did",dataBean.getDid());
+
+                                            startActivity(startIntent);
+                                            break;
+
+                                        case R.id.shanchu:
+                                        new QMUIDialog.MessageDialogBuilder(MyEquipmentAcitivity.this).setTitle("解绑此台机器").setMessage("确定要删除吗？")
+                                                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                                                    @Override
+                                                    public void onClick(QMUIDialog dialog, int index) {
+                                                        dialog.dismiss();
+                                                    }
+                                                })
+                                                .addAction(0, "删除", QMUIDialogAction.ACTION_PROP_NEGATIVE, new QMUIDialogAction.ActionListener() {
+
+                                                    @Override
+                                                    public void onClick(QMUIDialog dialog, int index) {
+                                                        MyList.DataBean dataBean = data.get(position);
+                                                        unbind(dataBean.getDid());
+                                                    }
+                                                })
+                                                .show();
+
+                                        default:break;
+                                    }
                                 }
                             });
                             //给RecyclerView设置适配器
-                            ProductRecy.setAdapter(productlistAdapter);
+                            productRecy.setAdapter(productlistAdapter);
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         ToastUtils.showShort("机器列表获取失败，请稍后重试");
+                    }
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    private void unbind( String did ) {
+        HttpApi mloginApi;
+        mloginApi = RetrofitClient.create(HttpApi.class);
+        String motime = String.valueOf(System.currentTimeMillis());
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("motime",motime);
+        //hashMap.put("phone",phone.getText().toString());
+
+        String sign = signMD5("interlnx&aY4N!bAAds",hashMap);
+
+        FormBody body = new FormBody.Builder()
+                .add("appid", "1288")
+                .add("motime",  motime)
+                .add("sign", "1234567890")
+                .add("token", MyApplication.getInstance().getLoginResult().getData().getToken())
+                .add("did",did)
+                .build();
+
+        Observable<UnbindResult> observable = mloginApi.unbind(body);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<UnbindResult>() {
+                    @Override
+                    public void accept(UnbindResult baseInfo) throws Exception {
+                            ToastUtils.showShort(baseInfo.getMsg());
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        ToastUtils.showShort("网络延迟过高，请稍后重试");
                     }
                 });
     }

@@ -83,6 +83,7 @@ public class MachineSetActivity extends BaseActivity {
 
     private String address;
 
+
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_main;
@@ -121,7 +122,11 @@ public class MachineSetActivity extends BaseActivity {
         String infoString = getIntent().getStringExtra("did");
 
         if (!StringUtils.isEmpty(infoString)){
+            MyApplication.getInstance().setDid(infoString);
             dvcinfo(infoString);
+        }else {
+            ToastUtils.showLong("机器编号不准为空");
+            finish();
         }
 
     }

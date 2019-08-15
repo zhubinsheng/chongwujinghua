@@ -1,6 +1,7 @@
 package com.sim.chongwukongjing.ui.http;
 
 
+import com.sim.chongwukongjing.ui.bean.ControlResult;
 import com.sim.chongwukongjing.ui.bean.DvcInfoResult;
 import com.sim.chongwukongjing.ui.bean.FindDeviceResult;
 import com.sim.chongwukongjing.ui.bean.LoginResult;
@@ -34,7 +35,6 @@ public interface HttpApi {
     @POST("api/sso/login")
     Observable<LoginResult> phoneregister2(@Body RequestBody body);
 
-
     @POST("api/sso/sendcode")
     Observable<SendcodeResult> sendcode(@Body RequestBody body);
 
@@ -58,8 +58,14 @@ public interface HttpApi {
 
     @POST("api/dvc/dvcinfo")
     Observable<DvcInfoResult> dvcinfo(@Body RequestBody body);
+
     @POST("api/common/weather")
     Observable<WeatherResult> getWeather(@Body RequestBody body);
+
+    @POST("api/cmd/control")
+    Observable<ControlResult> control(@Body RequestBody body);
+
+
 
     @GET("/reverse_geocoding/v3")
     Call<tianqiResult> findLocation(@Query("location") String location, @Query("ak") String ak);

@@ -10,6 +10,7 @@ import me.goldze.mvvmhabit.base.BaseApplication;
  */
 public class MyApplication extends BaseApplication {
 
+    private String did;
     private LoginResult loginResult;
     private static MyApplication instance;
 
@@ -35,5 +36,13 @@ public class MyApplication extends BaseApplication {
 
     public void setLoginResult(LoginResult loginResult) {
         this.loginResult = loginResult;
+    }
+
+    public String getDid() {
+        return did;
+    }
+
+    public void setDid(String did) {
+        this.did = did;
     }
 }

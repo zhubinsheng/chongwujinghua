@@ -168,6 +168,7 @@ public class MachineInfoFragment extends BaseFragment {
                 .add("motime",  motime)
                 .add("sign", "1234567890")
                 .add("did", did)
+                .add("cmd",jsonObject)
                 .add("token", MyApplication.getInstance().getLoginResult().getData().getToken())
                 .build();
 

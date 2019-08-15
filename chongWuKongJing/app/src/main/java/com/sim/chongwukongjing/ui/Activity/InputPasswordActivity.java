@@ -129,13 +129,7 @@ public class InputPasswordActivity extends BaseActivity {
                 easylinkPara.runSecond = 60000;
                 easylinkPara.sleeptime = 20;
 
-                //使用定时器,每隔200毫秒让handler发送一个空信息
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        myHandler.sendEmptyMessage(0x123);
-                    }
-                }, 0,800);
+
 
 
                 elp2p.startEasyLink(easylinkPara, new EasyLinkCallBack() {
@@ -143,7 +137,14 @@ public class InputPasswordActivity extends BaseActivity {
                     public void onSuccess(int code, String message) {
                         //ToastUtils.showShort("机器配网成功!");
                         Log.d("zbs","机器配网成功!");
-                        findDevice();
+                        //findDevice();
+                        //使用定时器,每隔200毫秒让handler发送一个空信息
+                        new Timer().schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                myHandler.sendEmptyMessage(0x123);
+                            }
+                        }, 0,1000);
                         //startActivity(MyEquipmentAcitivity.class);
                         //finish();
                     }
@@ -268,7 +269,7 @@ public class InputPasswordActivity extends BaseActivity {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        ToastUtils.showShort("登录失败，请稍后重试");
+                        ToastUtils.showShort("配对失败，请稍后重试");
                     }
                 });
     }

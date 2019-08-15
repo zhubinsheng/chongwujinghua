@@ -105,8 +105,8 @@ public class MachineSetActivity extends BaseActivity {
         Location location = LocationUtils.getInstance( this ).showLocation();
 
         if (location != null) {
-            address = "纬度：" + location.getLatitude() + "经度：" + location.getLongitude();
-            Log.d("zbs",address);
+            //address = "纬度：" + location.getLatitude() + "经度：" + location.getLongitude();
+            //Log.d("zbs",address);
         }
         //getWeather();
         //findLocation(address);

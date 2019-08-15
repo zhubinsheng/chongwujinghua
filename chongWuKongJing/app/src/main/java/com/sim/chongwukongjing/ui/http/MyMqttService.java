@@ -64,7 +64,7 @@ public class MyMqttService extends Service {
     public static String RESPONSE_TOPIC = "message_arrived";//响应主题
     @SuppressLint("MissingPermission")
     @RequiresApi(api = 26)
-    public        String CLIENTID       = "INX2bd34731488b4ae234";
+    public        String CLIENTID       = "INX2bd34731488b4ae2";
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -157,27 +157,11 @@ public class MyMqttService extends Service {
         }
 
 
-
-
-
-        //订阅消息 提供了一次订阅多个主题的方法
-        //smt/$clientid/upd_status
-        int[] Qos = {1, 0};
-        String[] topic1 = {TOPIC + "/abc", TOPIC + "/" + userName};
-        mqttAndroidClient.subscribe(topic1, Qos);
-
-
-
-
-
-
-
-
-
-
         if (doConnect) {
             doClientConnection();
         }
+
+
     }
 
     /**
@@ -223,7 +207,14 @@ public class MyMqttService extends Service {
         public void onSuccess(IMqttToken arg0) {
             Log.i(TAG, "连接成功 ");
             try {
-                mqttAndroidClient.subscribe(PUBLISH_TOPIC, 2);//订阅主题，参数：主题、服务质量
+                //订阅消息 提供了一次订阅多个主题的方法
+                //smt/$clientid/upd_status
+                //int[] Qos = {1, 0};
+                int Qos = 1;
+                //String[] topic1 = {TOPIC + "/abc", TOPIC + "/" + userName};
+                String topic1 = "smt/fa8c3d972bcddea4/upd_status";
+                mqttAndroidClient.subscribe(topic1, Qos);
+                //mqttAndroidClient.subscribe(PUBLISH_TOPIC, 2);//订阅主题，参数：主题、服务质量
             } catch (MqttException e) {
                 e.printStackTrace();
             }

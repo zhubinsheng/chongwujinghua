@@ -40,6 +40,7 @@ import static com.sim.chongwukongjing.ui.MqttService.skipSSLSocktet;
 
 public class MyMqttService extends Service {
 
+    private static final String TOPIC = "";
     Map map = new HashMap<>();
     String userName = "INX2bd34731488b4ae2";
     String salt = "4986bb9b3e011c00";
@@ -154,6 +155,26 @@ public class MyMqttService extends Service {
                 iMqttActionListener.onFailure(null, e);
             }
         }
+
+
+
+
+
+        //订阅消息 提供了一次订阅多个主题的方法
+        //smt/$clientid/upd_status
+        int[] Qos = {1, 0};
+        String[] topic1 = {TOPIC + "/abc", TOPIC + "/" + userName};
+        mqttAndroidClient.subscribe(topic1, Qos);
+
+
+
+
+
+
+
+
+
+
         if (doConnect) {
             doClientConnection();
         }

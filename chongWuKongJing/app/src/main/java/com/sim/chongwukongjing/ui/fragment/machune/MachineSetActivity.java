@@ -8,7 +8,6 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -232,7 +231,7 @@ public class MachineSetActivity extends BaseActivity {
         fragmentList.add(new MachineStateSwitchFragment());
         fragmentList.add(new MachineInfoFragment());
         fragmentList.add(new MachineStateTimingFragment());
-        fragmentList.add(new MachineStateWindPowerFragment());
+        fragmentList.add(new MachineStateFengweidengPowerFragment());
         //添加tab
         mainTabSegment.addTab(
                 new QMUITabSegment.Tab(

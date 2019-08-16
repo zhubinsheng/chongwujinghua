@@ -10,10 +10,10 @@ import com.sim.chongwukongjing.R;
 /**
  * @author binshengzhu
  */
-public class MachineStateWindPowerFragment extends BaseFragment {
+public class MachineStateFengweidengPowerFragment extends BaseFragment {
     @Override
     protected View getBaseView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.machine_state, container, false);
+        return inflater.inflate(R.layout.machine_fengweideng, container, false);
     }
 
     @Override
@@ -34,5 +34,10 @@ public class MachineStateWindPowerFragment extends BaseFragment {
     @Override
     protected void initDisplayData(View view) {
 
+    }
+
+    @Override
+    protected boolean isRegEvent() {
+        return true;
     }
 }

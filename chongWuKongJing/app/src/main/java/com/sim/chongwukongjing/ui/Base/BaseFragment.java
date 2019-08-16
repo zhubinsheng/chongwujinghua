@@ -1,18 +1,15 @@
 package com.sim.chongwukongjing.ui.Base;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,13 +17,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
-import org.eclipse.jetty.util.ajax.JSON;
-import org.json.JSONObject;
-import java.util.HashMap;
-import java.util.Map;
+import com.sim.chongwukongjing.ui.bean.MessageWrap;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 
@@ -147,17 +143,21 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public void onStart() {
         initDisplayData(view);
         super.onStart();
-
         if(isRegEvent()){
-            //EventBus.getDefault().register(this);
+            EventBus.getDefault().register(this);
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReceiveMsg(MessageWrap message) {
+        Log.e("zbs", "onReceiveMsg: " + message.toString());
     }
 
     @Override
     public void onStop() {
         super.onStop();
         if(isRegEvent()){
-            //EventBus.getDefault().unregister(this);
+            EventBus.getDefault().unregister(this);
         }
     }
 

@@ -9,9 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
+import com.google.gson.Gson;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseFragment;
-import com.sim.chongwukongjing.ui.MqttService;
+import com.sim.chongwukongjing.ui.http.MyMqttService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -43,9 +47,24 @@ public class MachineStateSwitchFragment extends BaseFragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch(msg.what){
-                case 1:gifImageView.setImageResource(R.drawable.mansu_machene_x_b); break;
-                case 2:gifImageView.setImageResource(R.drawable.zhongsu_x_b);  break;
-                case 3:gifImageView.setImageResource(R.drawable.kuaisu_x_b);  break;
+                case 1:gifImageView.setImageResource(R.drawable.mansu_machene_x_b);
+                    Map map = new HashMap();
+                    map.put(3,01);
+                    Gson gson = new Gson();
+                    ControUtil.dvcinfo(gson.toJson(map));
+                break;
+                case 2:gifImageView.setImageResource(R.drawable.zhongsu_x_b);
+                    Map map1 = new HashMap();
+                    map1.put(3,02);
+                    Gson gson2 = new Gson();
+                    ControUtil.dvcinfo(gson2.toJson(map1));
+                break;
+                case 3:gifImageView.setImageResource(R.drawable.kuaisu_x_b);
+                    Map map2 = new HashMap();
+                    map2.put(3,03);
+                    Gson gson3 = new Gson();
+                    ControUtil.dvcinfo(gson3.toJson(map2));
+                break;
                 default:break;
             }
         }
@@ -69,7 +88,7 @@ public class MachineStateSwitchFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        MqttService.makePassword(getActivity());
+        MyMqttService.MqttService.makePassword(getActivity());
     }
 
     @Override
@@ -95,22 +114,22 @@ public class MachineStateSwitchFragment extends BaseFragment {
                 switch (seekBar.getProgress()) {
                     case 0:
                         //gifImageView.setVisibility(View.GONE);
-                        ToastUtils.showLong("已关闭机器,停止风扇");
+                        //ToastUtils.showLong("已关闭机器,停止风扇");
                         break;
                     case 1:
-                        gifImageView.setImageResource(R.drawable.mansu_machine_x_a);
+                        //gifImageView.setImageResource(R.drawable.mansu_machine_x_a);
                         handler.sendEmptyMessageDelayed(MANSU,3000);
 
                         ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
                         break;
                     case 2:
-                        gifImageView.setImageResource(R.drawable.zhongsu_x_a);
+                        //gifImageView.setImageResource(R.drawable.zhongsu_x_a);
                         handler.sendEmptyMessageDelayed(ZHONGSU,1500);
 
                         ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
                         break;
                     case 3:
-                        gifImageView.setImageResource(R.drawable.kuaisu_x_a);
+                        //gifImageView.setImageResource(R.drawable.kuaisu_x_a);
                         handler.sendEmptyMessageDelayed(KUAISU,1000);
 
                         ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
@@ -156,4 +175,8 @@ public class MachineStateSwitchFragment extends BaseFragment {
         }
     }
 
+    @Override
+    protected boolean isRegEvent() {
+        return true;
+    }
 }

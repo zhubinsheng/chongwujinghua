@@ -36,4 +36,9 @@ public class MachineYeLiangFragment extends BaseFragment {
     protected void initDisplayData(View view) {
 
     }
+
+    @Override
+    protected boolean isRegEvent() {
+        return true;
+    }
 }

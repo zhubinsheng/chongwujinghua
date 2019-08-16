@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.mingle.widget.LoadingView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
@@ -57,6 +58,9 @@ public class MyEquipmentAcitivity extends BaseActivity {
 
     @BindView(R.id.textView4)
     TextView textView4;
+
+    @BindView(R.id.loadView)
+    LoadingView loadingView;
 
 
     @Override
@@ -145,6 +149,8 @@ public class MyEquipmentAcitivity extends BaseActivity {
                     public void accept(MyList baseInfo) throws Exception {
                         if ("10000".equals(baseInfo.getCode())){
                             ToastUtils.showShort(baseInfo.getMsg());
+                            //View不可见，且不占据空间
+                            loadingView.setVisibility(View.GONE);
                             //创建适配器
                             data = baseInfo.getData();
                             productlistAdapter = new MyProductlistAdapter(R.layout.drag_item_shanchu, data,MyEquipmentAcitivity.this);

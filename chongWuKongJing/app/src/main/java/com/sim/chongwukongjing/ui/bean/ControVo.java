@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * @author binshengzhu
- *///ID 名称 类型 读写 说明
+ *///ID 名称 类型 读写 说明 转化用ｍａｐ实际
 public class ControVo {
     /**
      * 0 : 1

@@ -11,7 +11,6 @@ import com.google.gson.Gson;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseFragment;
 import com.sim.chongwukongjing.ui.Main.MyApplication;
-import com.sim.chongwukongjing.ui.bean.ControVo;
 import com.sim.chongwukongjing.ui.bean.ControlResult;
 import com.sim.chongwukongjing.ui.bean.WeatherResult;
 import com.sim.chongwukongjing.ui.http.HttpApi;
@@ -19,6 +18,7 @@ import com.sim.chongwukongjing.ui.http.MyMqttService;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -51,6 +51,7 @@ public class MachineInfoFragment extends BaseFragment {
     @BindView(R.id.imageView9)
     ImageView imageView9;
 
+    private boolean kaiguan = true;
     //@BindView(R.id.groupListView)
     //QMUICommonListItemView groupListView;
 
@@ -63,6 +64,9 @@ public class MachineInfoFragment extends BaseFragment {
     protected void initView(View view) {
 
     }
+
+
+
 
     @Override
     protected void initDate(View view) {
@@ -88,7 +92,17 @@ public class MachineInfoFragment extends BaseFragment {
     public void onClick(View v) {
 
         switch (v.getId()){
-            case R.id.imageView9: contro_0(); break;
+            case R.id.imageView9:
+
+                if (kaiguan){
+                    contro_0(0);
+                    kaiguan = false;
+                }else {
+                    contro_0(1);
+                    kaiguan = true;
+                }
+
+                break;
             case R.id.diqu: MyMqttService.startService(getActivity());; break;
             default:break;
         }
@@ -143,11 +157,11 @@ public class MachineInfoFragment extends BaseFragment {
     }
 
 
-    public void contro_0(){
-        ControVo controVo = new ControVo();
-        controVo.set_$0(1);
+    public void contro_0(int i){
+        Map map = new HashMap();
+        map.put(0,i);
         Gson gson = new Gson();
-        String jsonObject = gson.toJson(controVo);
+        String jsonObject = gson.toJson(map);
         dvcinfo(MyApplication.getInstance().getDid(),jsonObject);
     }
 
@@ -193,4 +207,8 @@ public class MachineInfoFragment extends BaseFragment {
                 });
     }
 
+    @Override
+    protected boolean isRegEvent() {
+        return true;
+    }
 }

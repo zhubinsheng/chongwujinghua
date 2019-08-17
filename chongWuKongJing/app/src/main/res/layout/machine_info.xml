@@ -123,10 +123,17 @@
             app:qmui_orientation="vertical"
             app:qmui_commonList_titleColor="@color/qmui_s_link_color"
             app:qmui_commonList_detailColor="@color/qmui_config_color_red"/>-->
-        <ImageView
-            android:id="@+id/imageView9"
+        <com.qmuiteam.qmui.widget.QMUIViewPager
+            android:id="@+id/QMUIViewPager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/machine_main_picture" />
+            android:layout_height="match_parent">
+
+
+            <!--<ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/machine_main_picture" />-->
+        </com.qmuiteam.qmui.widget.QMUIViewPager>
     </LinearLayout>
 </LinearLayout>

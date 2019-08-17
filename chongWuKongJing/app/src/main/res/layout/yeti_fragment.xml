@@ -5,16 +5,41 @@
     android:layout_height="match_parent">
 
 
-
     <ImageView
         android:id="@+id/imageView8"
         android:layout_width="match_parent"
-        android:layout_height="434dp"
-        app:srcCompat="@drawable/machine_main_picture" />
+        android:layout_height="303dp"
+        android:layout_marginTop="100dp"
+        app:srcCompat="@drawable/yeliang" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="100dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/quanxing" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="76dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/taiji" />
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/meitian"
+            android:layout_width="102dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="液体剩余量"
+            android:textColor="@color/white"
+            app:qmui_radius="18dp" />
 
 
         <TextView
@@ -22,6 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="110dp"
+            android:textColor="@color/white"
             android:text="60%" />
     </FrameLayout>
 

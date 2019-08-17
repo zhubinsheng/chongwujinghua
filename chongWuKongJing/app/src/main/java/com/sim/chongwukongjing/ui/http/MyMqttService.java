@@ -71,6 +71,7 @@ public class MyMqttService extends Service {
         return password;
     }
 
+    public static final String ACTION = "com.sim.chongwukongjing.ui.http.MyMqttService";
     public final String TAG = MyMqttService.class.getSimpleName();
     private static MqttAndroidClient  mqttAndroidClient;
     private        MqttConnectOptions mMqttConnectOptions;

@@ -25,6 +25,8 @@ import com.sim.chongwukongjing.ui.Base.BaseActivity;
 import com.sim.chongwukongjing.ui.Main.MyApplication;
 import com.sim.chongwukongjing.ui.bean.ConfigResult;
 import com.sim.chongwukongjing.ui.bean.DvcInfoResult;
+import com.sim.chongwukongjing.ui.bean.MessageEvent;
+import com.sim.chongwukongjing.ui.bean.MessageWrap;
 import com.sim.chongwukongjing.ui.bean.UuidResult;
 import com.sim.chongwukongjing.ui.bean.WeatherResult;
 import com.sim.chongwukongjing.ui.bean.tianqiResult;
@@ -36,6 +38,8 @@ import com.sim.chongwukongjing.ui.utils.LocationUtils;
 import com.sim.chongwukongjing.ui.wigdet.FragAdapter;
 import com.sim.chongwukongjing.ui.wigdet.NoScrollViewPager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,6 +106,14 @@ public class MachineSetActivity extends BaseActivity {
         topbar.setTitle("My Air Machiene");
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent intent = new Intent();
+        intent.setAction(MyMqttService.ACTION);
+        intent.setPackage(this.getPackageName());
+        this.stopService(intent);
+    }
 
     @Override
     protected void initData() {
@@ -245,15 +257,15 @@ public class MachineSetActivity extends BaseActivity {
                         getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
                         getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
                         getString(R.string.yeliang),
-                        false,
+                        true,
                         false));
 
         mainTabSegment.addTab(
                 new QMUITabSegment.Tab(
-                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
-                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
+                        getResources().getDrawable(R.drawable.kaiguanmoren),
+                        getResources().getDrawable(R.drawable.kaiguandakai),
                         getString(R.string.fengli),
-                        false,
+                        true,
                         false));
 
         mainTabSegment.addTab(
@@ -261,7 +273,7 @@ public class MachineSetActivity extends BaseActivity {
                         getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
                         getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
                         getString(R.string.kaiguan),
-                        false,
+                        true,
                         false));
 
         mainTabSegment.addTab(
@@ -269,7 +281,7 @@ public class MachineSetActivity extends BaseActivity {
                         getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
                         getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
                         getString(R.string.dingshi),
-                        false,
+                        true,
                         false));
 
         mainTabSegment.addTab(
@@ -277,7 +289,7 @@ public class MachineSetActivity extends BaseActivity {
                         getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
                         getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
                         getString(R.string.fengweidneg),
-                        false,
+                        true,
                         false));
     }
 
@@ -296,12 +308,6 @@ public class MachineSetActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
 
@@ -361,6 +367,8 @@ public class MachineSetActivity extends BaseActivity {
                     public void accept(WeatherResult baseInfo) throws Exception {
                         if ("10000".equals(baseInfo.getCode())){
                             ToastUtils.showShort(baseInfo.getMsg());
+
+                            EventBus.getDefault().post(new MessageEvent("wea",baseInfo));
                         }
                     }
                 }, new Consumer<Throwable>() {

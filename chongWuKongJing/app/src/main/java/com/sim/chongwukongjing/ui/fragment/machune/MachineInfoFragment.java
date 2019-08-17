@@ -8,20 +8,30 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+
 import com.google.gson.Gson;
+import com.qmuiteam.qmui.widget.QMUIViewPager;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseFragment;
 import com.sim.chongwukongjing.ui.Main.MyApplication;
 import com.sim.chongwukongjing.ui.bean.ControlResult;
+import com.sim.chongwukongjing.ui.bean.MessageEvent;
 import com.sim.chongwukongjing.ui.bean.MessageWrap;
 import com.sim.chongwukongjing.ui.bean.WeatherResult;
 import com.sim.chongwukongjing.ui.http.HttpApi;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
+import com.sim.chongwukongjing.ui.wigdet.FragAdapter;
+import com.sim.chongwukongjing.ui.wigdet.NoScrollViewPager;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -52,10 +62,16 @@ public class MachineInfoFragment extends BaseFragment {
     TextView shidu;
     @BindView(R.id.fengdu)
     TextView fengdu;
-    @BindView(R.id.imageView9)
-    ImageView imageView9;
+    /*@BindView(R.id.imageView9)
+    ImageView imageView9;*/
+
+    @BindView(R.id.QMUIViewPager)
+    QMUIViewPager qmuiViewPager;
+
 
     private boolean kaiguan = true;
+
+    private List<BaseFragment> fragmentList;
     //@BindView(R.id.groupListView)
     //QMUICommonListItemView groupListView;
 
@@ -67,14 +83,35 @@ public class MachineInfoFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
 
+        fragmentList = new ArrayList<>();
+        fragmentList.add(new MachineInfo());
+        fragmentList.add(new MachinePic());
+        //设置viewPage的缓存页数
+        qmuiViewPager.setOffscreenPageLimit(2);
+        //设置adapter
+        qmuiViewPager.setAdapter(new ViewPagerAdapter(getFragmentManager(), fragmentList));
     }
 
 
-
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+        private List<BaseFragment> list;
+        public ViewPagerAdapter(FragmentManager fm, List<BaseFragment> list) {
+            super(fm);
+            this.list = list;
+        }
+        @Override
+        public Fragment getItem(int position) {
+            return list.get(position);
+        }
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+    }
 
     @Override
     protected void initDate(View view) {
-        getWeather();
+        //getWeather();
     }
 
     @Override
@@ -92,11 +129,11 @@ public class MachineInfoFragment extends BaseFragment {
     }
 
     @Override
-    @OnClick({R.id.diqu,R.id.imageView9})
+    @OnClick({R.id.diqu})
     public void onClick(View v) {
 
         switch (v.getId()){
-            case R.id.imageView9:
+           /* case R.id.imageView9:
 
                 if (kaiguan){
                     contro_0(0);
@@ -106,7 +143,7 @@ public class MachineInfoFragment extends BaseFragment {
                     kaiguan = true;
                 }
 
-                break;
+                break;*/
             case R.id.diqu:  break;
             default:break;
         }
@@ -219,6 +256,16 @@ public class MachineInfoFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onReceiveMsg(MessageWrap message) {
         Log.e("zbs", "onReceiveMsg: " + message.toString());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReceiveMsg2(MessageEvent message) {
+        Log.e("zbs", "onReceiveMsg: " + message.toString());
+        diqu.setText(message.getResult().getData().getAreanm());
+        wendu.setText(message.getResult().getData().getTemp());
+        tianqi.setText(message.getResult().getData().getWeath());
+        shidu.setText(message.getResult().getData().getPm25());
+        fengdu.setText(message.getResult().getData().getWind());
     }
 
 }

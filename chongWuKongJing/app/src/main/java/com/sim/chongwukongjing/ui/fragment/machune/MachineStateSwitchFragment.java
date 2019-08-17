@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseFragment;
+import com.sim.chongwukongjing.ui.bean.MessageEvent;
 import com.sim.chongwukongjing.ui.bean.MessageWrap;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -35,6 +37,18 @@ public class MachineStateSwitchFragment extends BaseFragment {
     private static int ZHONGSU = 2;
     private static int KUAISU = 3;
 
+    @BindView(R.id.diqu)
+    TextView diqu;
+    @BindView(R.id.wendu)
+    TextView wendu;
+    @BindView(R.id.tianqi)
+    TextView tianqi;
+    @BindView(R.id.zuidigao)
+    TextView zuidigao;
+    @BindView(R.id.shidu)
+    TextView shidu;
+    @BindView(R.id.fengdu)
+    TextView fengdu;
 
     @BindView(R.id.imageView2)
     ImageView imageView2;
@@ -190,5 +204,15 @@ public class MachineStateSwitchFragment extends BaseFragment {
             return;
         }
         Log.e("zbs", "onReceiveMsg: " + message.toString());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReceiveMsg2(MessageEvent message) {
+        Log.e("zbs", "onReceiveMsg: " + message.toString());
+        diqu.setText(message.getResult().getData().getAreanm());
+        wendu.setText(message.getResult().getData().getTemp());
+        tianqi.setText(message.getResult().getData().getWeath());
+        shidu.setText(message.getResult().getData().getPm25());
+        fengdu.setText(message.getResult().getData().getWind());
     }
 }

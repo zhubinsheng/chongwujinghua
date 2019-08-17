@@ -149,7 +149,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onReceiveMsg(MessageWrap message) {
+    public void onReceiveMsg2(MessageWrap message) {
         Log.e("zbs", "onReceiveMsg: " + message.toString());
     }
 

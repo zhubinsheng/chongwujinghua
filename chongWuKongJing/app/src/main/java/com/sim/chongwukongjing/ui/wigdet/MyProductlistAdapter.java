@@ -1,5 +1,6 @@
 package com.sim.chongwukongjing.ui.wigdet;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -27,20 +28,37 @@ public class MyProductlistAdapter extends BaseQuickAdapter<MyList.DataBean, Base
         this.mcontext = context;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void convert(BaseViewHolder helper, MyList.DataBean item) {
         ImageView imageView = helper.getView(R.id.imageView4);
         //可链式调用赋值
-        helper.setText(R.id.textView12, item.getDvcnm())
-                .setText(R.id.textView13 ,item.getIsnative())
+        helper.setText(R.id.textView11, item.getDvcnm())
                 .addOnClickListener(R.id.shanchu)    //给添加点击事件
                 .addOnClickListener(R.id.content)
+                .setText(R.id.textView14 ,String.valueOf(item.getTid())+"%");
+
+
+        if ("1".equals(item.getIsonline())){
+            helper.setTextColor(R.id.textView12, R.color.qmui_s_switch_text_color);
+            helper.setText(R.id.textView12, "在线");
+        }else {
+            helper.setTextColor(R.id.textView12, R.color.qmui_s_switch_text_color);
+            helper.setText(R.id.textView12, "离线");
+        }
+
+
+        if ("1".equals(item.getIsnative())){
+            helper.setTextColor(R.id.textView13, R.color.qmui_s_switch_text_color);
+            helper.setText(R.id.textView13, "运行");
+        }else {
+            helper.setTextColor(R.id.textView13, R.color.qmui_s_switch_text_color);
+            helper.setText(R.id.textView13, "关闭");
+        }
 
 
 
 
-
-                .setText(R.id.textView13 ,String.valueOf(item.getTid())+"%");
 
         if (!TextUtils.isEmpty(item.getPic())) {
             //使用Glide框架加载图片

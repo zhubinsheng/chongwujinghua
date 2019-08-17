@@ -1,6 +1,7 @@
 package com.sim.chongwukongjing.ui.fragment.machune;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,13 @@ import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseFragment;
 import com.sim.chongwukongjing.ui.Main.MyApplication;
 import com.sim.chongwukongjing.ui.bean.ControlResult;
+import com.sim.chongwukongjing.ui.bean.MessageWrap;
 import com.sim.chongwukongjing.ui.bean.WeatherResult;
 import com.sim.chongwukongjing.ui.http.HttpApi;
-import com.sim.chongwukongjing.ui.http.MyMqttService;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -103,7 +107,7 @@ public class MachineInfoFragment extends BaseFragment {
                 }
 
                 break;
-            case R.id.diqu: MyMqttService.startService(getActivity());; break;
+            case R.id.diqu:  break;
             default:break;
         }
     }
@@ -211,4 +215,10 @@ public class MachineInfoFragment extends BaseFragment {
     protected boolean isRegEvent() {
         return true;
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReceiveMsg(MessageWrap message) {
+        Log.e("zbs", "onReceiveMsg: " + message.toString());
+    }
+
 }

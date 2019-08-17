@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -15,6 +16,8 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.sim.chongwukongjing.R;
@@ -51,6 +54,9 @@ public class InputPasswordActivity extends BaseActivity {
     private static final String TAG = "InputPasswordActivity";
 
     private boolean succuse = false;
+
+    private boolean ssidsuccuse = false;
+
     @BindView(R.id.ssid_name)
     TextView ssidName;
 
@@ -105,58 +111,92 @@ public class InputPasswordActivity extends BaseActivity {
     @Override
     protected void initData() {
         requestPermissions();
-        ssid = getWIFISSID(this);
-        if ("unknown id".equals(ssid)){
-            ToastUtils.showLong("请先连接无线网");
-        }else {
-            ssidName.setText(ssid);
-        }
+        setSsidName();
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @OnClick({R.id.textView8,R.id.ssid_name})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ssid_name:
-                startActivity(MyEquipmentAcitivity.class);
+                //startActivity(MyEquipmentAcitivity.class);
+                setSsidName();
             case R.id.textView8:
                 //startActivity(MyEquipmentAcitivity.class);
                 //finish();
                 //发送数据包(包含ssid和password)给设备，连续发10s，再停止3s，再继续发，如此反复
-                EasyLinkParams easylinkPara = new EasyLinkParams();
-                easylinkPara.ssid = ssid;
-                easylinkPara.password = editText3.getText().toString();
-                easylinkPara.runSecond = 60000;
-                easylinkPara.sleeptime = 20;
+                if (
+                        "点击停止".contentEquals(textView8.getText()) && !succuse
+                ){
+                    elp2p.stopEasyLink(new EasyLinkCallBack() {
+                        @Override
+                        public void onSuccess(int code, String message) {
+                            ToastUtils.showLong("配网已停止");
+                        }
 
+                        @Override
+                        public void onFailure(int code, String message) {
+                            ToastUtils.showLong("配网停止失败，建议重启应用");
+                        }
+                    });
+                    succuse = false;
+                    textView8.setText("配网");
+                    textView8.setBackgroundColor(Color.parseColor("#87CEEB"));
+                }else {
 
-
-
-                elp2p.startEasyLink(easylinkPara, new EasyLinkCallBack() {
-                    @Override
-                    public void onSuccess(int code, String message) {
-                        //ToastUtils.showShort("机器配网成功!");
-                        Log.d("zbs","机器配网成功!");
-                        //findDevice();
-                        //使用定时器,每隔200毫秒让handler发送一个空信息
-                        new Timer().schedule(new TimerTask() {
-                            @Override
-                            public void run() {
-                                myHandler.sendEmptyMessage(0x123);
-                            }
-                        }, 0,1000);
-                        //startActivity(MyEquipmentAcitivity.class);
-                        //finish();
+                    if (!ssidsuccuse){
+                        ToastUtils.showLong("请先连接无线网");
+                        return;
                     }
-                    @Override
-                    public void onFailure(int code, String message) {
-                        Log.d(TAG, code + message);
-                    }
-                });
+                    textView8.setBackgroundColor(getColor(R.color.colorAccent));
+                    textView8.setText("点击停止");
+                    //new SVProgressHUD(this).showWithStatus( "这是提示");
+
+
+                    EasyLinkParams easylinkPara = new EasyLinkParams();
+                    easylinkPara.ssid = ssid;
+                    easylinkPara.password = editText3.getText().toString();
+                    easylinkPara.runSecond = 60000;
+                    easylinkPara.sleeptime = 20;
+                    elp2p.startEasyLink(easylinkPara, new EasyLinkCallBack() {
+                        @Override
+                        public void onSuccess(int code, String message) {
+                            //ToastUtils.showShort("机器配网成功!");
+                            Log.d("zbs","机器配网成功!");
+                            //findDevice();
+                            //使用定时器,每隔200毫秒让handler发送一个空信息
+                            new Timer().schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    myHandler.sendEmptyMessage(0x123);
+                                }
+                            }, 0,1000);
+                            //startActivity(MyEquipmentAcitivity.class);
+                            //finish();
+                        }
+                        @Override
+                        public void onFailure(int code, String message) {
+                            Log.d(TAG, code + message);
+                        }
+                    });
+                }
+
                 break;
 
             default:
                 break;
+        }
+    }
+
+    private void setSsidName() {
+        ssid = getWIFISSID(this);
+        if ("<unknown ssid>".equals(ssid)||"unknown id".equals(ssid)){
+            ToastUtils.showLong("请先连接无线网");
+            ssidName.setText("连接无线网后请点此刷新");
+        }else {
+            ssidsuccuse = true;
+            ssidName.setText(ssid);
         }
     }
 

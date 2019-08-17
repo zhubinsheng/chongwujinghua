@@ -20,13 +20,18 @@ import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.sim.chongwukongjing.R;
+import com.sim.chongwukongjing.ui.Activity.MyEquipmentAcitivity;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
 import com.sim.chongwukongjing.ui.Main.MyApplication;
+import com.sim.chongwukongjing.ui.bean.ConfigResult;
 import com.sim.chongwukongjing.ui.bean.DvcInfoResult;
+import com.sim.chongwukongjing.ui.bean.UuidResult;
 import com.sim.chongwukongjing.ui.bean.WeatherResult;
 import com.sim.chongwukongjing.ui.bean.tianqiResult;
 import com.sim.chongwukongjing.ui.http.HttpApi;
+import com.sim.chongwukongjing.ui.http.MyMqttService;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
+import com.sim.chongwukongjing.ui.http.RetrofitClient2;
 import com.sim.chongwukongjing.ui.utils.LocationUtils;
 import com.sim.chongwukongjing.ui.wigdet.FragAdapter;
 import com.sim.chongwukongjing.ui.wigdet.NoScrollViewPager;
@@ -100,6 +105,8 @@ public class MachineSetActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        uuid();//获取uuid　然后获取ｃｏｎｆｉｇ
+
 
         Location location = LocationUtils.getInstance( this ).showLocation();
 
@@ -402,6 +409,127 @@ public class MachineSetActivity extends BaseActivity {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         ToastUtils.showShort("获取机器信息失败，请稍后重试");
+                    }
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    private void config(String uuid) {
+        String baseUrl = "http://smart.airmedic.cn:8180";
+        HttpApi mloginApi;
+        mloginApi = RetrofitClient2.create(HttpApi.class);
+        String motime = String.valueOf(System.currentTimeMillis());
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("motime",motime);
+
+
+        String androidID = Settings.System.getString(this.getContentResolver(), Settings.System.ANDROID_ID);
+        String sign = signMD5("interlnx&aY4N!bAAds",hashMap);
+
+        FormBody body = new FormBody.Builder()
+                .add("motime",  motime)
+                .add("mac",uuid)
+                .add("sign", "1234567890")
+                .build();
+
+        Observable<ConfigResult> observable = mloginApi.config(body);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ConfigResult>() {
+                    @Override
+                    public void accept(ConfigResult baseInfo) throws Exception {
+                        if ("10000".equals(baseInfo.getCode())){
+                            ToastUtils.showShort(baseInfo.getMsg());
+                            MyMqttService.startService(MachineSetActivity.this,baseInfo.getData());
+                        }else {
+                            startActivity(MyEquipmentAcitivity.class);
+                            finish();
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        startActivity(MyEquipmentAcitivity.class);
+                        finish();
+                    }
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    public void config2(String uuid) {
+        String baseUrl = "http://smart.airmedic.cn:8180";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .build();
+        HttpApi apiService = retrofit.create(HttpApi.class);
+
+        String motime = String.valueOf(System.currentTimeMillis());
+
+
+        FormBody body = new FormBody.Builder()
+                .add("motime",  motime)
+                .add("mac",uuid)
+                .add("sign", "1234567890")
+                .build();
+
+        /*all<ConfigResult> call = apiService.config(body);
+
+        call.enqueue(new Callback<com.sim.chongwukongjing.ui.bean.ConfigResult>() {
+            @Override
+            public void onResponse(Call<ConfigResult> call, Response<ConfigResult> response) {
+                ToastUtils.showShort(response.body().getMsg());
+                MyMqttService.startService(MachineSetActivity.this,response.body().getData());
+            }
+
+            @Override
+            public void onFailure(Call<ConfigResult> call, Throwable t) {
+
+            }
+
+        });*/
+    }
+
+    @SuppressLint("CheckResult")
+    private void uuid() {
+        HttpApi mloginApi;
+        mloginApi = RetrofitClient.create(HttpApi.class);
+        String motime = String.valueOf(System.currentTimeMillis());
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("motime",motime);
+
+
+        String androidID = Settings.System.getString(this.getContentResolver(), Settings.System.ANDROID_ID);
+        String sign = signMD5("interlnx&aY4N!bAAds",hashMap);
+
+        FormBody body = new FormBody.Builder()
+                .add("appid", "1288")
+                .add("motime",  motime)
+                .add("sign", "1234567890")
+                .build();
+
+        Observable<UuidResult> observable = mloginApi.uuid(body);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<UuidResult>() {
+                    @Override
+                    public void accept(UuidResult baseInfo) throws Exception {
+                        if ("10000".equals(baseInfo.getCode())){
+                            new Thread(() -> config(baseInfo.getData().getUuid())).start();
+
+
+                        }else {
+                            startActivity(MyEquipmentAcitivity.class);
+                            finish();
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        startActivity(MyEquipmentAcitivity.class);
+                        finish();
                     }
                 });
     }

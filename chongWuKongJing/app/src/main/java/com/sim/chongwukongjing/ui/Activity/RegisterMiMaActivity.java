@@ -11,7 +11,7 @@ import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
-import com.sim.chongwukongjing.ui.bean.RegResult;
+import com.sim.chongwukongjing.ui.bean.ForgotpassResult;
 import com.sim.chongwukongjing.ui.bean.SendcodeResult;
 import com.sim.chongwukongjing.ui.http.HttpApi;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
@@ -33,7 +33,7 @@ import static com.sim.chongwukongjing.ui.utils.Md5Util.signMD5;
 /**
  * @author Administrator
  */
-public class RegisterActivity extends BaseActivity {
+public class RegisterMiMaActivity extends BaseActivity {
 
     @BindView(R.id.topbar)
     QMUITopBar topBar;
@@ -50,16 +50,19 @@ public class RegisterActivity extends BaseActivity {
     @BindView(R.id.yanzhegnma)
     EditText yanzhegnma;
 
-    @BindView(R.id.nicknm)
-    EditText nicknm;
 
     @BindView(R.id.et_register_password4)
     EditText et_register_password4;
 
+
+    @BindView(R.id.et_register_password5)
+    EditText et_register_password5;
+
     private TimeCount mTime;
+
     @Override
     protected int getLayoutRes() {
-        return R.layout.activity_regist;
+        return R.layout.activity_regist_mima;
     }
 
     @Override
@@ -68,16 +71,8 @@ public class RegisterActivity extends BaseActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        mTime.cancel();
-    }
-
-    @Override
     protected void initSet() {
-        topBar.setTitle("新用户");
-
-
+        topBar.setTitle("重置密码");
         mTime = new TimeCount(60000,1000);
     }
 
@@ -103,6 +98,12 @@ public class RegisterActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mTime.cancel();
+    }
+
     @SuppressLint("CheckResult")
     private void reg() {
         HttpApi mloginApi;
@@ -121,38 +122,28 @@ public class RegisterActivity extends BaseActivity {
 
         String  name ;
         FormBody body ;
-        if(nicknm.getText() != null){
-            name = nicknm.getText().toString() ;
-
+        if(et_register_password4.getText().toString().equals(et_register_password5.getText().toString())){
              body = new FormBody.Builder()
                     .add("appid", "1288")
                     .add("motime",  motime)
                     .add("sign", "1234567890")
+                     .add("verifycode", yanzhegnma.getText().toString())
                     .add("phone", phone.getText().toString())
-                    .add("mac", androidID)
-                    .add("verifycode", yanzhegnma.getText().toString())
-                    .add("nicknm",name)
                     .add("passwd",et_register_password4.getText().toString())
                     .build();
         }else {
-             body = new FormBody.Builder()
-                    .add("appid", "1288")
-                    .add("motime",  motime)
-                    .add("sign", "1234567890")
-                    .add("phone", phone.getText().toString())
-                    .add("mac", androidID)
-                    .add("passwd",et_register_password4.getText().toString())
-                    .build();
+            ToastUtils.showLong("两次密码输入不一致，请核查后提交");
+            return;
         }
 
 
 
-        Observable<RegResult> observable = mloginApi.reg(body);
+        Observable<ForgotpassResult> observable = mloginApi.forgotpass(body);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<RegResult>() {
+                .subscribe(new Consumer<ForgotpassResult>() {
                     @Override
-                    public void accept(RegResult baseInfo) throws Exception {
+                    public void accept(ForgotpassResult baseInfo) throws Exception {
                         if ("10000".equals(baseInfo.getCode())){
                             ToastUtils.showShort(baseInfo.getMsg());
                             startActivity(LoginActivity.class);
@@ -162,7 +153,7 @@ public class RegisterActivity extends BaseActivity {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        ToastUtils.showShort("注册失败，请稍后重试");
+                        ToastUtils.showShort("操作失败，请稍后重试");
                     }
                 });
 
@@ -231,5 +222,4 @@ public class RegisterActivity extends BaseActivity {
             huoquyanzhengm.setText("重新获取验证码");
         }
     }
-
 }

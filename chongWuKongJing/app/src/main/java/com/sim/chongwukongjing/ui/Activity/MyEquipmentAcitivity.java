@@ -205,6 +205,7 @@ public class MyEquipmentAcitivity extends BaseActivity {
                                                     public void onClick(QMUIDialog dialog, int index) {
                                                         MyList.DataBean dataBean = data.get(position);
                                                         unbind(dataBean.getDid());
+                                                        dialog.dismiss();
                                                     }
                                                 })
                                                 .show();
@@ -252,6 +253,7 @@ public class MyEquipmentAcitivity extends BaseActivity {
                     @Override
                     public void accept(UnbindResult baseInfo) throws Exception {
                             ToastUtils.showShort(baseInfo.getMsg());
+
                     }
                 }, new Consumer<Throwable>() {
                     @Override

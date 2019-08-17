@@ -3,6 +3,7 @@ package com.sim.chongwukongjing.ui.fragment.machune;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,10 @@ import android.widget.SeekBar;
 import com.google.gson.Gson;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseFragment;
-import com.sim.chongwukongjing.ui.http.MyMqttService;
+import com.sim.chongwukongjing.ui.bean.MessageWrap;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -88,7 +92,7 @@ public class MachineStateSwitchFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        MyMqttService.MqttService.makePassword(getActivity());
+        //MyMqttService.MqttService.makePassword(getActivity());
     }
 
     @Override
@@ -178,5 +182,13 @@ public class MachineStateSwitchFragment extends BaseFragment {
     @Override
     protected boolean isRegEvent() {
         return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReceiveMsg(MessageWrap message) {
+        if (!message.message.equals("0")){
+            return;
+        }
+        Log.e("zbs", "onReceiveMsg: " + message.toString());
     }
 }

@@ -1,7 +1,11 @@
 package com.sim.chongwukongjing.ui.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,4 +38,21 @@ public class Md5Util {
         String sign = DigestUtils.md5Hex(content);
         return sign;
     }
+
+    public static Map<String, Integer> mapTojson(String json) {
+        /*final Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+        map.put(1, 11);
+        map.put(2, 10);
+        map.put(3, 10);
+        final Gson gson = new Gson();
+        final String string = gson.toJson(map);*/
+        final Gson gson = new Gson();
+        final Type type = new TypeToken<Map<String, Integer>>() {}.getType();
+        final Map<String, Integer> map2 = gson.fromJson(json, type);
+        return map2;
+       /* for (final Map.Entry<Integer, Integer> entry : map2.entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }*/
+    }
+
 }

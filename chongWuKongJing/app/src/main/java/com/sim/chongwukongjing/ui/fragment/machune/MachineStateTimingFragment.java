@@ -3,6 +3,7 @@ package com.sim.chongwukongjing.ui.fragment.machune;
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,10 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseFragment;
+import com.sim.chongwukongjing.ui.bean.MessageWrap;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -194,5 +199,11 @@ public class MachineStateTimingFragment extends BaseFragment {
     @Override
     protected boolean isRegEvent() {
         return true;
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReceiveMsg(MessageWrap message) {
+        Log.e("zbs", "onReceiveMsg: " + message.toString());
     }
 }

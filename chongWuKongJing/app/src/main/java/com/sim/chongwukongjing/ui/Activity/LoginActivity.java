@@ -80,6 +80,7 @@ public class LoginActivity extends BaseActivity {
                 }
                 login();
                 break;
+            case R.id.textView10:  startActivity(RegisterMiMaActivity.class);  break;
             default:
                 break;
         }

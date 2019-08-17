@@ -56,10 +56,9 @@
         <activity android:name=".ui.Activity.FindEquipmentActivity"></activity>
         <activity android:name=".ui.Activity.InputPasswordActivity"></activity>
         <activity android:name=".ui.Activity.MyEquipmentAcitivity"></activity>
-        <activity android:name=".ui.fragment.machune.MachineSetActivity">
+        <activity android:name=".ui.fragment.machune.MachineSetActivity"></activity>
+        <activity android:name=".ui.Activity.RegisterMiMaActivity"></activity>
 
-
-        </activity>
         <service android:name="org.eclipse.paho.android.service.MqttService" /> <!--MqttService-->
         <service android:name="com.sim.chongwukongjing.ui.http.MyMqttService"/> <!--MyMqttService-->
     </application>

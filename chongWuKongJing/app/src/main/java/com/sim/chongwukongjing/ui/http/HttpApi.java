@@ -1,15 +1,18 @@
 package com.sim.chongwukongjing.ui.http;
 
 
+import com.sim.chongwukongjing.ui.bean.ConfigResult;
 import com.sim.chongwukongjing.ui.bean.ControlResult;
 import com.sim.chongwukongjing.ui.bean.DvcInfoResult;
 import com.sim.chongwukongjing.ui.bean.FindDeviceResult;
+import com.sim.chongwukongjing.ui.bean.ForgotpassResult;
 import com.sim.chongwukongjing.ui.bean.LoginResult;
 import com.sim.chongwukongjing.ui.bean.MyList;
 import com.sim.chongwukongjing.ui.bean.ProductlistResult;
 import com.sim.chongwukongjing.ui.bean.RegResult;
 import com.sim.chongwukongjing.ui.bean.SendcodeResult;
 import com.sim.chongwukongjing.ui.bean.UnbindResult;
+import com.sim.chongwukongjing.ui.bean.UuidResult;
 import com.sim.chongwukongjing.ui.bean.WeatherResult;
 import com.sim.chongwukongjing.ui.bean.tianqiResult;
 
@@ -41,6 +44,9 @@ public interface HttpApi {
     @POST("api/sso/reg")
     Observable<RegResult> reg(@Body RequestBody body);
 
+    @POST("api/sso/forgotpass")
+    Observable<ForgotpassResult> forgotpass(@Body RequestBody body);
+
     @POST("api/sso/login")
     Observable<LoginResult> login(@Body RequestBody body);
 
@@ -65,7 +71,12 @@ public interface HttpApi {
     @POST("api/cmd/control")
     Observable<ControlResult> control(@Body RequestBody body);
 
+    @POST("qq/linx/config")
+    Observable<ConfigResult> config(@Body RequestBody body);
 
+
+    @POST("api/sso/uuid")
+    Observable<UuidResult> uuid(@Body RequestBody body);
 
     @GET("/reverse_geocoding/v3")
     Call<tianqiResult> findLocation(@Query("location") String location, @Query("ak") String ak);

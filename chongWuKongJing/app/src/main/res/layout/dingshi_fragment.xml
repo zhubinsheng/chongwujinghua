@@ -23,6 +23,7 @@
             android:gravity="center"
             app:qmui_radiusTopLeft="18dp"
             app:qmui_radiusBottomLeft="18dp"
+            app:qmui_borderColor="@color/qmui_s_link_color"
             android:text="连续运行" />
 
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton

@@ -1,16 +1,51 @@
 package com.sim.chongwukongjing.ui.fragment.machune;
 
+import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.google.gson.Gson;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseFragment;
+import com.sim.chongwukongjing.ui.Main.MyApplication;
+import com.sim.chongwukongjing.ui.bean.ControlResult;
+import com.sim.chongwukongjing.ui.bean.DvcInfoResult;
+import com.sim.chongwukongjing.ui.bean.MessageDecInfo;
+import com.sim.chongwukongjing.ui.bean.MessageWrap;
+import com.sim.chongwukongjing.ui.http.HttpApi;
+import com.sim.chongwukongjing.ui.http.RetrofitClient;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import me.goldze.mvvmhabit.utils.ToastUtils;
+import okhttp3.FormBody;
+
+import static com.sim.chongwukongjing.ui.utils.Md5Util.signMD5;
 
 public class MachinePic extends BaseFragment {
+
+    private boolean kaiguan = true;
+
+    @BindView(R.id.imageView9)
+    ImageView imageView9;
+
     @Override
     protected View getBaseView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.machine_picture, container, false);
+        return inflater.inflate(R.layout.machine_pic, container, false);
     }
 
     @Override
@@ -31,5 +66,105 @@ public class MachinePic extends BaseFragment {
     @Override
     protected void initDisplayData(View view) {
 
+    }
+
+    @Override
+    @OnClick({R.id.imageView9})
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.imageView9:
+
+                if (kaiguan){
+                    contro_0(0);
+                    kaiguan = false;
+                }else {
+                    contro_0(1);
+                    kaiguan = true;
+                }
+
+                break;
+            default:break;
+        }
+    }
+
+    @Override
+    protected boolean isRegEvent() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onGetStickyEvent(MessageDecInfo message) {
+        Log.e("zbs", "onReceiveMsg: " + message.toString());
+        DvcInfoResult.DataBean dat = message.getResult().getData();
+        if (dat.get_$0() == 0){
+            kaiguan = false;
+        }else {
+            kaiguan = true;
+        }
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onGetStickyEvent2(MessageWrap message) {
+        Log.e("zbs", "onReceiveMsg: " + message.toString());
+
+        Map<String, Integer> map = new LinkedHashMap<String, Integer>();
+        map = message.getMap();
+        if (map.get("0") == 0){
+            kaiguan = false;
+        }else {
+            kaiguan = true;
+        }
+
+    }
+
+    public void contro_0(int i){
+        Map map = new HashMap();
+        map.put(0,i);
+        Gson gson = new Gson();
+        String jsonObject = gson.toJson(map);
+        dvcinfo(MyApplication.getInstance().getDid(),jsonObject);
+    }
+
+    @SuppressLint("CheckResult")
+    private void dvcinfo(String did , String jsonObject) {
+        HttpApi mloginApi;
+        mloginApi = RetrofitClient.create(HttpApi.class);
+        String motime = String.valueOf(System.currentTimeMillis());
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("motime",motime);
+
+
+        String sign = signMD5("interlnx&aY4N!bAAds",hashMap);
+
+        FormBody body = new FormBody.Builder()
+                .add("appid", "1288")
+                .add("motime",  motime)
+                .add("sign", "1234567890")
+                .add("did", did)
+                .add("cmd",jsonObject)
+                .add("token", MyApplication.getInstance().getLoginResult().getData().getToken())
+                .build();
+
+        Observable<ControlResult> observable = mloginApi.control(body);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ControlResult>() {
+                    @Override
+                    public void accept(ControlResult baseInfo) throws Exception {
+                        if ("10000".equals(baseInfo.getCode())){
+                            ToastUtils.showShort(baseInfo.getMsg());
+
+                        }else {
+                            ToastUtils.showShort(baseInfo.getMsg());
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        ToastUtils.showShort("远程操纵失败，请稍后重试");
+                    }
+                });
     }
 }

@@ -14,19 +14,31 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseFragment;
+import com.sim.chongwukongjing.ui.Main.MyApplication;
+import com.sim.chongwukongjing.ui.bean.ControlResult;
 import com.sim.chongwukongjing.ui.bean.MessageEvent;
 import com.sim.chongwukongjing.ui.bean.MessageWrap;
+import com.sim.chongwukongjing.ui.http.HttpApi;
+import com.sim.chongwukongjing.ui.http.RetrofitClient;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import me.goldze.mvvmhabit.utils.ToastUtils;
+import okhttp3.FormBody;
 import pl.droidsonroids.gif.GifImageView;
+
+import static com.sim.chongwukongjing.ui.utils.Md5Util.signMD5;
 
 /**
  * @author Administrator  风力调整
@@ -132,25 +144,26 @@ public class MachineStateSwitchFragment extends BaseFragment {
                 switch (seekBar.getProgress()) {
                     case 0:
                         //gifImageView.setVisibility(View.GONE);
-                        //ToastUtils.showLong("已关闭机器,停止风扇");
+                        ToastUtils.showLong("已关闭机器,停止风扇");
+                        contro_0(0);
                         break;
                     case 1:
                         //gifImageView.setImageResource(R.drawable.mansu_machine_x_a);
-                        handler.sendEmptyMessageDelayed(MANSU,3000);
+                        handler.sendEmptyMessageDelayed(MANSU,100);
 
-                        ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
+                        //ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
                         break;
                     case 2:
                         //gifImageView.setImageResource(R.drawable.zhongsu_x_a);
-                        handler.sendEmptyMessageDelayed(ZHONGSU,1500);
+                        handler.sendEmptyMessageDelayed(ZHONGSU,100);
 
-                        ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
+                        //ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
                         break;
                     case 3:
                         //gifImageView.setImageResource(R.drawable.kuaisu_x_a);
-                        handler.sendEmptyMessageDelayed(KUAISU,1000);
+                        handler.sendEmptyMessageDelayed(KUAISU,100);
 
-                        ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
+                        //ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
                         break;
 
 
@@ -214,5 +227,71 @@ public class MachineStateSwitchFragment extends BaseFragment {
         tianqi.setText(message.getResult().getData().getWeath());
         shidu.setText(message.getResult().getData().getPm25());
         fengdu.setText(message.getResult().getData().getWind());
+    }
+
+    public void contro_0(int i){
+        Map map = new HashMap();
+        map.put(0,i);
+        Gson gson = new Gson();
+        String jsonObject = gson.toJson(map);
+        dvcinfo(MyApplication.getInstance().getDid(),jsonObject);
+    }
+
+    @SuppressLint("CheckResult")
+    private void dvcinfo(String did , String jsonObject) {
+        HttpApi mloginApi;
+        mloginApi = RetrofitClient.create(HttpApi.class);
+        String motime = String.valueOf(System.currentTimeMillis());
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("motime",motime);
+
+
+        String sign = signMD5("interlnx&aY4N!bAAds",hashMap);
+
+        FormBody body = new FormBody.Builder()
+                .add("appid", "1288")
+                .add("motime",  motime)
+                .add("sign", "1234567890")
+                .add("did", did)
+                .add("cmd",jsonObject)
+                .add("token", MyApplication.getInstance().getLoginResult().getData().getToken())
+                .build();
+
+        Observable<ControlResult> observable = mloginApi.control(body);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ControlResult>() {
+                    @Override
+                    public void accept(ControlResult baseInfo) throws Exception {
+                        if ("10000".equals(baseInfo.getCode())){
+                            ToastUtils.showShort(baseInfo.getMsg());
+
+                        }else {
+                            ToastUtils.showShort(baseInfo.getMsg());
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        ToastUtils.showShort("远程操纵失败，请稍后重试");
+                    }
+                });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onGetStickyEvent2(MessageWrap message) {
+        Log.e("zbs", "onReceiveMsg: " + message.toString());
+
+        Map<String, Integer> map = new LinkedHashMap<String, Integer>();
+        map = message.getMap();
+        if (map.get("3") == 1){
+            setProgress(1);
+        }else if (map.get("3") == 2){
+            setProgress(2);
+        }else if (map.get("3") == 2){
+            setProgress(3);
+        }
+
     }
 }

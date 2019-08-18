@@ -1,5 +1,7 @@
 package com.sim.chongwukongjing.ui.bean;
 
+import java.util.Map;
+
 public class MessageEvent {
 
     private String recode;
@@ -21,6 +23,10 @@ public class MessageEvent {
         this.result = result;
     }
 
+
+    public static MessageEvent getInstance(String message , WeatherResult data) {
+        return new MessageEvent(message,data);
+    }
 
 
     public MessageEvent(String recode, WeatherResult result) {

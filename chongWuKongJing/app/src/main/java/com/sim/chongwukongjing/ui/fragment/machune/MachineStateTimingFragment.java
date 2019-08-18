@@ -20,6 +20,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -143,9 +144,9 @@ public class MachineStateTimingFragment extends BaseFragment {
                 moshi = true;
                 break;
             case R.id.yici:yici.setBackgroundColor(Color.parseColor("#87CEEB"));
-                jianxie.setBackgroundColor(Color.parseColor("#D4D4D4"));
+                meitian.setBackgroundColor(Color.parseColor("#D4D4D4"));
                 break;
-            case R.id.meitian:jianxie.setBackgroundColor(Color.parseColor("#87CEEB"));
+            case R.id.meitian:meitian.setBackgroundColor(Color.parseColor("#87CEEB"));
                 yici.setBackgroundColor(Color.parseColor("#D4D4D4"));
                 break;
 
@@ -205,5 +206,23 @@ public class MachineStateTimingFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onReceiveMsg(MessageWrap message) {
         Log.e("zbs", "onReceiveMsg: " + message.toString());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onGetStickyEvent2(MessageWrap message) {
+        Log.e("zbs", "onReceiveMsg: " + message.toString());
+
+        Map<String, Integer> map = new LinkedHashMap<String, Integer>();
+        map = message.getMap();
+        if (map.get("1") == 1){
+            jianxie:jianxie.setBackgroundColor(Color.parseColor("#87CEEB"));
+            lianxu.setBackgroundColor(Color.parseColor("#D4D4D4"));
+            moshi = true;
+        }else if (map.get("1") == 0){
+            lianxu.setBackgroundColor(Color.parseColor("#87CEEB"));
+            jianxie.setBackgroundColor(Color.parseColor("#D4D4D4"));
+            moshi = false;
+        }
+
     }
 }

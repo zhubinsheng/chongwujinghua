@@ -7,8 +7,8 @@ public class DvcInfoResult {
     /**
      * code : 10000
      * msg : 设备信息获取成功！
-     * data : {"0":1,"3":10,"5":10,"6":4660,"uid":5,"rssi":-23,"type":5678,"isonline":"0"}
-     * optime : 9ms
+     * data : {"0":1,"uid":13,"1":1,"rssi":-43,"2":1,"3":3,"4":3,"5":2,"6":0,"type":5678,"isonline":"1"}
+     * optime : 32ms
      */
 
     private String code;
@@ -51,25 +51,34 @@ public class DvcInfoResult {
     public static class DataBean {
         /**
          * 0 : 1
-         * 3 : 10
-         * 5 : 10
-         * 6 : 4660
-         * uid : 5
-         * rssi : -23
+         * uid : 13
+         * 1 : 1
+         * rssi : -43
+         * 2 : 1
+         * 3 : 3
+         * 4 : 3
+         * 5 : 2
+         * 6 : 0
          * type : 5678
-         * isonline : 0
+         * isonline : 1
          */
 
         @SerializedName("0")
         private int _$0;
+        private int uid;
+        @SerializedName("1")
+        private int _$1;
+        private int rssi;
+        @SerializedName("2")
+        private int _$2;
         @SerializedName("3")
         private int _$3;
+        @SerializedName("4")
+        private int _$4;
         @SerializedName("5")
         private int _$5;
         @SerializedName("6")
         private int _$6;
-        private int uid;
-        private int rssi;
         private int type;
         private String isonline;
 
@@ -81,12 +90,52 @@ public class DvcInfoResult {
             this._$0 = _$0;
         }
 
+        public int getUid() {
+            return uid;
+        }
+
+        public void setUid(int uid) {
+            this.uid = uid;
+        }
+
+        public int get_$1() {
+            return _$1;
+        }
+
+        public void set_$1(int _$1) {
+            this._$1 = _$1;
+        }
+
+        public int getRssi() {
+            return rssi;
+        }
+
+        public void setRssi(int rssi) {
+            this.rssi = rssi;
+        }
+
+        public int get_$2() {
+            return _$2;
+        }
+
+        public void set_$2(int _$2) {
+            this._$2 = _$2;
+        }
+
         public int get_$3() {
             return _$3;
         }
 
         public void set_$3(int _$3) {
             this._$3 = _$3;
+        }
+
+        public int get_$4() {
+            return _$4;
+        }
+
+        public void set_$4(int _$4) {
+            this._$4 = _$4;
         }
 
         public int get_$5() {
@@ -103,22 +152,6 @@ public class DvcInfoResult {
 
         public void set_$6(int _$6) {
             this._$6 = _$6;
-        }
-
-        public int getUid() {
-            return uid;
-        }
-
-        public void setUid(int uid) {
-            this.uid = uid;
-        }
-
-        public int getRssi() {
-            return rssi;
-        }
-
-        public void setRssi(int rssi) {
-            this.rssi = rssi;
         }
 
         public int getType() {

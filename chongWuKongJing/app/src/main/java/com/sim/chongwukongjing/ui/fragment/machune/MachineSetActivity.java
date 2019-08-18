@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Message;
 import android.provider.Settings;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -25,6 +26,7 @@ import com.sim.chongwukongjing.ui.Base.BaseActivity;
 import com.sim.chongwukongjing.ui.Main.MyApplication;
 import com.sim.chongwukongjing.ui.bean.ConfigResult;
 import com.sim.chongwukongjing.ui.bean.DvcInfoResult;
+import com.sim.chongwukongjing.ui.bean.MessageDecInfo;
 import com.sim.chongwukongjing.ui.bean.MessageEvent;
 import com.sim.chongwukongjing.ui.bean.MessageWrap;
 import com.sim.chongwukongjing.ui.bean.UuidResult;
@@ -368,7 +370,7 @@ public class MachineSetActivity extends BaseActivity {
                         if ("10000".equals(baseInfo.getCode())){
                             ToastUtils.showShort(baseInfo.getMsg());
 
-                            EventBus.getDefault().post(new MessageEvent("wea",baseInfo));
+                            EventBus.getDefault().post(MessageEvent.getInstance("wea",baseInfo));
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -410,7 +412,7 @@ public class MachineSetActivity extends BaseActivity {
                     public void accept(DvcInfoResult baseInfo) throws Exception {
                         if ("10000".equals(baseInfo.getCode())){
                             ToastUtils.showShort(baseInfo.getMsg());
-
+                            EventBus.getDefault().postSticky(MessageDecInfo.getInstance("dvcinfo",baseInfo));
                         }
                     }
                 }, new Consumer<Throwable>() {

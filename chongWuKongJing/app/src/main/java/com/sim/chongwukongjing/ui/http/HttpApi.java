@@ -11,6 +11,7 @@ import com.sim.chongwukongjing.ui.bean.MyList;
 import com.sim.chongwukongjing.ui.bean.ProductlistResult;
 import com.sim.chongwukongjing.ui.bean.RegResult;
 import com.sim.chongwukongjing.ui.bean.SendcodeResult;
+import com.sim.chongwukongjing.ui.bean.TtinmingResult;
 import com.sim.chongwukongjing.ui.bean.UnbindResult;
 import com.sim.chongwukongjing.ui.bean.UuidResult;
 import com.sim.chongwukongjing.ui.bean.WeatherResult;
@@ -74,6 +75,8 @@ public interface HttpApi {
     @POST("qq/linx/config")
     Observable<ConfigResult> config(@Body RequestBody body);
 
+    @POST("api/dvc/setTiming")
+    Observable<TtinmingResult> setTiming(@Body RequestBody body);
 
     @POST("api/sso/uuid")
     Observable<UuidResult> uuid(@Body RequestBody body);

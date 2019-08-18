@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.bean.MyList;
+import com.sim.chongwukongjing.ui.utils.ShuiweiUtil;
 
 import java.util.List;
 
@@ -35,8 +36,15 @@ public class MyProductlistAdapter extends BaseQuickAdapter<MyList.DataBean, Base
         //可链式调用赋值
         helper.setText(R.id.textView11, item.getDvcnm())
                 .addOnClickListener(R.id.shanchu)    //给添加点击事件
-                .addOnClickListener(R.id.content)
-                .setText(R.id.textView14 ,String.valueOf(item.getTid())+"%");
+                .addOnClickListener(R.id.content);
+        if (
+                item.getIsonline().equals("1")
+        ){
+           String SWzhi = ShuiweiUtil.shuiwei(item.getAttr6());
+            helper.setText(R.id.textView14 ,SWzhi);
+        }else {
+            helper.setText(R.id.textView14 ,"--");
+        }
 
 
         if ("1".equals(item.getIsonline())){
@@ -60,12 +68,12 @@ public class MyProductlistAdapter extends BaseQuickAdapter<MyList.DataBean, Base
 
 
 
-        if (!TextUtils.isEmpty(item.getPic())) {
+        /*if (!TextUtils.isEmpty(item.getPic())) {
             //使用Glide框架加载图片
             Glide.with(mcontext)
                     .load(item.getPic())
                     .into(imageView);
-        }
+        }*/
         //获取当前条目position
         //int position = helper.getLayoutPosition();
     }

@@ -2,6 +2,7 @@ package com.sim.chongwukongjing.ui.fragment.machune;
 
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,10 +11,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.sim.chongwukongjing.R;
+import com.sim.chongwukongjing.ui.Activity.MyEquipmentAcitivity;
 import com.sim.chongwukongjing.ui.Base.BaseFragment;
+import com.sim.chongwukongjing.ui.Main.MyApplication;
+import com.sim.chongwukongjing.ui.bean.DvcInfoResult;
+import com.sim.chongwukongjing.ui.bean.MessageDecInfo;
 import com.sim.chongwukongjing.ui.bean.MessageWrap;
+import com.sim.chongwukongjing.ui.bean.MyList;
+import com.sim.chongwukongjing.ui.bean.TtinmingResult;
+import com.sim.chongwukongjing.ui.http.HttpApi;
+import com.sim.chongwukongjing.ui.http.RetrofitClient;
+import com.sim.chongwukongjing.ui.wigdet.MyProductlistAdapter;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -25,6 +38,14 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import me.goldze.mvvmhabit.utils.ToastUtils;
+import okhttp3.FormBody;
+
+import static com.sim.chongwukongjing.ui.utils.Md5Util.signMD5;
 
 /**
  * @author Administrator 定时界面
@@ -53,6 +74,7 @@ public class MachineStateTimingFragment extends BaseFragment {
     Button fabButton;
 
     private boolean moshi = false;
+    private boolean isloop = false;
 
     @Override
     protected View getBaseView(LayoutInflater inflater, ViewGroup container) {
@@ -108,7 +130,8 @@ public class MachineStateTimingFragment extends BaseFragment {
 
     @Override
     protected void initSet(View view) {
-
+        yici.setBackgroundColor(Color.parseColor("#87CEEB"));
+        meitian.setBackgroundColor(Color.parseColor("#D4D4D4"));
     }
 
     @Override
@@ -121,7 +144,7 @@ public class MachineStateTimingFragment extends BaseFragment {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fabButton:
-            if (moshi=false){
+           /* if (moshi==false){
                 Map map = new HashMap();
                 map.put(1,0);
                 Gson gson = new Gson();
@@ -131,23 +154,34 @@ public class MachineStateTimingFragment extends BaseFragment {
                 map.put(1,1);
                 Gson gson = new Gson();
                 ControUtil.dvcinfo(gson.toJson(map));
-            }
+            }*/
+                setTiming();
             break;
 
 
             case R.id.lianxu: lianxu.setBackgroundColor(Color.parseColor("#87CEEB"));
                 jianxie.setBackgroundColor(Color.parseColor("#D4D4D4"));
                 moshi = false;
+                Map map = new HashMap();
+                map.put(1,0);
+                Gson gson = new Gson();
+                ControUtil.dvcinfo(gson.toJson(map));
                 break;
             case R.id.jianxie:jianxie.setBackgroundColor(Color.parseColor("#87CEEB"));
                 lianxu.setBackgroundColor(Color.parseColor("#D4D4D4"));
                 moshi = true;
+                Map map2 = new HashMap();
+                map2.put(1,1);
+                Gson gson2 = new Gson();
+                ControUtil.dvcinfo(gson2.toJson(map2));
                 break;
             case R.id.yici:yici.setBackgroundColor(Color.parseColor("#87CEEB"));
                 meitian.setBackgroundColor(Color.parseColor("#D4D4D4"));
+                isloop = false;
                 break;
             case R.id.meitian:meitian.setBackgroundColor(Color.parseColor("#87CEEB"));
                 yici.setBackgroundColor(Color.parseColor("#D4D4D4"));
+                isloop = true;
                 break;
 
 
@@ -209,6 +243,24 @@ public class MachineStateTimingFragment extends BaseFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onGetStickyEvent(MessageDecInfo message) {
+        Log.e("zbs", "onReceiveMsg: " + message.toString());
+        DvcInfoResult.DataBean dat = message.getResult().getData();
+
+        int i  = dat.get_$1();
+        if (i == 1){
+            jianxie:jianxie.setBackgroundColor(Color.parseColor("#87CEEB"));
+            lianxu.setBackgroundColor(Color.parseColor("#D4D4D4"));
+            moshi = true;
+        }else if (i == 0){
+            lianxu.setBackgroundColor(Color.parseColor("#87CEEB"));
+            jianxie.setBackgroundColor(Color.parseColor("#D4D4D4"));
+            moshi = false;
+        }
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onGetStickyEvent2(MessageWrap message) {
         Log.e("zbs", "onReceiveMsg: " + message.toString());
 
@@ -225,4 +277,72 @@ public class MachineStateTimingFragment extends BaseFragment {
         }
 
     }
+
+
+
+
+    @SuppressLint("CheckResult")
+    private void setTiming() {
+        HttpApi mloginApi;
+        mloginApi = RetrofitClient.create(HttpApi.class);
+        String motime = String.valueOf(System.currentTimeMillis());
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("motime",motime);
+        //hashMap.put("phone",phone.getText().toString());
+
+        String sign = signMD5("interlnx&aY4N!bAAds",hashMap);
+
+        Map map = new HashMap();
+        map.put("start", kaishi.getText().toString());
+        map.put("end",jieshu.getText().toString());
+        Gson gson = new Gson();
+
+        String mo_shi;
+        if ( moshi ){
+            mo_shi = "1";
+        }else {
+            mo_shi = "0";
+        }
+
+        String is_loop;
+        if ( isloop ){
+            is_loop = "1";
+        }else {
+            is_loop = "0";
+        }
+
+
+        FormBody body = new FormBody.Builder()
+                .add("t1", gson.toJson(map))
+                .add("isloop",is_loop)
+                .add("mode",mo_shi)
+                .add("appid", "1288")
+                .add("motime",  motime)
+                .add("sign", "1234567890")
+                .add("token", MyApplication.getInstance().getLoginResult().getData().getToken())
+                .add("did", MyApplication.getInstance().getDid())
+
+                .build();
+
+        Observable<TtinmingResult> observable = mloginApi.setTiming(body);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<TtinmingResult>() {
+                    @Override
+                    public void accept(TtinmingResult baseInfo) throws Exception {
+                        if ("10000".equals(baseInfo.getCode())){
+                            ToastUtils.showShort(baseInfo.getMsg());
+
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        ToastUtils.showShort("定时失败，请稍后重试");
+                    }
+                });
+    }
+
+
 }

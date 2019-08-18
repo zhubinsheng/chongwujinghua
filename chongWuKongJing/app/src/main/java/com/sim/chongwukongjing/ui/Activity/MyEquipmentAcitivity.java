@@ -2,6 +2,7 @@ package com.sim.chongwukongjing.ui.Activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,13 +17,18 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
 import com.sim.chongwukongjing.ui.Main.MyApplication;
+import com.sim.chongwukongjing.ui.bean.MessageWrap;
 import com.sim.chongwukongjing.ui.bean.MyList;
 import com.sim.chongwukongjing.ui.bean.UnbindResult;
 import com.sim.chongwukongjing.ui.fragment.machune.MachineSetActivity;
 import com.sim.chongwukongjing.ui.http.HttpApi;
+import com.sim.chongwukongjing.ui.http.MyMqttService;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
 import com.sim.chongwukongjing.ui.wigdet.MyProductlistAdapter;
 import com.sim.chongwukongjing.ui.wigdet.SpacesItemDecoration;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -63,6 +69,19 @@ public class MyEquipmentAcitivity extends BaseActivity {
     LoadingView loadingView;
 
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getProductlist();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getProductlist();
+    }
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_my_equipment;
@@ -90,12 +109,6 @@ public class MyEquipmentAcitivity extends BaseActivity {
             startActivity(LoginActivity.class);
             finish();
         }
-
-
-
-
-
-
 
     }
 
@@ -261,5 +274,10 @@ public class MyEquipmentAcitivity extends BaseActivity {
                         ToastUtils.showShort("网络延迟过高，请稍后重试");
                     }
                 });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReceiveMsg(MessageWrap message) {
+        getProductlist();
     }
 }

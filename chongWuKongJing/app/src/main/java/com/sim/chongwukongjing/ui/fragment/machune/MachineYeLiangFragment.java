@@ -13,9 +13,13 @@ import com.sim.chongwukongjing.ui.Base.BaseFragment;
 import com.sim.chongwukongjing.ui.bean.DvcInfoResult;
 import com.sim.chongwukongjing.ui.bean.MessageDecInfo;
 import com.sim.chongwukongjing.ui.bean.MessageWrap;
+import com.sim.chongwukongjing.ui.utils.ShuiweiUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -71,8 +75,22 @@ public class MachineYeLiangFragment extends BaseFragment {
         Log.e("zbs", "onReceiveMsg: " + message.toString());
         DvcInfoResult.DataBean dat = message.getResult().getData();
 
-        float zyx =  dat.get_$6()/1000 ;
-        textView18.setText((int)zyx+"%");
+        String SWzhi = ShuiweiUtil.shuiwei(dat.get_$6());
 
+        //float zyx =  dat.get_$6()/1000 ;
+        textView18.setText(SWzhi);
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onGetStickyEvent2(MessageWrap message) {
+        Log.e("zbs", "onReceiveMsg: " + message.toString());
+
+        Map<String, Integer> map = new LinkedHashMap<String, Integer>();
+        map = message.getMap();
+        //if (message.message.equals("6")){
+            String SWzhi = ShuiweiUtil.shuiwei(map.get("6"));
+            textView18.setText(SWzhi);
+        //}
     }
 }

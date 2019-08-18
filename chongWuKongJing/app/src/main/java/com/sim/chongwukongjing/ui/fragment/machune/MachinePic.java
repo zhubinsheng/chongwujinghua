@@ -33,6 +33,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import okhttp3.FormBody;
+import pl.droidsonroids.gif.GifImageView;
 
 import static com.sim.chongwukongjing.ui.utils.Md5Util.signMD5;
 
@@ -42,6 +43,9 @@ public class MachinePic extends BaseFragment {
 
     @BindView(R.id.imageView9)
     ImageView imageView9;
+
+    @BindView(R.id.GifImageView)
+    GifImageView gifImageView;
 
     @Override
     protected View getBaseView(LayoutInflater inflater, ViewGroup container) {
@@ -75,9 +79,13 @@ public class MachinePic extends BaseFragment {
             case R.id.imageView9:
 
                 if (kaiguan){
+                    imageView9.setImageResource(R.drawable.buliang);
+                    gifImageView.setVisibility(View.GONE);
                     contro_0(0);
                     kaiguan = false;
                 }else {
+                    imageView9.setImageResource(R.drawable.machine_main_picture);
+                    gifImageView.setVisibility(View.VISIBLE);
                     contro_0(1);
                     kaiguan = true;
                 }
@@ -111,8 +119,12 @@ public class MachinePic extends BaseFragment {
         Map<String, Integer> map = new LinkedHashMap<String, Integer>();
         map = message.getMap();
         if (map.get("0") == 0){
+            imageView9.setImageResource(R.drawable.buliang);
+            gifImageView.setVisibility(View.GONE);
             kaiguan = false;
         }else {
+            imageView9.setImageResource(R.drawable.machine_main_picture);
+            gifImageView.setVisibility(View.VISIBLE);
             kaiguan = true;
         }
 

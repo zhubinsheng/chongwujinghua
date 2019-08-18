@@ -264,37 +264,37 @@ public class MyMqttService extends Service {
             Log.i("zbs", "收到消息： " + map.get("0").toString());
             EventBus.getDefault().post(MessageWrap.getInstance("all",200,map));
 
-            if (mapCopy!=null){
+           /* if (mapCopy!=null){
                if (!map.get("0").equals(mapCopy.get("0"))){
                    EventBus.getDefault().post(MessageWrap.getInstance("0",map.get("0"),null));
                    Log.i("zbs", "收到消息： " + map.get("0").toString());
                }
                 if (!map.get("1").equals(mapCopy.get("1"))){
-                    EventBus.getDefault().post(MessageWrap.getInstance("1",map.get("0"),null));
+                    EventBus.getDefault().post(MessageWrap.getInstance("1",map.get("1"),null));
                     Log.i("zbs", "收到消息： " + map.get("0").toString());
                 }
                 if (!map.get("2").equals(mapCopy.get("2"))){
-                    EventBus.getDefault().post(MessageWrap.getInstance("2",map.get("0"),null));
+                    EventBus.getDefault().post(MessageWrap.getInstance("2",map.get("2"),null));
                     Log.i("zbs", "收到消息： " + map.get("0").toString());
                 }
                 if (!map.get("3").equals(mapCopy.get("3"))){
-                    EventBus.getDefault().post(MessageWrap.getInstance("3",map.get("0"),null));
+                    EventBus.getDefault().post(MessageWrap.getInstance("3",map.get("3"),null));
                     Log.i("zbs", "收到消息： " + map.get("0").toString());
                 }
                 if (!map.get("4").equals(mapCopy.get("4"))){
-                    EventBus.getDefault().post(MessageWrap.getInstance("4",map.get("0"),null));
+                    EventBus.getDefault().post(MessageWrap.getInstance("4",map.get("4"),null));
                     Log.i("zbs", "收到消息： " + map.get("0").toString());
                 }
                 if (!map.get("5").equals(mapCopy.get("5"))){
-                    EventBus.getDefault().post(MessageWrap.getInstance("5",map.get("0"),null));
+                    EventBus.getDefault().post(MessageWrap.getInstance("5",map.get("5"),null));
                     Log.i("zbs", "收到消息： " + map.get("0").toString());
                 }
                 if (!map.get("6").equals(mapCopy.get("6"))){
-                    EventBus.getDefault().post(MessageWrap.getInstance("6",map.get("0"),null));
+                    EventBus.getDefault().post(MessageWrap.getInstance("6",map.get("6"),null));
                     Log.i("zbs", "收到消息： " + map.get("0").toString());
                 }
 
-            }
+            }*/
             mapCopy = map;
             //收到其他客户端的消息后，响应给对方告知消息已到达或者消息有问题等
             response("message arrived");

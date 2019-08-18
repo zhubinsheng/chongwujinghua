@@ -10,12 +10,14 @@ public class MyList {
     /**
      * code : 10000
      * msg : 我的设备列表获取成功！
-     * data : [{"owner":"1","panelid":2010,"isvideoin":"","dvcgs":"1","dvcnm":"我的小乖乖","pic":"http://asjdflkajflkdasjkljfaklsjdflk.jpg","isnative":"1","tid":75,"isonline":"0","select_img":"http://asjdflkajflkdasjkljfaklsjdflk.jpg","bhome":"1","ison":"0","tmallflag":"0","did":"4db9dce34105c025","unselect_img":"http://asjdflkajflkdasjkljfaklsjdflk.jpg"}]
-     * optime : 28ms
+     * data : [{"owner":"1","panelid":2010,"isvideoin":"","dvcgs":"1","dvcnm":"AIR MEDIC-AIR MEDIC S1","attr6":107,"pic":"http://asjdflkajflkdasjkljfaklsjdflk.jpg","isnative":"1","tid":75,"isonline":"1","select_img":"http://asjdflkajflkdasjkljfaklsjdflk.jpg","bhome":"1","ison":null,"tmallflag":"0","did":"905277ea4aceeee0","unselect_img":"http://asjdflkajflkdasjkljfaklsjdflk.jpg"}]
+     * other : {"airQuality":"NA","intemp":"NA","indumi":"NA","inpm25":"NA"}
+     * optime : 21ms
      */
 
     private String code;
     private String msg;
+    private OtherBean other;
     private String optime;
     private List<DataBean> data;
 
@@ -35,6 +37,14 @@ public class MyList {
         this.msg = msg;
     }
 
+    public OtherBean getOther() {
+        return other;
+    }
+
+    public void setOther(OtherBean other) {
+        this.other = other;
+    }
+
     public String getOptime() {
         return optime;
     }
@@ -51,22 +61,69 @@ public class MyList {
         this.data = data;
     }
 
+    public static class OtherBean {
+        /**
+         * airQuality : NA
+         * intemp : NA
+         * indumi : NA
+         * inpm25 : NA
+         */
+
+        private String airQuality;
+        private String intemp;
+        private String indumi;
+        private String inpm25;
+
+        public String getAirQuality() {
+            return airQuality;
+        }
+
+        public void setAirQuality(String airQuality) {
+            this.airQuality = airQuality;
+        }
+
+        public String getIntemp() {
+            return intemp;
+        }
+
+        public void setIntemp(String intemp) {
+            this.intemp = intemp;
+        }
+
+        public String getIndumi() {
+            return indumi;
+        }
+
+        public void setIndumi(String indumi) {
+            this.indumi = indumi;
+        }
+
+        public String getInpm25() {
+            return inpm25;
+        }
+
+        public void setInpm25(String inpm25) {
+            this.inpm25 = inpm25;
+        }
+    }
+
     public static class DataBean {
         /**
          * owner : 1
          * panelid : 2010
          * isvideoin :
          * dvcgs : 1
-         * dvcnm : 我的小乖乖
+         * dvcnm : AIR MEDIC-AIR MEDIC S1
+         * attr6 : 107
          * pic : http://asjdflkajflkdasjkljfaklsjdflk.jpg
          * isnative : 1
          * tid : 75
-         * isonline : 0
+         * isonline : 1
          * select_img : http://asjdflkajflkdasjkljfaklsjdflk.jpg
          * bhome : 1
-         * ison : 0
+         * ison : null
          * tmallflag : 0
-         * did : 4db9dce34105c025
+         * did : 905277ea4aceeee0
          * unselect_img : http://asjdflkajflkdasjkljfaklsjdflk.jpg
          */
 
@@ -75,13 +132,14 @@ public class MyList {
         private String isvideoin;
         private String dvcgs;
         private String dvcnm;
+        private int attr6;
         private String pic;
         private String isnative;
         private int tid;
         private String isonline;
         private String select_img;
         private String bhome;
-        private String ison;
+        private Object ison;
         private String tmallflag;
         private String did;
         private String unselect_img;
@@ -124,6 +182,14 @@ public class MyList {
 
         public void setDvcnm(String dvcnm) {
             this.dvcnm = dvcnm;
+        }
+
+        public int getAttr6() {
+            return attr6;
+        }
+
+        public void setAttr6(int attr6) {
+            this.attr6 = attr6;
         }
 
         public String getPic() {
@@ -174,11 +240,11 @@ public class MyList {
             this.bhome = bhome;
         }
 
-        public String getIson() {
+        public Object getIson() {
             return ison;
         }
 
-        public void setIson(String ison) {
+        public void setIson(Object ison) {
             this.ison = ison;
         }
 

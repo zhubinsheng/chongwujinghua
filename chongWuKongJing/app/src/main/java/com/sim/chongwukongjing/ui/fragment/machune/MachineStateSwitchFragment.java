@@ -16,10 +16,13 @@ import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseFragment;
 import com.sim.chongwukongjing.ui.Main.MyApplication;
 import com.sim.chongwukongjing.ui.bean.ControlResult;
+import com.sim.chongwukongjing.ui.bean.DvcInfoResult;
+import com.sim.chongwukongjing.ui.bean.MessageDecInfo;
 import com.sim.chongwukongjing.ui.bean.MessageEvent;
 import com.sim.chongwukongjing.ui.bean.MessageWrap;
 import com.sim.chongwukongjing.ui.http.HttpApi;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
+import com.sim.chongwukongjing.ui.utils.ShuiweiUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -144,8 +147,9 @@ public class MachineStateSwitchFragment extends BaseFragment {
                 switch (seekBar.getProgress()) {
                     case 0:
                         //gifImageView.setVisibility(View.GONE);
-                        ToastUtils.showLong("已关闭机器,停止风扇");
-                        contro_0(0);
+                        //ToastUtils.showLong("已关闭机器,停止风扇");
+                        //contro_0(0);
+                        setProgress(1);
                         break;
                     case 1:
                         //gifImageView.setImageResource(R.drawable.mansu_machine_x_a);
@@ -213,9 +217,9 @@ public class MachineStateSwitchFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onReceiveMsg(MessageWrap message) {
-        if (!message.message.equals("0")){
+        /*if (!message.message.equals("0")){
             return;
-        }
+        }*/
         Log.e("zbs", "onReceiveMsg: " + message.toString());
     }
 
@@ -290,6 +294,22 @@ public class MachineStateSwitchFragment extends BaseFragment {
         }else if (map.get("3") == 2){
             setProgress(2);
         }else if (map.get("3") == 2){
+            setProgress(3);
+        }
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onGetStickyEvent(MessageDecInfo message) {
+        Log.e("zbs", "onReceiveMsg: " + message.toString());
+        DvcInfoResult.DataBean dat = message.getResult().getData();
+
+        int i  = dat.get_$3();
+        if (i == 1){
+            setProgress(1);
+        }else if (i == 2){
+            setProgress(2);
+        }else if (i == 3){
             setProgress(3);
         }
 

@@ -37,6 +37,7 @@ import com.sim.chongwukongjing.ui.http.MyMqttService;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
 import com.sim.chongwukongjing.ui.http.RetrofitClient2;
 import com.sim.chongwukongjing.ui.utils.LocationUtils;
+import com.sim.chongwukongjing.ui.utils.SharedPreferencesUtil;
 import com.sim.chongwukongjing.ui.wigdet.FragAdapter;
 import com.sim.chongwukongjing.ui.wigdet.NoScrollViewPager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -52,6 +53,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import me.goldze.mvvmhabit.utils.SPUtils;
 import me.goldze.mvvmhabit.utils.StringUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import okhttp3.FormBody;
@@ -111,10 +113,10 @@ public class MachineSetActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Intent intent = new Intent();
+        /*Intent intent = new Intent();
         intent.setAction(MyMqttService.ACTION);
         intent.setPackage(this.getPackageName());
-        this.stopService(intent);
+        this.stopService(intent);*/
     }
 
     @Override
@@ -122,12 +124,12 @@ public class MachineSetActivity extends BaseActivity {
         uuid();//获取uuid　然后获取ｃｏｎｆｉｇ
 
 
-        Location location = LocationUtils.getInstance( this ).showLocation();
+       /* Location location = LocationUtils.getInstance( this ).showLocation();
 
         if (location != null) {
             //address = "纬度：" + location.getLatitude() + "经度：" + location.getLongitude();
             //Log.d("zbs",address);
-        }
+        }*/
         //getWeather();
         //findLocation(address);
         /*Map<String,String> param =new HashMap<String,String>();
@@ -503,45 +505,51 @@ public class MachineSetActivity extends BaseActivity {
 
     @SuppressLint("CheckResult")
     private void uuid() {
-        HttpApi mloginApi;
-        mloginApi = RetrofitClient.create(HttpApi.class);
-        String motime = String.valueOf(System.currentTimeMillis());
+        if (SPUtils.getInstance().contains("Fuuid")){
+            new Thread(() -> config(SPUtils.getInstance().getString("Fuuid"))).start();
+        }else {
+            HttpApi mloginApi;
+            mloginApi = RetrofitClient.create(HttpApi.class);
+            String motime = String.valueOf(System.currentTimeMillis());
 
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("motime",motime);
-
-
-        String androidID = Settings.System.getString(this.getContentResolver(), Settings.System.ANDROID_ID);
-        String sign = signMD5("interlnx&aY4N!bAAds",hashMap);
-
-        FormBody body = new FormBody.Builder()
-                .add("appid", "1288")
-                .add("motime",  motime)
-                .add("sign", "1234567890")
-                .build();
-
-        Observable<UuidResult> observable = mloginApi.uuid(body);
-        observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<UuidResult>() {
-                    @Override
-                    public void accept(UuidResult baseInfo) throws Exception {
-                        if ("10000".equals(baseInfo.getCode())){
-                            new Thread(() -> config(baseInfo.getData().getUuid())).start();
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("motime",motime);
 
 
-                        }else {
+            String androidID = Settings.System.getString(this.getContentResolver(), Settings.System.ANDROID_ID);
+            String sign = signMD5("interlnx&aY4N!bAAds",hashMap);
+
+            FormBody body = new FormBody.Builder()
+                    .add("appid", "1288")
+                    .add("motime",  motime)
+                    .add("sign", "1234567890")
+                    .build();
+
+            Observable<UuidResult> observable = mloginApi.uuid(body);
+            observable.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<UuidResult>() {
+                        @Override
+                        public void accept(UuidResult baseInfo) throws Exception {
+                            if ("10000".equals(baseInfo.getCode())){
+                                SPUtils.getInstance().put("Fuuid",baseInfo.getData().getUuid());
+                                new Thread(() -> config(baseInfo.getData().getUuid())).start();
+
+
+                            }else {
+                                startActivity(MyEquipmentAcitivity.class);
+                                finish();
+                            }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
                             startActivity(MyEquipmentAcitivity.class);
                             finish();
                         }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        startActivity(MyEquipmentAcitivity.class);
-                        finish();
-                    }
-                });
+                    });
+        }
+
     }
 
 }

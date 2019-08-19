@@ -72,19 +72,19 @@ public class MachineStateFengweidengPowerFragment extends BaseFragment {
                     break;
                 case 1:imageView7.setImageResource(R.drawable.ruoguang);
                     Map map = new HashMap();
-                    map.put(4,01);
+                    map.put(4,1);
                     Gson gson = new Gson();
                     ControUtil.dvcinfo(gson.toJson(map));
                     break;
                 case 2:imageView7.setImageResource(R.drawable.ciliang);
                     Map map1 = new HashMap();
-                    map1.put(4,02);
+                    map1.put(4,2);
                     Gson gson2 = new Gson();
                     ControUtil.dvcinfo(gson2.toJson(map1));
                     break;
                 case 3:imageView7.setImageResource(R.drawable.zuiliang);
                     Map map2 = new HashMap();
-                    map2.put(4,03);
+                    map2.put(4,3);
                     Gson gson3 = new Gson();
                     ControUtil.dvcinfo(gson3.toJson(map2));
                     break;
@@ -127,23 +127,23 @@ public class MachineStateFengweidengPowerFragment extends BaseFragment {
                         //gifImageView.setVisibility(View.GONE);
                         //ToastUtils.showLong("已关闭机器,停止风扇");
                         //contro_0(0);
-                        handler.sendEmptyMessageDelayed(BULAING,100);
+                        handler.sendEmptyMessageDelayed(BULAING,0);
                         break;
                     case 1:
                         //gifImageView.setImageResource(R.drawable.mansu_machine_x_a);
-                        handler.sendEmptyMessageDelayed(CICILIANG,100);
+                        handler.sendEmptyMessageDelayed(CICILIANG,0);
 
                         //ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
                         break;
                     case 2:
                         //gifImageView.setImageResource(R.drawable.zhongsu_x_a);
-                        handler.sendEmptyMessageDelayed(CILAING,100);
+                        handler.sendEmptyMessageDelayed(CILAING,0);
 
                         //ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
                         break;
                     case 3:
                         //gifImageView.setImageResource(R.drawable.kuaisu_x_a);
-                        handler.sendEmptyMessageDelayed(ZUILIANG,100);
+                        handler.sendEmptyMessageDelayed(ZUILIANG,0);
 
                         //ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
                         break;
@@ -222,7 +222,7 @@ public class MachineStateFengweidengPowerFragment extends BaseFragment {
             setProgress(1);
         }else if (map.get("4") == 2){
             setProgress(2);
-        }else if (map.get("4") == 2){
+        }else if (map.get("4") == 3){
             setProgress(3);
         }if (map.get("4") == 0){
             setProgress(0);

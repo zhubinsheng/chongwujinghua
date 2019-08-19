@@ -22,7 +22,6 @@ import com.sim.chongwukongjing.ui.bean.MessageEvent;
 import com.sim.chongwukongjing.ui.bean.MessageWrap;
 import com.sim.chongwukongjing.ui.http.HttpApi;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
-import com.sim.chongwukongjing.ui.utils.ShuiweiUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -51,6 +50,8 @@ public class MachineStateSwitchFragment extends BaseFragment {
     private static int MANSU = 1;
     private static int ZHONGSU = 2;
     private static int KUAISU = 3;
+
+    private boolean Chould = true;
 
     @BindView(R.id.diqu)
     TextView diqu;
@@ -143,29 +144,41 @@ public class MachineStateSwitchFragment extends BaseFragment {
             }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                if (!Chould){
+                    return;
+                }
+                Log.d("zbsg", String.valueOf(seekBar.getProgress()));
                 switch (seekBar.getProgress()) {
                     case 0:
                         //gifImageView.setVisibility(View.GONE);
                         //ToastUtils.showLong("已关闭机器,停止风扇");
                         //contro_0(0);
                         setProgress(1);
+                        Chould = false;
+                        seekBar2.setEnabled(false);
+                        handler.sendEmptyMessageDelayed(MANSU,0);
                         break;
                     case 1:
                         //gifImageView.setImageResource(R.drawable.mansu_machine_x_a);
-                        handler.sendEmptyMessageDelayed(MANSU,100);
+                        Chould = false;
+                        seekBar2.setEnabled(false);
+                        handler.sendEmptyMessageDelayed(MANSU,0);
 
                         //ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
                         break;
                     case 2:
                         //gifImageView.setImageResource(R.drawable.zhongsu_x_a);
-                        handler.sendEmptyMessageDelayed(ZHONGSU,100);
+                        Chould = false;
+                        seekBar2.setEnabled(false);
+                        handler.sendEmptyMessageDelayed(ZHONGSU,0);
 
                         //ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
                         break;
                     case 3:
                         //gifImageView.setImageResource(R.drawable.kuaisu_x_a);
-                        handler.sendEmptyMessageDelayed(KUAISU,100);
+                        Chould = false;
+                        seekBar2.setEnabled(false);
+                        handler.sendEmptyMessageDelayed(KUAISU,0);
 
                         //ToastUtils.showLong(String.valueOf(seekBar.getProgress()));
                         break;
@@ -296,7 +309,8 @@ public class MachineStateSwitchFragment extends BaseFragment {
         }else if (map.get("3") == 2){
             setProgress(3);
         }
-
+        seekBar2.setEnabled(true);
+        Chould = true;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)

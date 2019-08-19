@@ -2,13 +2,11 @@ package com.sim.chongwukongjing.ui.wigdet;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.text.TextUtils;
 import android.widget.ImageView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sim.chongwukongjing.R;
@@ -56,7 +54,7 @@ public class MyProductlistAdapter extends BaseQuickAdapter<MyList.DataBean, Base
         }
 
 
-        if ("1".equals(item.getIsnative())){
+        if ("1".equals(item.getIson())){
             helper.setTextColor(R.id.textView13, R.color.qmui_s_switch_text_color);
             helper.setText(R.id.textView13, "运行");
         }else {

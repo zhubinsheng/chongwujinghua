@@ -4,10 +4,8 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Message;
 import android.provider.Settings;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -28,7 +26,6 @@ import com.sim.chongwukongjing.ui.bean.ConfigResult;
 import com.sim.chongwukongjing.ui.bean.DvcInfoResult;
 import com.sim.chongwukongjing.ui.bean.MessageDecInfo;
 import com.sim.chongwukongjing.ui.bean.MessageEvent;
-import com.sim.chongwukongjing.ui.bean.MessageWrap;
 import com.sim.chongwukongjing.ui.bean.UuidResult;
 import com.sim.chongwukongjing.ui.bean.WeatherResult;
 import com.sim.chongwukongjing.ui.bean.tianqiResult;
@@ -36,8 +33,6 @@ import com.sim.chongwukongjing.ui.http.HttpApi;
 import com.sim.chongwukongjing.ui.http.MyMqttService;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
 import com.sim.chongwukongjing.ui.http.RetrofitClient2;
-import com.sim.chongwukongjing.ui.utils.LocationUtils;
-import com.sim.chongwukongjing.ui.utils.SharedPreferencesUtil;
 import com.sim.chongwukongjing.ui.wigdet.FragAdapter;
 import com.sim.chongwukongjing.ui.wigdet.NoScrollViewPager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -117,6 +112,21 @@ public class MachineSetActivity extends BaseActivity {
         intent.setAction(MyMqttService.ACTION);
         intent.setPackage(this.getPackageName());
         this.stopService(intent);*/
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Intent intent = new Intent();
+        intent.setAction(MyMqttService.ACTION);
+        intent.setPackage(this.getPackageName());
+        this.stopService(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        uuid();//获取uuid　然后获取ｃｏｎｆｉｇ
     }
 
     @Override

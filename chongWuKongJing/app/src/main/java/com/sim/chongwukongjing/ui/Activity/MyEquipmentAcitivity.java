@@ -90,6 +90,14 @@ public class MyEquipmentAcitivity extends BaseActivity {
     @Override
     protected void initView() {
         qmuiTopBar.setTitle("设备列表");
+        qmuiTopBar.addLeftImageButton(R.drawable.caidan,R.id.caidan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(UserInfoActivity.class);
+            }
+        });
+
+
 
 
     }

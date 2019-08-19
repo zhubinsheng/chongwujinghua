@@ -53,10 +53,9 @@ public class HomePagement extends BaseFragment {
     @BindView(R.id.group_list_item_shouhoufuwu)
     QMUICommonListItemView mShouhoufuwuListItemGender;
 
-    @BindView(R.id.group_list_item_wodewuliu)
+   /* @BindView(R.id.group_list_item_wodewuliu)
     QMUICommonListItemView mwodewuliuListItemGender;
-
-    @Override
+*/    @Override
     protected View getBaseView(LayoutInflater inflater, ViewGroup container) {
         return inflater.inflate(R.layout.fragment_userinfo_set, container, false);
     }
@@ -85,9 +84,9 @@ public class HomePagement extends BaseFragment {
         mShouhoufuwuListItemGender.setText("售后服务");
         mShouhoufuwuListItemGender.setImageDrawable(getResources().getDrawable(R.drawable.qmui_list_item_bg_with_border_bottom_inset_left));
 
-        mwodewuliuListItemGender.setText("我的物流");
+       /* mwodewuliuListItemGender.setText("我的物流");
         mwodewuliuListItemGender.showNewTip(true);
-        mwodewuliuListItemGender.setImageDrawable(getResources().getDrawable(R.drawable.qmui_popup_arrow_up));
+        mwodewuliuListItemGender.setImageDrawable(getResources().getDrawable(R.drawable.qmui_popup_arrow_up));*/
     }
 
     @Override

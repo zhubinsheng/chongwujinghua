@@ -52,9 +52,9 @@ public class UserPageFragment extends BaseFragment {
 
     @BindView(R.id.group_list_item_shouhoufuwu)
     QMUICommonListItemView mShouhoufuwuListItemGender;
-
+/*
     @BindView(R.id.group_list_item_wodewuliu)
-    QMUICommonListItemView mwodewuliuListItemGender;
+    QMUICommonListItemView mwodewuliuListItemGender;*/
 
     @Override
     protected View getBaseView(LayoutInflater inflater, ViewGroup container) {
@@ -85,9 +85,9 @@ public class UserPageFragment extends BaseFragment {
         mShouhoufuwuListItemGender.setText("售后服务");
         mShouhoufuwuListItemGender.setImageDrawable(getResources().getDrawable(R.drawable.qmui_list_item_bg_with_border_bottom_inset_left));
 
-        mwodewuliuListItemGender.setText("我的物流");
+   /*     mwodewuliuListItemGender.setText("我的物流");
         mwodewuliuListItemGender.showNewTip(true);
-        mwodewuliuListItemGender.setImageDrawable(getResources().getDrawable(R.drawable.qmui_popup_arrow_up));
+        mwodewuliuListItemGender.setImageDrawable(getResources().getDrawable(R.drawable.qmui_popup_arrow_up));*/
     }
 
     @Override

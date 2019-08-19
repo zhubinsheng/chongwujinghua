@@ -61,6 +61,7 @@
 
         <service android:name="org.eclipse.paho.android.service.MqttService" /> <!--MqttService-->
         <service android:name="com.sim.chongwukongjing.ui.http.MyMqttService"/> <!--MyMqttService-->
+        <activity android:name=".ui.Activity.UserInfoActivity"></activity>
     </application>
 
 </manifest>

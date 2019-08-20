@@ -81,8 +81,9 @@ public class MachineInfoFragment extends BaseFragment {
     protected void initView(View view) {
 
         fragmentList = new ArrayList<>();
-        fragmentList.add(new MachineInfo());
         fragmentList.add(new MachinePic());
+        fragmentList.add(new MachineInfo());
+
         //设置viewPage的缓存页数
         qmuiViewPager.setOffscreenPageLimit(2);
         //设置adapter

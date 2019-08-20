@@ -207,7 +207,7 @@ public class MachineSetActivity extends BaseActivity {
     protected void initSet() {
         addTabAndViewPage();
         //设置viewPage的缓存页数
-        mainViewPage.setOffscreenPageLimit(3);
+        mainViewPage.setOffscreenPageLimit(5);
         //设置adapter
         mainViewPage.setAdapter(new FragAdapter(getSupportFragmentManager(), fragmentList));
         //设置字体大小

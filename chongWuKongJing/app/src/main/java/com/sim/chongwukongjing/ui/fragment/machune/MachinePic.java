@@ -79,7 +79,7 @@ public class MachinePic extends BaseFragment {
             case R.id.imageView7:
 
                 if (kaiguan){
-                    imageView9.setImageResource(R.drawable.wuguang);
+                    imageView9.setImageResource(R.drawable.guanji);
                     gifImageView.setVisibility(View.GONE);
                     contro_0(0);
                     kaiguan = false;
@@ -119,11 +119,11 @@ public class MachinePic extends BaseFragment {
         Map<String, Integer> map = new LinkedHashMap<String, Integer>();
         map = message.getMap();
         if (map.get("0") == 0){
-            imageView9.setImageResource(R.drawable.wuguang);
+            imageView9.setImageResource(R.drawable.guanji);
             gifImageView.setVisibility(View.GONE);
             kaiguan = false;
         }else {
-            imageView9.setImageResource(R.drawable.wuguang);
+            imageView9.setImageResource(R.drawable.guanji);
             gifImageView.setVisibility(View.VISIBLE);
             kaiguan = true;
         }
@@ -140,7 +140,7 @@ public class MachinePic extends BaseFragment {
             imageView9.setImageResource(R.drawable.qiangguang);
         }if (map.get("4") == 0){
 
-            imageView9.setImageResource(R.drawable.wuguang);
+            imageView9.setImageResource(R.drawable.guanji);
         }
 
         //３　风力

@@ -148,9 +148,9 @@ public class MachineStateSwitchFragment extends BaseFragment {
             }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                if (!Chould){
+                /*if (!Chould){
                     return;
-                }
+                }*/
                 Log.d("zbsg", String.valueOf(seekBar.getProgress()));
                 switch (seekBar.getProgress()) {
                     case 0:
@@ -158,13 +158,13 @@ public class MachineStateSwitchFragment extends BaseFragment {
                         //ToastUtils.showLong("已关闭机器,停止风扇");
                         //contro_0(0);
                         setProgress(1);
-                        Chould = false;
+                        //Chould = false;
                         seekBar2.setEnabled(false);
                         handler.sendEmptyMessageDelayed(MANSU,0);
                         break;
                     case 1:
                         //gifImageView.setImageResource(R.drawable.mansu_machine_x_a);
-                        Chould = false;
+                        //Chould = false;
                         seekBar2.setEnabled(false);
                         handler.sendEmptyMessageDelayed(MANSU,0);
 
@@ -172,7 +172,7 @@ public class MachineStateSwitchFragment extends BaseFragment {
                         break;
                     case 2:
                         //gifImageView.setImageResource(R.drawable.zhongsu_x_a);
-                        Chould = false;
+                        //Chould = false;
                         seekBar2.setEnabled(false);
                         handler.sendEmptyMessageDelayed(ZHONGSU,0);
 
@@ -180,7 +180,7 @@ public class MachineStateSwitchFragment extends BaseFragment {
                         break;
                     case 3:
                         //gifImageView.setImageResource(R.drawable.kuaisu_x_a);
-                        Chould = false;
+                        //Chould = false;
                         seekBar2.setEnabled(false);
                         handler.sendEmptyMessageDelayed(KUAISU,0);
 
@@ -310,17 +310,17 @@ public class MachineStateSwitchFragment extends BaseFragment {
             setProgress(1);
             gifImageView.setImageResource(R.drawable.mansu_machene_x_b);
             seekBar2.setEnabled(true);
-            Chould = true;
+            //Chould = true;
         }else if (map.get("3") == 2){
             setProgress(2);
             gifImageView.setImageResource(R.drawable.zhongsu_x_b);
             seekBar2.setEnabled(true);
-            Chould = true;
+            //Chould = true;
         }else if (map.get("3") == 3){
             setProgress(3);
             gifImageView.setImageResource(R.drawable.kuaisu_x_b);
             seekBar2.setEnabled(true);
-            Chould = true;
+           // Chould = true;
         }
 
 

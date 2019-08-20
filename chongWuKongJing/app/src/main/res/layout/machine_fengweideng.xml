@@ -159,7 +159,7 @@
             android:layout_width="match_parent"
             android:layout_height="286dp"
             android:layout_marginTop="130dp"
-            app:srcCompat="@drawable/wuguang" />
+            app:srcCompat="@drawable/qiangguang" />
     </RelativeLayout>
 
 

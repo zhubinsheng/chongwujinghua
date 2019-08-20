@@ -21,6 +21,7 @@ import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.sim.chongwukongjing.R;
+import com.sim.chongwukongjing.ui.Activity.InterfaceActivity;
 import com.sim.chongwukongjing.ui.Activity.MyEquipmentAcitivity;
 import com.sim.chongwukongjing.ui.Activity.UserInfoActivity;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
@@ -206,7 +207,7 @@ public class MachineSetActivity extends BaseActivity {
     protected void initSet() {
         addTabAndViewPage();
         //设置viewPage的缓存页数
-        mainViewPage.setOffscreenPageLimit(5);
+        mainViewPage.setOffscreenPageLimit(3);
         //设置adapter
         mainViewPage.setAdapter(new FragAdapter(getSupportFragmentManager(), fragmentList));
         //设置字体大小
@@ -529,6 +530,10 @@ public class MachineSetActivity extends BaseActivity {
         if (SPUtils.getInstance().contains("Fuuid")){
             new Thread(() -> config(SPUtils.getInstance().getString("Fuuid"))).start();
         }else {
+            if (MyApplication.getInstance().getLoginResult()==null){
+                startActivity(InterfaceActivity.class);
+                finish();
+            }
             HttpApi mloginApi;
             mloginApi = RetrofitClient.create(HttpApi.class);
             String motime = String.valueOf(System.currentTimeMillis());

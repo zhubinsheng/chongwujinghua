@@ -166,7 +166,7 @@ public class MachineStateTimingFragment extends BaseFragment {
                 map.put(1,0);
                 Gson gson = new Gson();
                 ControUtil.dvcinfo(gson.toJson(map));
-
+                break;
             case R.id.jianxie:jianxie.setBackground(getActivity().getDrawable(R.drawable.banbianyuanjiao));
                 lianxu.setBackground(getActivity().getDrawable(R.drawable.fanbianyuanjiaohuise));
                 moshi = true;

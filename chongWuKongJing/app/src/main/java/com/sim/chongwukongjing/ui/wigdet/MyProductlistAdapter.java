@@ -31,6 +31,10 @@ public class MyProductlistAdapter extends BaseQuickAdapter<MyList.DataBean, Base
     @Override
     protected void convert(BaseViewHolder helper, MyList.DataBean item) {
         ImageView imageView = helper.getView(R.id.imageView4);
+
+        ImageView imageView5 = helper.getView(R.id.imageView5);
+        ImageView imageView6 = helper.getView(R.id.imageView6);
+        ImageView imageView7 = helper.getView(R.id.imageView7);
         //可链式调用赋值
         helper.setText(R.id.textView11, item.getDvcnm())
                 .addOnClickListener(R.id.shanchu)    //给添加点击事件
@@ -48,20 +52,25 @@ public class MyProductlistAdapter extends BaseQuickAdapter<MyList.DataBean, Base
         if ("1".equals(item.getIsonline())){
             helper.setTextColor(R.id.textView12, R.color.qmui_s_switch_text_color);
             helper.setText(R.id.textView12, "在线");
+            imageView5.setImageDrawable(mcontext.getResources().getDrawable(R.drawable.zaixian));
         }else {
             helper.setTextColor(R.id.textView12, R.color.qmui_s_switch_text_color);
             helper.setText(R.id.textView12, "离线");
+            imageView5.setImageDrawable(mcontext.getResources().getDrawable(R.drawable.lixian));
         }
 
 
-        if ("1".equals(item.getIson())){
+        if (1==(item.getIson())){
             helper.setTextColor(R.id.textView13, R.color.qmui_s_switch_text_color);
             helper.setText(R.id.textView13, "运行");
+            imageView6.setImageDrawable(mcontext.getResources().getDrawable(R.drawable.kaiji));
+            imageView7.setImageDrawable(mcontext.getResources().getDrawable(R.drawable.yeliangji));
         }else {
             helper.setTextColor(R.id.textView13, R.color.qmui_s_switch_text_color);
             helper.setText(R.id.textView13, "关闭");
+            imageView6.setImageDrawable(mcontext.getResources().getDrawable(R.drawable.meikai));
+            imageView7.setImageDrawable(mcontext.getResources().getDrawable(R.drawable.meishui));
         }
-
 
 
 

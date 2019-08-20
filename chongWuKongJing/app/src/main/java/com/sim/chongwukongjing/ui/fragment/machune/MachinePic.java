@@ -41,7 +41,7 @@ public class MachinePic extends BaseFragment {
 
     private boolean kaiguan = true;
 
-    @BindView(R.id.imageView9)
+    @BindView(R.id.imageView7)
     ImageView imageView9;
 
     @BindView(R.id.GifImageView)
@@ -73,10 +73,10 @@ public class MachinePic extends BaseFragment {
     }
 
     @Override
-    @OnClick({R.id.imageView9})
+    @OnClick({R.id.imageView7})
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.imageView9:
+            case R.id.imageView7:
 
                 if (kaiguan){
                     imageView9.setImageResource(R.drawable.wuguang);
@@ -123,9 +123,33 @@ public class MachinePic extends BaseFragment {
             gifImageView.setVisibility(View.GONE);
             kaiguan = false;
         }else {
-            imageView9.setImageResource(R.drawable.ciguang);
+            imageView9.setImageResource(R.drawable.wuguang);
             gifImageView.setVisibility(View.VISIBLE);
             kaiguan = true;
+        }
+
+        //４　氛围灯
+        if (map.get("4") == 1){
+
+            imageView9.setImageResource(R.drawable.ruoguang);
+        }else if (map.get("4") == 2){
+
+            imageView9.setImageResource(R.drawable.ciguang);
+        }else if (map.get("4") == 3){
+
+            imageView9.setImageResource(R.drawable.qiangguang);
+        }if (map.get("4") == 0){
+
+            imageView9.setImageResource(R.drawable.wuguang);
+        }
+
+        //３　风力
+        if (map.get("3") == 1){
+            gifImageView.setImageResource(R.drawable.mansu_machene_x_b);
+        }else if (map.get("3") == 2){
+            gifImageView.setImageResource(R.drawable.zhongsu_x_b);
+        }else if (map.get("3") == 3){
+            gifImageView.setImageResource(R.drawable.kuaisu_x_b);
         }
 
     }

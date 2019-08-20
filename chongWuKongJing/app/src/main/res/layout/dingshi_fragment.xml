@@ -55,7 +55,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center|bottom"
             android:layout_marginLeft="30dp"
-            android:background="@drawable/fanbianyuanjiao"
+            android:background="@drawable/fanbianyuanjiaohuise"
             android:gravity="center"
             android:text="一次"
             android:textColor="@color/black" />

@@ -139,7 +139,7 @@ public class MyList {
         private String isonline;
         private String select_img;
         private String bhome;
-        private Object ison;
+        private int ison;
         private String tmallflag;
         private String did;
         private String unselect_img;
@@ -240,11 +240,11 @@ public class MyList {
             this.bhome = bhome;
         }
 
-        public Object getIson() {
+        public int getIson() {
             return ison;
         }
 
-        public void setIson(Object ison) {
+        public void setIson(int ison) {
             this.ison = ison;
         }
 

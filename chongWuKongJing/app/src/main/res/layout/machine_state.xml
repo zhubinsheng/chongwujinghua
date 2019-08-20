@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                app:srcCompat="@drawable/main_screen_drawable_mine_selected" />
+                app:srcCompat="@drawable/tianqi" />
 
             <TextView
                 android:id="@+id/diqu"
@@ -145,8 +145,10 @@
 
 
     <RelativeLayout
-    android:layout_width="match_parent" android:layout_weight="1"
-    android:layout_height="0dp">
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_marginTop="100dp">
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/GifImageView"
@@ -158,10 +160,10 @@
         <ImageView
             android:id="@+id/imageView7"
             android:layout_width="match_parent"
-            android:layout_height="288dp"
-            android:layout_marginTop="190dp"
+            android:layout_height="286dp"
+            android:layout_marginTop="130dp"
             app:srcCompat="@drawable/wuguang" />
-</RelativeLayout>
+    </RelativeLayout>
 
 
 

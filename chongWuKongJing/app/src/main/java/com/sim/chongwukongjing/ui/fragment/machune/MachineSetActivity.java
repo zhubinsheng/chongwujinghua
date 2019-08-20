@@ -279,43 +279,43 @@ public class MachineSetActivity extends BaseActivity {
         //添加tab
         mainTabSegment.addTab(
                 new QMUITabSegment.Tab(
-                        ContextCompat.getDrawable(this, R.drawable.ic_eye),
-                        ContextCompat.getDrawable(this, R.drawable.dibu),
+                        ContextCompat.getDrawable(this, R.drawable.xiaoyeti),
+                        ContextCompat.getDrawable(this, R.drawable.dayeliang),
                         getString(R.string.yeliang),
                         false,
                         true));
 
         mainTabSegment.addTab(
                 new QMUITabSegment.Tab(
-                        getResources().getDrawable(R.drawable.dibu2),
-                        getResources().getDrawable(R.drawable.dibu),
+                        getResources().getDrawable(R.drawable.xiaofengli),
+                        getResources().getDrawable(R.drawable.dafegnli),
                         getString(R.string.fengli),
-                        true,
+                        false,
                         true));
 
         mainTabSegment.addTab(
                 new QMUITabSegment.Tab(
-                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
-                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
+                        getResources().getDrawable(R.drawable.xiaokaiguan),
+                        getResources().getDrawable(R.drawable.dakaiguan),
                         getString(R.string.kaiguan),
                         false,
                         true));
 
         mainTabSegment.addTab(
                 new QMUITabSegment.Tab(
-                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
-                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
+                        getResources().getDrawable(R.drawable.xiaodingshi),
+                        getResources().getDrawable(R.drawable.dadingshi),
                         getString(R.string.dingshi),
-                        true,
-                        false));
+                        false,
+                        true));
 
         mainTabSegment.addTab(
                 new QMUITabSegment.Tab(
-                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
-                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
+                        getResources().getDrawable(R.drawable.xiaofengweideng),
+                        getResources().getDrawable(R.drawable.dafengweideng),
                         getString(R.string.fengweidneg),
-                        true,
-                        false));
+                        false,
+                        true));
     }
 
 

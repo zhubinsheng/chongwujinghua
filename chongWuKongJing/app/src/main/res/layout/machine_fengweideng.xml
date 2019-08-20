@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                app:srcCompat="@drawable/main_screen_drawable_mine_selected" />
+                app:srcCompat="@drawable/tianqi" />
 
             <TextView
                 android:id="@+id/diqu"

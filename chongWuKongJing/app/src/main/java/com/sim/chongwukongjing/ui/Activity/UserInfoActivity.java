@@ -47,27 +47,27 @@ public class UserInfoActivity extends BaseActivity {
         //group_list_item_gegngaishebeimignc.showNewTip(true);
         group_list_item_gegngaishebeimignc.setRedDotPosition(QMUICommonListItemView.REDDOT_POSITION_RIGHT);
         group_list_item_gegngaishebeimignc.showRedDot(true);
-        group_list_item_gegngaishebeimignc.setImageDrawable(getResources().getDrawable(R.drawable.qmui_icon_checkbox_checked));
+        group_list_item_gegngaishebeimignc.setImageDrawable(getResources().getDrawable(R.drawable.diqiu));
 
         mShouhoufuwuListItemGender.setText("售后维修");
         mShouhoufuwuListItemGender.showNewTip(true);
         mShouhoufuwuListItemGender.setImageDrawable(getResources().getDrawable(R.drawable.qmui_popup_arrow_up));
-        mShouhoufuwuListItemGender.setImageDrawable(getResources().getDrawable(R.drawable.qmui_icon_checkbox_checked));
+        mShouhoufuwuListItemGender.setImageDrawable(getResources().getDrawable(R.drawable.shoho));
 
         group_list_item_genggaimima.setText("更改密码");
         //group_list_item_genggaimima.showNewTip(true);
         group_list_item_genggaimima.setImageDrawable(getResources().getDrawable(R.drawable.qmui_popup_arrow_up));
-        group_list_item_genggaimima.setImageDrawable(getResources().getDrawable(R.drawable.qmui_icon_checkbox_checked));
+        group_list_item_genggaimima.setImageDrawable(getResources().getDrawable(R.drawable.suo));
 
         group_list_item_changjianwenti.setText("常见问题");
         //group_list_item_changjianwenti.showNewTip(true);
         group_list_item_changjianwenti.setImageDrawable(getResources().getDrawable(R.drawable.qmui_popup_arrow_up));
-        group_list_item_changjianwenti.setImageDrawable(getResources().getDrawable(R.drawable.qmui_icon_checkbox_checked));
+        group_list_item_changjianwenti.setImageDrawable(getResources().getDrawable(R.drawable.changjianwent));
 
         group_list_item_richangweihushouce.setText("日常维护手册");
         //group_list_item_richangweihushouce.showNewTip(true);
         group_list_item_richangweihushouce.setImageDrawable(getResources().getDrawable(R.drawable.qmui_popup_arrow_up));
-        group_list_item_richangweihushouce.setImageDrawable(getResources().getDrawable(R.drawable.qmui_icon_checkbox_checked));
+        group_list_item_richangweihushouce.setImageDrawable(getResources().getDrawable(R.drawable.richangweihu));
     }
 
     @Override

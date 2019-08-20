@@ -137,7 +137,7 @@ public class MachineInfo extends BaseFragment {
             }else if (map.get("4").equals(3)){
                 liangdu1.setText("高亮度");
             }else if (map.get("4").equals(0)){
-                liangdu1.setText("无关");
+                liangdu1.setText("关机");
             }
 
 

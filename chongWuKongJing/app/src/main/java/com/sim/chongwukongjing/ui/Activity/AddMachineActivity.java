@@ -3,6 +3,7 @@ package com.sim.chongwukongjing.ui.Activity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
 
@@ -17,7 +18,8 @@ public class AddMachineActivity extends BaseActivity {
     @BindView(R.id.textView4)
     TextView textView4;
 
-
+    @BindView(R.id.topbar)
+    QMUITopBar qmuiTopBar;
 
     @Override
     protected int getLayoutRes() {
@@ -26,7 +28,12 @@ public class AddMachineActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        qmuiTopBar.addLeftImageButton(R.drawable.caidan,R.id.caidan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(UserInfoActivity.class);
+            }
+        });
     }
 
     @Override

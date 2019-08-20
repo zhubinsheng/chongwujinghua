@@ -2,45 +2,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
 
     <ImageView
         android:id="@+id/imageView8"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="351dp"
         android:layout_weight="1"
         android:layout_marginTop="100dp"
         app:srcCompat="@drawable/yeliang" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="338dp">
 
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_gravity="center"
             android:layout_marginTop="100dp"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/quanxing" />
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="76dp"
-            android:layout_gravity="center"
             app:srcCompat="@drawable/taiji" />
 
-        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        <!--<com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
             android:id="@+id/meitian"
             android:layout_width="102dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:gravity="center"
+
             android:text="液体剩余量"
             android:textColor="@color/white"
-            app:qmui_radius="18dp" />
+            app:qmui_radius="18dp"
+            app:qmui_borderColor="#90e1f4"/>-->
+
+        <TextView
+            android:layout_width="91dp"
+            android:layout_height="29dp"
+            android:layout_gravity="center"
+            android:background="@drawable/yuanjiao"
+            android:gravity="center"
+            android:text="液体剩余量"
+            android:textColor="@color/white" />
 
 
         <TextView
@@ -49,8 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="110dp"
-            android:textColor="@color/white"
-            android:text="60%" />
+            android:text="60%"
+            android:textColor="@color/white" />
     </FrameLayout>
 
 

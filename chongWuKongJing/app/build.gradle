@@ -74,7 +74,7 @@ dependencies {
     implementation 'com.romainpiel.shimmer:library:1.4.0@aar'//闪亮字体
     implementation 'com.github.AppIntro:AppIntro:5.1.0'//快速欢迎页
     implementation group: 'com.blankj', name: 'utilcodex', version: '1.23.7'
-    implementation 'com.github.ZS-ZhangsShun:EasyMqttAndroidClient:1.0'
+    //implementation 'com.github.ZS-ZhangsShun:EasyMqttAndroidClient:1.0'
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'com.github.anzaizai:EasySwipeMenuLayout:1.1.4'
     implementation 'com.github.zzz40500:android-shapeLoadingView:1.0.3.2'
@@ -82,5 +82,8 @@ dependencies {
     implementation 'com.bigkoo:svprogresshud:1.0.6'
     //implementation 'com.github.Bakumon:StatusLayoutManager:1.0.4'
 
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'
+    implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
 }

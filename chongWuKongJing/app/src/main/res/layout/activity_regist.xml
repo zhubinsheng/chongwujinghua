@@ -93,7 +93,7 @@
         android:id="@+id/next"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#ADD8E6"
+        android:background="@drawable/background_gradient"
         android:gravity="center"
         android:textSize="18dp"
         android:text="继续" />

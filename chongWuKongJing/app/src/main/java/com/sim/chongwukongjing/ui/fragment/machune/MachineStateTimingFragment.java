@@ -2,8 +2,7 @@ package com.sim.chongwukongjing.ui.fragment.machune;
 
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
-import android.content.Intent;
-import android.graphics.Color;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,22 +10,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import androidx.annotation.RequiresApi;
+
 import com.google.gson.Gson;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.sim.chongwukongjing.R;
-import com.sim.chongwukongjing.ui.Activity.MyEquipmentAcitivity;
 import com.sim.chongwukongjing.ui.Base.BaseFragment;
 import com.sim.chongwukongjing.ui.Main.MyApplication;
 import com.sim.chongwukongjing.ui.bean.DvcInfoResult;
 import com.sim.chongwukongjing.ui.bean.MessageDecInfo;
 import com.sim.chongwukongjing.ui.bean.MessageWrap;
-import com.sim.chongwukongjing.ui.bean.MyList;
 import com.sim.chongwukongjing.ui.bean.TtinmingResult;
 import com.sim.chongwukongjing.ui.http.HttpApi;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
-import com.sim.chongwukongjing.ui.wigdet.MyProductlistAdapter;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -128,10 +123,13 @@ public class MachineStateTimingFragment extends BaseFragment {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void initSet(View view) {
-        yici.setBackgroundColor(Color.parseColor("#87CEEB"));
-        meitian.setBackgroundColor(Color.parseColor("#D4D4D4"));
+        jianxie.setBackground(getActivity().getDrawable(R.drawable.banbianyuanjiaohuise));
+        lianxu.setBackground(getActivity().getDrawable(R.drawable.fanbianyuanjiaohuise));
+        jianxie.setEnabled(false);
+        lianxu.setEnabled(false);
     }
 
     @Override
@@ -139,6 +137,7 @@ public class MachineStateTimingFragment extends BaseFragment {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     @OnClick({R.id.kaishi,R.id.jieshu,R.id.fabButton,R.id.lianxu,R.id.jianxie,R.id.yici,R.id.meitian})
     public void onClick(View v) {
@@ -159,28 +158,29 @@ public class MachineStateTimingFragment extends BaseFragment {
             break;
 
 
-            case R.id.lianxu: lianxu.setBackgroundColor(Color.parseColor("#87CEEB"));
-                jianxie.setBackgroundColor(Color.parseColor("#D4D4D4"));
-                moshi = false;
+            case R.id.lianxu:
+
+                jianxie.setBackground(getActivity().getDrawable(R.drawable.banbianyuanjiaohuise));
+                lianxu.setBackground(getActivity().getDrawable(R.drawable.fanbianyuanjiao));
                 Map map = new HashMap();
                 map.put(1,0);
                 Gson gson = new Gson();
                 ControUtil.dvcinfo(gson.toJson(map));
-                break;
-            case R.id.jianxie:jianxie.setBackgroundColor(Color.parseColor("#87CEEB"));
-                lianxu.setBackgroundColor(Color.parseColor("#D4D4D4"));
+
+            case R.id.jianxie:jianxie.setBackground(getActivity().getDrawable(R.drawable.banbianyuanjiao));
+                lianxu.setBackground(getActivity().getDrawable(R.drawable.fanbianyuanjiaohuise));
                 moshi = true;
                 Map map2 = new HashMap();
                 map2.put(1,1);
                 Gson gson2 = new Gson();
                 ControUtil.dvcinfo(gson2.toJson(map2));
                 break;
-            case R.id.yici:yici.setBackgroundColor(Color.parseColor("#87CEEB"));
-                meitian.setBackgroundColor(Color.parseColor("#D4D4D4"));
+            case R.id.yici:meitian.setBackground(getActivity().getDrawable(R.drawable.banbianyuanjiaohuise));
+                yici.setBackground(getActivity().getDrawable(R.drawable.fanbianyuanjiao));
                 isloop = false;
                 break;
-            case R.id.meitian:meitian.setBackgroundColor(Color.parseColor("#87CEEB"));
-                yici.setBackgroundColor(Color.parseColor("#D4D4D4"));
+            case R.id.meitian:yici.setBackground(getActivity().getDrawable(R.drawable.fanbianyuanjiaohuise));
+                meitian.setBackground(getActivity().getDrawable(R.drawable.banbianyuanjiao));
                 isloop = true;
                 break;
 
@@ -242,6 +242,7 @@ public class MachineStateTimingFragment extends BaseFragment {
         Log.e("zbs", "onReceiveMsg: " + message.toString());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onGetStickyEvent(MessageDecInfo message) {
         Log.e("zbs", "onReceiveMsg: " + message.toString());
@@ -249,17 +250,25 @@ public class MachineStateTimingFragment extends BaseFragment {
 
         int i  = dat.get_$1();
         if (i == 1){
-            jianxie:jianxie.setBackgroundColor(Color.parseColor("#87CEEB"));
-            lianxu.setBackgroundColor(Color.parseColor("#D4D4D4"));
+            jianxie.setBackground(getActivity().getDrawable(R.drawable.banbianyuanjiao));
+            lianxu.setBackground(getActivity().getDrawable(R.drawable.fanbianyuanjiaohuise));
             moshi = true;
         }else if (i == 0){
-            lianxu.setBackgroundColor(Color.parseColor("#87CEEB"));
-            jianxie.setBackgroundColor(Color.parseColor("#D4D4D4"));
+            jianxie.setBackground(getActivity().getDrawable(R.drawable.banbianyuanjiaohuise));
+            lianxu.setBackground(getActivity().getDrawable(R.drawable.fanbianyuanjiao));
             moshi = false;
         }
 
+        if (dat.get_$0() == 0){
+            jianxie.setEnabled(false);
+            lianxu.setEnabled(false);
+        }else {
+            jianxie.setEnabled(true);
+            lianxu.setEnabled(true);
+        }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onGetStickyEvent2(MessageWrap message) {
         Log.e("zbs", "onReceiveMsg: " + message.toString());
@@ -267,13 +276,22 @@ public class MachineStateTimingFragment extends BaseFragment {
         Map<String, Integer> map = new LinkedHashMap<String, Integer>();
         map = message.getMap();
         if (map.get("1") == 1){
-            jianxie:jianxie.setBackgroundColor(Color.parseColor("#87CEEB"));
-            lianxu.setBackgroundColor(Color.parseColor("#D4D4D4"));
+            jianxie.setBackground(getActivity().getDrawable(R.drawable.banbianyuanjiao));
+            lianxu.setBackground(getActivity().getDrawable(R.drawable.fanbianyuanjiaohuise));
+            moshi = true;
             moshi = true;
         }else if (map.get("1") == 0){
-            lianxu.setBackgroundColor(Color.parseColor("#87CEEB"));
-            jianxie.setBackgroundColor(Color.parseColor("#D4D4D4"));
+            jianxie.setBackground(getActivity().getDrawable(R.drawable.banbianyuanjiaohuise));
+            lianxu.setBackground(getActivity().getDrawable(R.drawable.fanbianyuanjiao));
             moshi = false;
+        }
+
+        if (map.get("0") == 1){
+            jianxie.setEnabled(true);
+            lianxu.setEnabled(true);
+        }else {
+            jianxie.setEnabled(false);
+            lianxu.setEnabled(false);
         }
 
     }
@@ -333,7 +351,10 @@ public class MachineStateTimingFragment extends BaseFragment {
                     public void accept(TtinmingResult baseInfo) throws Exception {
                         if ("10000".equals(baseInfo.getCode())){
                             ToastUtils.showShort(baseInfo.getMsg());
-
+                            Map map2 = new HashMap();
+                            map2.put(5,0);
+                            Gson gson3 = new Gson();
+                            ControUtil.dvcinfo(gson3.toJson(map2));
                         }
                     }
                 }, new Consumer<Throwable>() {

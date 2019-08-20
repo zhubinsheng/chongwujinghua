@@ -3,7 +3,6 @@ package com.sim.chongwukongjing.ui.fragment.machune;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +26,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * @author binshengzhu
@@ -58,13 +58,16 @@ public class MachineStateFengweidengPowerFragment extends BaseFragment {
     @BindView(R.id.imageView7)
     ImageView imageView7;
 
+    @BindView(R.id.GifImageView)
+    GifImageView gifImageView;
+
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch(msg.what){
-                case 0:imageView7.setImageResource(R.drawable.buliang);
+                case 0:imageView7.setImageResource(R.drawable.wuguang);
                     Map map0 = new HashMap();
                     map0.put(4,0);
                     Gson gson0 = new Gson();
@@ -76,13 +79,13 @@ public class MachineStateFengweidengPowerFragment extends BaseFragment {
                     Gson gson = new Gson();
                     ControUtil.dvcinfo(gson.toJson(map));
                     break;
-                case 2:imageView7.setImageResource(R.drawable.ciliang);
+                case 2:imageView7.setImageResource(R.drawable.ciguang);
                     Map map1 = new HashMap();
                     map1.put(4,2);
                     Gson gson2 = new Gson();
                     ControUtil.dvcinfo(gson2.toJson(map1));
                     break;
-                case 3:imageView7.setImageResource(R.drawable.zuiliang);
+                case 3:imageView7.setImageResource(R.drawable.qiangguang);
                     Map map2 = new HashMap();
                     map2.put(4,3);
                     Gson gson3 = new Gson();
@@ -105,7 +108,7 @@ public class MachineStateFengweidengPowerFragment extends BaseFragment {
 
     @Override
     protected void initDate(View view) {
-
+        //seekBar2.setEnabled(false);
     }
 
     @Override
@@ -179,53 +182,90 @@ public class MachineStateFengweidengPowerFragment extends BaseFragment {
         return true;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onReceiveMsg(MessageWrap message) {
-        Log.e("zbs", "onReceiveMsg: " + message.toString());
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onReceiveMsg2(MessageEvent message) {
-        Log.e("zbs", "onReceiveMsg: " + message.toString());
         diqu.setText(message.getResult().getData().getAreanm());
-        wendu.setText(message.getResult().getData().getTemp());
+        wendu.setText(message.getResult().getData().getTemp()+"°");
         tianqi.setText(message.getResult().getData().getWeath());
-        shidu.setText(message.getResult().getData().getPm25());
+        shidu.setText("湿度："+message.getResult().getData().getTemp());
         fengdu.setText(message.getResult().getData().getWind());
+        zuidigao.setText(message.getResult().getData().getTemp2());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onGetStickyEvent(MessageDecInfo message) {
-        Log.e("zbs", "onReceiveMsg: " + message.toString());
         DvcInfoResult.DataBean dat = message.getResult().getData();
 
         int i  = dat.get_$4();
         if (i == 1){
             setProgress(1);
+            imageView7.setImageResource(R.drawable.ruoguang);
         }else if (i == 2){
             setProgress(2);
+            imageView7.setImageResource(R.drawable.ciguang);
         }else if (i == 3){
             setProgress(3);
+            imageView7.setImageResource(R.drawable.qiangguang);
         }else if (i ==0){
             setProgress(0);
+            imageView7.setImageResource(R.drawable.wuguang);
         }
+
+        //３　风力
+        if (dat.get_$3() == 1){
+            gifImageView.setImageResource(R.drawable.mansu_machene_x_b);
+        }else if (dat.get_$3() == 2){
+            gifImageView.setImageResource(R.drawable.zhongsu_x_b);
+        }else if (dat.get_$3() == 3){
+            gifImageView.setImageResource(R.drawable.kuaisu_x_b);
+        }
+
+        if (dat.get_$0() == 0){
+            seekBar2.setEnabled(false);
+        }else {
+            seekBar2.setEnabled(true);
+        }
+
 
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onGetStickyEvent2(MessageWrap message) {
-        Log.e("zbs", "onReceiveMsg: " + message.toString());
 
         Map<String, Integer> map = new LinkedHashMap<String, Integer>();
         map = message.getMap();
+
+        //４　氛围灯
         if (map.get("4") == 1){
             setProgress(1);
+            imageView7.setImageResource(R.drawable.ruoguang);
         }else if (map.get("4") == 2){
             setProgress(2);
+            imageView7.setImageResource(R.drawable.ciguang);
         }else if (map.get("4") == 3){
             setProgress(3);
+            imageView7.setImageResource(R.drawable.qiangguang);
         }if (map.get("4") == 0){
             setProgress(0);
+            imageView7.setImageResource(R.drawable.wuguang);
+        }
+
+        //３　风力
+        if (map.get("3") == 1){
+            gifImageView.setImageResource(R.drawable.mansu_machene_x_b);
+        }else if (map.get("3") == 2){
+            gifImageView.setImageResource(R.drawable.zhongsu_x_b);
+        }else if (map.get("3") == 3){
+            gifImageView.setImageResource(R.drawable.kuaisu_x_b);
+        }
+
+
+
+        if (map.get("0") == 1){
+            seekBar2.setEnabled(true);
+        }else {
+            seekBar2.setEnabled(false);
         }
 
     }

@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.qmuiteam.qmui.widget.QMUITabSegment;
@@ -20,6 +22,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Activity.MyEquipmentAcitivity;
+import com.sim.chongwukongjing.ui.Activity.UserInfoActivity;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
 import com.sim.chongwukongjing.ui.Main.MyApplication;
 import com.sim.chongwukongjing.ui.bean.ConfigResult;
@@ -103,6 +106,12 @@ public class MachineSetActivity extends BaseActivity {
         //关闭其他所有ａｃｔｉｖｉｔｙ
         //ActivityUtils.finishAllActivitiesExceptNewest();
         topbar.setTitle("My Air Machiene");
+        topbar.addLeftImageButton(R.drawable.caidan,R.id.caidan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(UserInfoActivity.class);
+            }
+        });
     }
 
     @Override
@@ -140,7 +149,7 @@ public class MachineSetActivity extends BaseActivity {
             //address = "纬度：" + location.getLatitude() + "经度：" + location.getLongitude();
             //Log.d("zbs",address);
         }*/
-        //getWeather();
+        getWeather();
         //findLocation(address);
         /*Map<String,String> param =new HashMap<String,String>();
         param.put("mac", "123456");
@@ -202,8 +211,10 @@ public class MachineSetActivity extends BaseActivity {
         mainViewPage.setAdapter(new FragAdapter(getSupportFragmentManager(), fragmentList));
         //设置字体大小
        // mainTabSegment.setTabTextSize(ConvertUtils.dp2px(12));
+        mainTabSegment.setDefaultNormalColor(getResources().getColor(R.color.huise));
+        mainTabSegment.setDefaultSelectedColor(getResources().getColor(R.color.white));
         //设置 Tab 选中状态下的颜色
-        mainTabSegment.setDefaultSelectedColor(getResources().getColor(R.color.qmui_config_color_50_blue));
+        //mainTabSegment.setDefaultSelectedColor(getResources().getColor(R.color.qmui_config_color_50_blue));
         //关联viewPage
         mainTabSegment.setupWithViewPager(mainViewPage, false);
         String[] permission = {Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO};
@@ -268,27 +279,27 @@ public class MachineSetActivity extends BaseActivity {
         //添加tab
         mainTabSegment.addTab(
                 new QMUITabSegment.Tab(
-                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
-                        getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
+                        ContextCompat.getDrawable(this, R.drawable.ic_eye),
+                        ContextCompat.getDrawable(this, R.drawable.dibu),
                         getString(R.string.yeliang),
-                        true,
-                        false));
+                        false,
+                        true));
 
         mainTabSegment.addTab(
                 new QMUITabSegment.Tab(
-                        getResources().getDrawable(R.drawable.kaiguanmoren),
-                        getResources().getDrawable(R.drawable.kaiguandakai),
+                        getResources().getDrawable(R.drawable.dibu2),
+                        getResources().getDrawable(R.drawable.dibu),
                         getString(R.string.fengli),
                         true,
-                        false));
+                        true));
 
         mainTabSegment.addTab(
                 new QMUITabSegment.Tab(
                         getResources().getDrawable(R.drawable.main_screen_drawable_mine_unselected),
                         getResources().getDrawable(R.drawable.main_screen_drawable_mine_selected),
                         getString(R.string.kaiguan),
-                        true,
-                        false));
+                        false,
+                        true));
 
         mainTabSegment.addTab(
                 new QMUITabSegment.Tab(
@@ -368,7 +379,7 @@ public class MachineSetActivity extends BaseActivity {
                     .add("appid", "1288")
                     .add("motime",  motime)
                     .add("sign", "1234567890")
-                    .add("city","南京市建邺区")
+                    .add("city","上海市浦东新区")
                     .add("token", MyApplication.getInstance().getLoginResult().getData().getToken())
                     .build();
 

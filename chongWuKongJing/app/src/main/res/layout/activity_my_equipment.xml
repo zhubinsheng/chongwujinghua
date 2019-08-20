@@ -8,6 +8,7 @@
     <com.qmuiteam.qmui.widget.QMUITopBar
         android:id="@+id/topbar"
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="?attr/qmui_topbar_height" />
 
     <com.mingle.widget.LoadingView
@@ -35,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:layout_weight="1"
-            android:background="@color/btn_filled_blue_bg_normal"
+            android:background="#0088c7"
             android:gravity="center"
             android:textSize="18dp"
             android:text="一键设定" />
@@ -45,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:layout_weight="1"
-            android:background="#ADD8E6"
+            android:background="#90e1f4"
             android:gravity="center"
             android:textSize="18dp"
             android:text="添加设备" />

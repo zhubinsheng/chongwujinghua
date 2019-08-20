@@ -1,13 +1,11 @@
 package com.sim.chongwukongjing.ui.fragment.machune;
 
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseFragment;
 import com.sim.chongwukongjing.ui.bean.DvcInfoResult;
@@ -28,8 +26,7 @@ import butterknife.BindView;
  */
 public class MachineYeLiangFragment extends BaseFragment {
 
-    @BindView(R.id.meitian)
-    QMUIRoundButton meitian;
+
 
     @BindView(R.id.textView18)
     TextView textView18;
@@ -42,7 +39,7 @@ public class MachineYeLiangFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        meitian.setBackgroundColor(Color.parseColor("#D4D4D4"));
+
     }
 
     @Override

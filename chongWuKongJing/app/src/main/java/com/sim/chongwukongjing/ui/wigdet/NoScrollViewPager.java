@@ -34,7 +34,7 @@ public class NoScrollViewPager extends QMUIViewPager {
 
     @Override
     public boolean onTouchEvent(MotionEvent arg0) {
-        if (noScroll) {
+        if (!noScroll) {
             return false;
         } else {
             return super.onTouchEvent(arg0);
@@ -43,7 +43,7 @@ public class NoScrollViewPager extends QMUIViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent arg0) {
-        if (noScroll) {
+        if (!noScroll) {
             return false;
         } else {
             return super.onInterceptTouchEvent(arg0);

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="#f6f5f5"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -9,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"
         app:contentView="@+id/content"
+        android:background="#f6f5f5"
         app:leftMenuView="@+id/left"
         app:rightMenuView="@+id/right">
 
@@ -16,7 +18,7 @@
             android:id="@+id/left"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_bright"
+            android:background="#f6f5f5"
             android:orientation="horizontal"
             android:padding="20dp">
 
@@ -41,7 +43,7 @@
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#cccccc"
+            android:background="#f6f5f5"
             android:orientation="horizontal"
             android:padding="20dp">
 
@@ -122,7 +124,7 @@
             android:id="@+id/right"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@android:color/holo_blue_bright"
+            android:background="@color/qmui_config_color_red"
             android:orientation="horizontal">
 
             <com.qmuiteam.qmui.widget.QMUIVerticalTextView
@@ -131,10 +133,10 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_marginTop="30dp"
-                android:background="@android:color/holo_blue_bright"
+                android:background="@color/qmui_config_color_red"
                 android:padding="25dp"
                 android:textSize="30dp"
-                android:textColor="@color/qmui_config_color_red"
+                android:textColor="@color/white"
                 android:text="删除" />
 
         </LinearLayout>

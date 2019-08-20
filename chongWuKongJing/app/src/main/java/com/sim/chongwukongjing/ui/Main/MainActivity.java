@@ -15,7 +15,6 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.sim.chongwukongjing.R;
 import com.sim.chongwukongjing.ui.Base.BaseActivity;
-import com.sim.chongwukongjing.ui.fragment.home.UserPageFragment;
 import com.sim.chongwukongjing.ui.wigdet.FragAdapter;
 import com.sim.chongwukongjing.ui.wigdet.NoScrollViewPager;
 
@@ -135,8 +134,8 @@ public class MainActivity extends BaseActivity {
         fragmentList.add(new DynamicFragment());
         fragmentList.add(new MsgFragment());
         */
-        fragmentList.add(new UserPageFragment());
-        fragmentList.add(new UserPageFragment());
+        //fragmentList.add(new UserPageFragment());
+        //fragmentList.add(new UserPageFragment());
         //添加tab
         mainTabSegment.addTab(
                 new QMUITabSegment.Tab(

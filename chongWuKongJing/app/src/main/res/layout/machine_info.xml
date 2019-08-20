@@ -30,7 +30,9 @@
                 android:id="@+id/diqu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
                 android:layout_weight="1"
+                android:textSize="20dp"
                 android:gravity="center"
                 android:text="上海   徐汇区" />
         </LinearLayout>
@@ -50,10 +52,10 @@
                 android:id="@+id/wendu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="30dp"
-
+                android:textSize="50dp"
                 android:text="31" />
 
             <TextView
@@ -61,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="20dp"
                 android:gravity="center"
                 android:text="多云转晴 " />
 
@@ -69,8 +72,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="20dp"
                 android:gravity="center"
-                android:text="20 / 35" />
+                android:text="27° / 38°" />
         </LinearLayout>
 
         <View
@@ -88,16 +92,20 @@
                 android:id="@+id/shidu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
                 android:layout_weight="1"
+                android:textSize="20dp"
                 android:gravity="center"
-                android:text="温度   66%" />
+                android:text="湿度   66%" />
 
             <TextView
                 android:id="@+id/fengdu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textSize="20dp"
                 android:text="东风   二级" />
         </LinearLayout>
     </LinearLayout>

@@ -13,30 +13,32 @@
         android:layout_marginTop="60dp"
         android:orientation="horizontal">
 
-        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+
+
+        <TextView
             android:id="@+id/lianxu"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:layout_gravity="center|bottom"
             android:layout_marginLeft="30dp"
+            android:background="@drawable/fanbianyuanjiao"
             android:gravity="center"
-            app:qmui_radiusTopLeft="18dp"
-            app:qmui_radiusBottomLeft="18dp"
-            app:qmui_borderColor="@color/qmui_s_link_color"
-            android:text="连续运行" />
+            android:text="连续运行"
+            android:textColor="@color/black" />
 
-        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        <TextView
             android:id="@+id/jianxie"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:layout_gravity="center|bottom"
             android:gravity="center"
+            android:background="@drawable/banbianyuanjiao"
             android:layout_marginRight="30dp"
-            app:qmui_radiusTopRight="18dp"
-            app:qmui_radiusBottomRight="18dp"
-            android:text="间歇运行" />
+            android:text="间歇运行"
+            android:textColor="@color/black" />
+
     </LinearLayout>
 
 
@@ -46,29 +48,30 @@
         android:layout_marginTop="60dp"
         android:orientation="horizontal">
 
-        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        <TextView
             android:id="@+id/yici"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:layout_gravity="center|bottom"
             android:layout_marginLeft="30dp"
+            android:background="@drawable/fanbianyuanjiao"
             android:gravity="center"
-            app:qmui_radiusTopLeft="18dp"
-            app:qmui_radiusBottomLeft="18dp"
-            android:text="一次" />
+            android:text="一次"
+            android:textColor="@color/black" />
 
-        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        <TextView
             android:id="@+id/meitian"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:layout_gravity="center|bottom"
             android:gravity="center"
+            android:background="@drawable/banbianyuanjiao"
             android:layout_marginRight="30dp"
-            app:qmui_radiusTopRight="18dp"
-            app:qmui_radiusBottomRight="18dp"
-            android:text="每天" />
+            android:text="每天"
+            android:textColor="@color/black" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -108,7 +111,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_weight="1"
-            android:background="#87CEEB"
+            android:background="@color/qian"
             android:gravity="center"
             android:text="12:12"
             android:textColor="@color/cardview_light_background"
@@ -121,7 +124,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_weight="1"
-            android:background="#87CEEB"
+            android:background="@color/qian"
             android:gravity="center"
             android:text="12:12"
             android:textColor="@color/cardview_light_background"

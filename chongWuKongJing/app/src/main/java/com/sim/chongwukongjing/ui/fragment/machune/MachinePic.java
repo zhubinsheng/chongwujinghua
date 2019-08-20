@@ -79,12 +79,12 @@ public class MachinePic extends BaseFragment {
             case R.id.imageView9:
 
                 if (kaiguan){
-                    imageView9.setImageResource(R.drawable.buliang);
+                    imageView9.setImageResource(R.drawable.wuguang);
                     gifImageView.setVisibility(View.GONE);
                     contro_0(0);
                     kaiguan = false;
                 }else {
-                    imageView9.setImageResource(R.drawable.machine_main_picture);
+                    imageView9.setImageResource(R.drawable.ciguang);
                     gifImageView.setVisibility(View.VISIBLE);
                     contro_0(1);
                     kaiguan = true;
@@ -119,11 +119,11 @@ public class MachinePic extends BaseFragment {
         Map<String, Integer> map = new LinkedHashMap<String, Integer>();
         map = message.getMap();
         if (map.get("0") == 0){
-            imageView9.setImageResource(R.drawable.buliang);
+            imageView9.setImageResource(R.drawable.wuguang);
             gifImageView.setVisibility(View.GONE);
             kaiguan = false;
         }else {
-            imageView9.setImageResource(R.drawable.machine_main_picture);
+            imageView9.setImageResource(R.drawable.ciguang);
             gifImageView.setVisibility(View.VISIBLE);
             kaiguan = true;
         }

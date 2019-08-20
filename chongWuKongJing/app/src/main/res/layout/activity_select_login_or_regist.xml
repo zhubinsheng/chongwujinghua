@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="80dp"
                 android:layout_weight="1"
-                android:background="@color/btn_filled_blue_bg_normal"
+                android:background="#0088c7"
                 android:gravity="center"
                 android:textSize="18dp"
                 android:text="新用户" />
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="80dp"
                 android:layout_weight="1"
-                android:background="#ADD8E6"
+                android:background="#90e1f4"
                 android:gravity="center"
                 android:textSize="18dp"
                 android:text="登录" />

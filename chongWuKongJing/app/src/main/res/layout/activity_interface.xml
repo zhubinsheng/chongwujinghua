@@ -9,6 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:padding="80dp"
+        android:padding="100dp"
         app:srcCompat="@drawable/welcome_shilaing" />
 </LinearLayout>

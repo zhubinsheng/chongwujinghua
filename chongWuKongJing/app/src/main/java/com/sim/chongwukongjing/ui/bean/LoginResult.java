@@ -62,6 +62,7 @@ public class LoginResult {
 		private String phone;
 		private String nickname;
 		private int id;
+		private int dcvcnt;
 		private String headpic;
 		private String mac;
 		private String token;
@@ -112,6 +113,14 @@ public class LoginResult {
 
 		public void setToken(String token) {
 			this.token = token;
+		}
+
+		public int getDcvcnt() {
+			return dcvcnt;
+		}
+
+		public void setDcvcnt(int dcvcnt) {
+			this.dcvcnt = dcvcnt;
 		}
 	}
 }

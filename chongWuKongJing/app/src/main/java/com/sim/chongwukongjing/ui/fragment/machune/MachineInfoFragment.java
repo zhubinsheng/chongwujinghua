@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -23,8 +22,6 @@ import com.sim.chongwukongjing.ui.bean.MessageWrap;
 import com.sim.chongwukongjing.ui.bean.WeatherResult;
 import com.sim.chongwukongjing.ui.http.HttpApi;
 import com.sim.chongwukongjing.ui.http.RetrofitClient;
-import com.sim.chongwukongjing.ui.wigdet.FragAdapter;
-import com.sim.chongwukongjing.ui.wigdet.NoScrollViewPager;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -260,12 +257,12 @@ public class MachineInfoFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onReceiveMsg2(MessageEvent message) {
-        Log.e("zbs", "onReceiveMsg: " + message.toString());
         diqu.setText(message.getResult().getData().getAreanm());
-        wendu.setText(message.getResult().getData().getTemp());
+        wendu.setText(message.getResult().getData().getTemp()+"°");
         tianqi.setText(message.getResult().getData().getWeath());
-        shidu.setText(message.getResult().getData().getPm25());
+        shidu.setText("湿度："+message.getResult().getData().getTemp());
         fengdu.setText(message.getResult().getData().getWind());
+        zuidigao.setText(message.getResult().getData().getTemp2());
     }
 
 }

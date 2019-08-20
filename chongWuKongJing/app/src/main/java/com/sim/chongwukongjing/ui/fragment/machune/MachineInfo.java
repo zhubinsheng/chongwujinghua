@@ -11,6 +11,7 @@ import com.sim.chongwukongjing.ui.Base.BaseFragment;
 import com.sim.chongwukongjing.ui.bean.DvcInfoResult;
 import com.sim.chongwukongjing.ui.bean.MessageDecInfo;
 import com.sim.chongwukongjing.ui.bean.MessageWrap;
+import com.sim.chongwukongjing.ui.utils.ShuiweiUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -95,7 +96,7 @@ public class MachineInfo extends BaseFragment {
         }else if (dat.get_$4() == 3 ){
             liangdu1.setText("高亮度");
         }else if (dat.get_$4() == 0 ){
-            liangdu1.setText("关机");
+            liangdu1.setText("无光");
         }
 
 
@@ -105,12 +106,10 @@ public class MachineInfo extends BaseFragment {
             moshi1.setText("智能模式");
         }
 
-       float zyx =  dat.get_$6()/1000 ;
-        yetiyuliang1.setText("液体剩余量"+(int)zyx+"%");
+        String SWzhi = ShuiweiUtil.shuiwei(dat.get_$6());
+        yetiyuliang1.setText("液体剩余量"+SWzhi);
+
     }
-
-
-
 
 
 
@@ -138,7 +137,7 @@ public class MachineInfo extends BaseFragment {
             }else if (map.get("4").equals(3)){
                 liangdu1.setText("高亮度");
             }else if (map.get("4").equals(0)){
-                liangdu1.setText("关机");
+                liangdu1.setText("无关");
             }
 
 
@@ -148,8 +147,8 @@ public class MachineInfo extends BaseFragment {
                 moshi1.setText("智能模式");
             }
 
-            float zyx = map.get("6")/1000 ;
-            yetiyuliang1.setText("液体剩余量"+(int)zyx+"%");
+            String SWzhi = ShuiweiUtil.shuiwei(map.get("6"));
+            yetiyuliang1.setText(SWzhi);
 
         }
     }

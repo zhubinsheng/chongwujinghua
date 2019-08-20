@@ -61,6 +61,7 @@ public class WeatherResult {
 
         private String area;
         private String temp;
+        private String temp2;
         private String pm25;
         private String today;
         private String areanm;
@@ -139,6 +140,14 @@ public class WeatherResult {
 
         public void setWind(String wind) {
             this.wind = wind;
+        }
+
+        public String getTemp2() {
+            return temp2;
+        }
+
+        public void setTemp2(String temp2) {
+            this.temp2 = temp2;
         }
     }
 }

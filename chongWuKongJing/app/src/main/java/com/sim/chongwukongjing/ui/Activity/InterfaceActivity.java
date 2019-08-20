@@ -117,6 +117,11 @@ public class InterfaceActivity extends BaseActivity {
                             ToastUtils.showShort(baseInfo.getMsg());
                             MyApplication.getInstance().setLoginResult(baseInfo);
                             startActivity(MyEquipmentAcitivity.class);
+                           /* if (baseInfo.getData().getDcvcnt()==0){
+                                startActivity(AddMachineActivity.class);
+                            }else {
+                                startActivity(MyEquipmentAcitivity.class);
+                            }*/
                             finish();
                         }else {
                             ToastUtils.showShort(baseInfo.getMsg());

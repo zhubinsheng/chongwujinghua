@@ -90,7 +90,7 @@
             android:layout_marginLeft="35dp"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/lainxuyunxing" />
+            app:srcCompat="@drawable/lianxuyunxing" />
 
         <TextView
             android:id="@+id/moshi1"
@@ -115,7 +115,7 @@
             android:layout_marginLeft="35dp"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/lainxuyunxing" />
+            app:srcCompat="@drawable/shengyuyeti" />
 
         <TextView
             android:id="@+id/yetiyuliang1"
